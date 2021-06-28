@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { MatSidenav } from '@angular/material/sidenav';
 
 @Component({
   selector: 'app-layout-header',
@@ -6,10 +7,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./layout-header.component.scss']
 })
 export class LayoutHeaderComponent implements OnInit {
+  @Input() sidenav!: MatSidenav;
 
   constructor() { }
 
   ngOnInit(): void {
   }
 
+  sidenavToggle(): void {
+    this.sidenav.toggle();
+  }
 }

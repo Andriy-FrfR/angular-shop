@@ -1,2 +1,7 @@
-<app-layout-header></app-layout-header>>
-<router-outlet></router-outlet>
+<mat-sidenav-container class="mat-sidenav-container">
+  <mat-sidenav #matSidenav>Start</mat-sidenav>
+  <mat-sidenav-content>
+    <app-layout-header [sidenav]="matSidenav"></app-layout-header>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>
