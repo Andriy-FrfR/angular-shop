@@ -8,11 +8,13 @@ import { LayoutHeaderComponent } from './components/layout-header/layout-header.
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatButtonModule } from '@angular/material/button';
+import { SearchComponent } from './components/search/search.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LayoutHeaderComponent
+    LayoutHeaderComponent,
+    SearchComponent
   ],
   imports: [
     BrowserModule,

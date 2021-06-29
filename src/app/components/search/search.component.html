@@ -1,0 +1,11 @@
+<div class="container products-wrapper">
+  <div class="products-item" *ngFor="let product of products">
+    <img src="" alt="Lorem ipsum">
+    <a routerLink="/" class="products-item-title">
+      {{ product.title }}
+    </a>
+    <div class="products-item-price">
+      {{ product.price }} ₴
+    </div>
+  </div>
+</div>
