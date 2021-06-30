@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "angular-shop-a7f16": {
+      "hosting": {
+        "angular-shop": [
+          "angular-shop-a7f16"
+        ]
+      }
+    }
+  }
+}
