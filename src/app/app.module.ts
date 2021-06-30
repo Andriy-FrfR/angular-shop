@@ -13,12 +13,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatButtonModule } from '@angular/material/button';
 import { SearchComponent } from './components/search/search.component';
+import { SearchProductComponent } from './search-product/search-product.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LayoutHeaderComponent,
-    SearchComponent
+    SearchComponent,
+    SearchProductComponent
   ],
   imports: [
     BrowserModule,
