@@ -35,7 +35,7 @@ export class ProductsService {
       title: 'Title',
       description: 'Some description',
       price: 123,
-      img: ['note4.jpg'],
+      img: ['not4.jpg'],
       date: Date.now()
     });
   }
