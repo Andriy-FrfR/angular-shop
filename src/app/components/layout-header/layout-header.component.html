@@ -7,5 +7,25 @@
     <button class="catalog-btn">
       Каталог
     </button>
+    <div class="search">
+      <img class="search-icon" src="../../../assets/img/icons/search.png" alt="Lorem ipsum">
+      <input
+        class="search-input" 
+        type="text"
+        placeholder="Search"
+        matInput
+        [formControl]="searchInput"
+        [matAutocomplete]="auto"
+        (keydown.enter)="searchByString(searchInput.value)"
+      >
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option *ngFor="let product of products | filterByString:searchInput.value:5" [value]="product.title" (click)="searchByString(searchInput.value)">
+          {{ product.title }}
+        </mat-option>
+      </mat-autocomplete>
+      <button class="search-button" mat-raised-button color="primary" (click)="searchByString(searchInput.value)">
+        <span class="search-button-text">Search</span>
+      </button>
+    </div>
   </div>
 </header>
