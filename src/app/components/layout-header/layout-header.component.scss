@@ -1,11 +1,8 @@
 .header {
-  display: flex;
-  align-items: center;
-  height: 70px;
-
   background-color: #221f1f;
 
   &-wrapper {
+    height: 70px;
     display: flex;
     align-items: center;
   }
@@ -17,6 +14,7 @@
   font-size: 35px;
   font-weight: bold;
   color: #fff;
+  cursor: pointer;
 }
 
 .sidenav-toggle-btn {
@@ -46,6 +44,17 @@
 
   &:hover {
     background-color: hsla(0, 0%, 100%, .4);
+  }
+}
+
+.catalog-modal {
+  position: absolute;
+  top: 100%;
+
+  background-color: red;
+
+  &-container {
+    position: relative;
   }
 }
 

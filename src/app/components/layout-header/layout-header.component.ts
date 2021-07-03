@@ -1,3 +1,5 @@
+import { Category } from './../../shared/interfaces/category.interface';
+import { CatalogService } from './../../services/catalog.service';
 import { ProductsService } from './../../services/products.service';
 import { Component, Input, OnInit } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
@@ -15,7 +17,7 @@ export class LayoutHeaderComponent implements OnInit {
   products!: Product[];
   searchInput!: FormControl;
 
-  constructor(private productsServ: ProductsService, private router: Router) { }
+  constructor(private productsServ: ProductsService, private catalogServ: CatalogService, private router: Router) { }
 
   ngOnInit(): void {
     this.searchInput = new FormControl('');
@@ -31,5 +33,23 @@ export class LayoutHeaderComponent implements OnInit {
 
   searchByString(searchStr: string): void {
     this.router.navigate(['search'], { queryParams: { searchStr } });
+  }
+
+  getCategories(): void {
+    this.catalogServ.createCategory('Another category').subscribe((category: any) => {
+      console.log(category);
+      this.catalogServ.getCategoryById(category.name).subscribe((newCategory: Category) => {
+        console.log(newCategory);
+        this.catalogServ.createSubCategory(newCategory, 'some subcategory').subscribe((e) => {
+          console.log(e);
+        });
+        this.catalogServ.createSubCategory(newCategory, 'another subcategory').subscribe((e) => {
+          console.log(e);
+        });
+        this.catalogServ.createSubCategory(newCategory, '3rd subcategory').subscribe((e) => {
+          console.log(e);
+        });
+      });
+    });
   }
 }
