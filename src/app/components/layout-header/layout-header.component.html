@@ -4,7 +4,7 @@
       <img src="../../../assets/img/icons/toggle-menu.png" alt="Lorem ipsum">
     </button>
     <span [routerLink]="['/']" class="header-title">Angular Shop</span>
-    <button class="catalog-btn" (click)="getCategories()">
+    <button class="catalog-btn" (click)="showCategories()">
       Каталог
     </button>
     <div class="search">
@@ -28,14 +28,5 @@
       </button>
     </div>
   </div>
-  <div class="container catalog-modal-container">
-    <div class="catalog-modal">
-      <div class="catalog-categories">
-
-      </div>
-      <div class="catalog-subcategories">
-        
-      </div>
-    </div>
-  </div>
+  <app-catalog-popup [categories]="categories" *ngIf="showCatalog"></app-catalog-popup>
 </header>

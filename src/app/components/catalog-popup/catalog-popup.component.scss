@@ -1,0 +1,55 @@
+.catalog-popup {
+  position: absolute;
+  top: 100%;
+  z-index: 100;
+
+  display: flex;
+  justify-content: space-between;
+
+  border-radius: 5px;
+
+  padding: 20px 0;
+
+  background-color: rgb(255, 255, 255);
+
+  &-container {
+    position: relative;
+  }
+}
+
+.catalog-categories {
+  min-width: 300px;
+}
+
+.catalog-category {
+  position: relative;
+
+  padding: 4px 10px 4px 45px;
+
+  color: #3e77aa;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #fcfcee;
+  }
+
+  & fa-icon {
+    position: absolute;
+    right: 15px;
+
+    font-size: 10px;
+  }
+}
+
+.catalog-subcategories {
+  padding: 5px 10px;
+}
+
+.catalog-subcategory {
+  cursor: pointer;
+}
+
+.active {
+  color: #f84147;
+  text-decoration: underline;
+}

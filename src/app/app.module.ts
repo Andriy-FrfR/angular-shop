@@ -1,6 +1,6 @@
 import { environment } from './../environments/environment';
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AngularFireModule } from '@angular/fire';
@@ -18,14 +18,20 @@ import { MatInputModule } from '@angular/material/input';
 import { SearchComponent } from './components/search/search.component';
 import { SearchProductComponent } from './components/search-product/search-product.component';
 import { FilterByStringPipe } from './shared/pipes/filter-by-string.pipe';
+import { BackdropComponent } from './components/backdrop/backdrop.component';
+import { CatalogPopupComponent } from './components/catalog-popup/catalog-popup.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
+  schemas: [NO_ERRORS_SCHEMA],
   declarations: [
     AppComponent,
     LayoutHeaderComponent,
     SearchComponent,
     SearchProductComponent,
-    FilterByStringPipe
+    FilterByStringPipe,
+    BackdropComponent,
+    CatalogPopupComponent
   ],
   imports: [
     BrowserModule,
@@ -40,7 +46,8 @@ import { FilterByStringPipe } from './shared/pipes/filter-by-string.pipe';
     MatInputModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireDatabaseModule,
-    AngularFireStorageModule
+    AngularFireStorageModule,
+    FontAwesomeModule
   ],
   providers: [],
   bootstrap: [AppComponent]

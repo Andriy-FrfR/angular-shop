@@ -1,0 +1,24 @@
+<div class="container catalog-popup-container">
+  <div class="catalog-popup">
+    <div class="catalog-categories">
+      <div
+        class="catalog-category"
+        [class.active]="category === activeCategory"
+        *ngFor="let category of categories"
+        (mouseenter)="setActiveCategory(category)">
+        {{ category.title }}
+        <fa-icon [icon]="faChevronRight"></fa-icon>
+      </div>
+    </div>
+    <div class="catalog-subcategories" *ngIf="activeCategory">
+      <div 
+        class="catalog-subcategory"
+        [class.active]="subCategory === activeSubCategory"
+        *ngFor="let subCategory of activeCategory.subCategories"
+        (mouseenter)="setActiveSubCategory(subCategory)"
+      >
+        {{ subCategory.title }}
+      </div>
+    </div>
+  </div> 
+</div>

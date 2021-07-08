@@ -1,8 +1,11 @@
-<mat-sidenav-container class="mat-sidenav-container">
+<!-- <mat-sidenav-container class="mat-sidenav-container">
   <mat-sidenav #matSidenav></mat-sidenav>
   <mat-sidenav-content>
     <app-layout-header [sidenav]="matSidenav"></app-layout-header>
-    asdfkasdhjfhjasdhjkf
     <router-outlet></router-outlet>
+    <app-backdrop *ngIf="showBackdrop" (click)="hideBackdrop()"></app-backdrop>
   </mat-sidenav-content>
-</mat-sidenav-container>
+</mat-sidenav-container> -->
+<app-layout-header></app-layout-header>
+<router-outlet></router-outlet>
+<app-backdrop *ngIf="showBackdrop" (click)="hideBackdrop()"></app-backdrop>

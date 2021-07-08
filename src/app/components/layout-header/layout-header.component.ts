@@ -1,3 +1,4 @@
+import { BackdropService } from './../../services/backdrop.service';
 import { Category } from './../../shared/interfaces/category.interface';
 import { CatalogService } from './../../services/catalog.service';
 import { ProductsService } from './../../services/products.service';
@@ -16,14 +17,29 @@ export class LayoutHeaderComponent implements OnInit {
   @Input() sidenav!: MatSidenav;
   products!: Product[];
   searchInput!: FormControl;
+  categories!: Category[];
+  showCatalog = false;
 
-  constructor(private productsServ: ProductsService, private catalogServ: CatalogService, private router: Router) { }
+  constructor(private productsServ: ProductsService,
+              private catalogServ: CatalogService,
+              private router: Router,
+              private backdropServ: BackdropService) { }
 
   ngOnInit(): void {
     this.searchInput = new FormControl('');
 
     this.productsServ.getProducts().subscribe((products: Product[]) => {
       this.products = products;
+    });
+
+    this.catalogServ.getCategories().subscribe((categories: Category[]) => {
+      this.categories = categories;
+    });
+
+    this.backdropServ.backdrop$.subscribe((message: string) => {
+      if (message === 'hide') {
+        this.showCatalog = false;
+      }
     });
   }
 
@@ -35,21 +51,26 @@ export class LayoutHeaderComponent implements OnInit {
     this.router.navigate(['search'], { queryParams: { searchStr } });
   }
 
-  getCategories(): void {
-    this.catalogServ.createCategory('Another category').subscribe((category: any) => {
-      console.log(category);
-      this.catalogServ.getCategoryById(category.name).subscribe((newCategory: Category) => {
-        console.log(newCategory);
-        this.catalogServ.createSubCategory(newCategory, 'some subcategory').subscribe((e) => {
-          console.log(e);
-        });
-        this.catalogServ.createSubCategory(newCategory, 'another subcategory').subscribe((e) => {
-          console.log(e);
-        });
-        this.catalogServ.createSubCategory(newCategory, '3rd subcategory').subscribe((e) => {
-          console.log(e);
-        });
-      });
-    });
+  showCategories(): void {
+    this.backdropServ.showBackdrop();
+    this.showCatalog = true;
   }
+
+  // getCategories(): void {
+  //   this.catalogServ.createCategory('Another category').subscribe((category: any) => {
+  //     console.log(category);
+  //     this.catalogServ.getCategoryById(category.name).subscribe((newCategory: Category) => {
+  //       console.log(newCategory);
+  //       this.catalogServ.createSubCategory(newCategory, 'some subcategory').subscribe((e) => {
+  //         console.log(e);
+  //       });
+  //       this.catalogServ.createSubCategory(newCategory, 'another subcategory').subscribe((e) => {
+  //         console.log(e);
+  //       });
+  //       this.catalogServ.createSubCategory(newCategory, '3rd subcategory').subscribe((e) => {
+  //         console.log(e);
+  //       });
+  //     });
+  //   });
+  // }
 }
