@@ -17,8 +17,6 @@ export class SearchProductComponent implements OnInit {
   ngOnInit(): void {
     this.loadServ.downloadImg(this.product).subscribe((imgUrl: AngularFireStorageReference) => {
       this.imgUrl = imgUrl;
-
-      console.log(imgUrl);
     });
   }
 

@@ -21,6 +21,7 @@ import { FilterByStringPipe } from './shared/pipes/filter-by-string.pipe';
 import { BackdropComponent } from './components/backdrop/backdrop.component';
 import { CatalogPopupComponent } from './components/catalog-popup/catalog-popup.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { FilterByCategoryPipe } from './shared/pipes/filter-by-category.pipe';
 
 @NgModule({
   schemas: [NO_ERRORS_SCHEMA],
@@ -31,7 +32,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     SearchProductComponent,
     FilterByStringPipe,
     BackdropComponent,
-    CatalogPopupComponent
+    CatalogPopupComponent,
+    FilterByCategoryPipe
   ],
   imports: [
     BrowserModule,

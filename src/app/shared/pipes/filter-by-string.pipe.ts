@@ -6,7 +6,7 @@ import { Product } from '../interfaces/product.interface';
 })
 export class FilterByStringPipe implements PipeTransform {
 
-  transform(products: Product[], substr: string, limit?: number): Product[] | undefined {
+  transform(products: Product[], substr: string = '', limit?: number): Product[] | undefined {
     if (!products) {
       return;
     }

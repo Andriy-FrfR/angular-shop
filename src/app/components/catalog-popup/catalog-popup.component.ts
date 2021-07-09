@@ -1,3 +1,4 @@
+import { BackdropService } from './../../services/backdrop.service';
 import { Category } from './../../shared/interfaces/category.interface';
 import { SubCategory } from 'src/app/shared/interfaces/sub-category.interface';
 import { Component, Input, OnInit } from '@angular/core';
@@ -14,7 +15,7 @@ export class CatalogPopupComponent implements OnInit {
   activeSubCategory!: SubCategory;
   faChevronRight = faChevronRight;
 
-  constructor() { }
+  constructor(private backdropServ: BackdropService) { }
 
   ngOnInit(): void {
   }
@@ -25,5 +26,9 @@ export class CatalogPopupComponent implements OnInit {
 
   setActiveSubCategory(subCategory: SubCategory): void {
     this.activeSubCategory = subCategory;
+  }
+
+  hideBackdrop(): void {
+    this.backdropServ.hideBackdrop();
   }
 }

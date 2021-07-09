@@ -1,24 +1,31 @@
 <div class="container catalog-popup-container">
   <div class="catalog-popup">
     <div class="catalog-categories">
-      <div
-        class="catalog-category"
-        [class.active]="category === activeCategory"
+      <a
         *ngFor="let category of categories"
-        (mouseenter)="setActiveCategory(category)">
+        class="catalog-category"
+        [routerLink]="['search']"
+        [queryParams]="{category: category.title}"
+        [class.active]="category === activeCategory"
+        (mouseenter)="setActiveCategory(category)"
+        (click)="hideBackdrop()"
+      >
         {{ category.title }}
         <fa-icon [icon]="faChevronRight"></fa-icon>
-      </div>
+      </a>
     </div>
     <div class="catalog-subcategories" *ngIf="activeCategory">
-      <div 
-        class="catalog-subcategory"
-        [class.active]="subCategory === activeSubCategory"
+      <a 
         *ngFor="let subCategory of activeCategory.subCategories"
+        class="catalog-subcategory"
+        [routerLink]="['search']"
+        [queryParams]="{category: activeCategory.title, subCategory: subCategory.title}"
+        [class.active]="subCategory === activeSubCategory"
         (mouseenter)="setActiveSubCategory(subCategory)"
+        (click)="hideBackdrop()"
       >
         {{ subCategory.title }}
-      </div>
+      </a>
     </div>
   </div> 
 </div>
