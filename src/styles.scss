@@ -9,10 +9,26 @@
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
-.container { 
-  width: 100%;
+.container,
+.mat-tab-labels { 
   max-width: 1500px;
   
   margin: 0 auto;
   padding: 0 15px;
+}
+
+.mat-tab-list {
+  background-color: #f5f5f5;
+}
+
+.mat-tab-label {
+  color: #3e77aa;
+}
+
+.mat-tab-label-active {
+  color: #00a046;
+}
+
+.mat-tab-group.mat-primary .mat-ink-bar  {
+  background-color: #00a046;
 }

@@ -9,11 +9,17 @@ import { AngularFireDatabase } from '@angular/fire/database';
 })
 export class LoadService {
 
-  constructor(private storage: AngularFireStorage, private db: AngularFireDatabase) { }
+  constructor(private storage: AngularFireStorage) { }
 
-  downloadImg(product: Product): Observable<AngularFireStorageReference> {
-    const imageRef = this.storage.ref(`/img/${product.img[0]}`);
+  downloadImg(product: Product): Observable<any>[] {
+    const downloadUrls: Observable<any>[] = [];
 
-    return imageRef.getDownloadURL();
+    for (const image of product.img) {
+      const imageRef = this.storage.ref(`/${product.id}/${image}`);
+
+      downloadUrls.push(imageRef.getDownloadURL());
+    }
+
+    return downloadUrls;
   }
 }

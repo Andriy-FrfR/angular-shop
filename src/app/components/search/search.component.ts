@@ -30,8 +30,8 @@ export class SearchComponent implements OnInit {
       this.searchSubCategory = params.subCategory;
     });
 
-    this.catalogServ.getCategories().subscribe((cateories: Category[]) => {
-      this.categories = cateories;
+    this.catalogServ.getCategories().subscribe((categories: Category[]) => {
+      this.categories = categories;
     });
   }
 

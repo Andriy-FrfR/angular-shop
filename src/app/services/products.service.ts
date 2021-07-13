@@ -30,6 +30,15 @@ export class ProductsService {
       );
   }
 
+  getProductById(id: string): Observable<Product> {
+    return this.http.get<any>(`${environment.dbUrl}/products/${id}.json`)
+      .pipe(
+        map((data: any) => {
+          return {id, ...data};
+        })
+      );
+  }
+
   createProduct(): Observable<Product> {
     return this.http.post<Product>(`${environment.dbUrl}/products.json`, {
       title: 'Title',

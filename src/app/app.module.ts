@@ -15,6 +15,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatButtonModule } from '@angular/material/button';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatInputModule } from '@angular/material/input';
+import { MatTabsModule } from '@angular/material/tabs';
 import { SearchComponent } from './components/search/search.component';
 import { SearchProductComponent } from './components/search-product/search-product.component';
 import { FilterByStringPipe } from './shared/pipes/filter-by-string.pipe';
@@ -22,6 +23,7 @@ import { BackdropComponent } from './components/backdrop/backdrop.component';
 import { CatalogPopupComponent } from './components/catalog-popup/catalog-popup.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FilterByCategoryPipe } from './shared/pipes/filter-by-category.pipe';
+import { ProductComponent } from './components/product/product.component';
 
 @NgModule({
   schemas: [NO_ERRORS_SCHEMA],
@@ -33,7 +35,8 @@ import { FilterByCategoryPipe } from './shared/pipes/filter-by-category.pipe';
     FilterByStringPipe,
     BackdropComponent,
     CatalogPopupComponent,
-    FilterByCategoryPipe
+    FilterByCategoryPipe,
+    ProductComponent
   ],
   imports: [
     BrowserModule,
@@ -46,6 +49,7 @@ import { FilterByCategoryPipe } from './shared/pipes/filter-by-category.pipe';
     MatButtonModule,
     MatAutocompleteModule,
     MatInputModule,
+    MatTabsModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireDatabaseModule,
     AngularFireStorageModule,

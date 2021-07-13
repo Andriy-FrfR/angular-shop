@@ -1,7 +1,7 @@
 import { LoadService } from '../../load/shared/load.service';
 import { Product } from '../../shared/interfaces/product.interface';
 import { Component, Input, OnInit } from '@angular/core';
-import { AngularFireStorageReference } from '@angular/fire/storage';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-search-product',
@@ -10,14 +10,22 @@ import { AngularFireStorageReference } from '@angular/fire/storage';
 })
 export class SearchProductComponent implements OnInit {
   @Input() product!: Product;
-  imgUrl!: AngularFireStorageReference;
+  imgUrls: any[] = [];
 
   constructor(private loadServ: LoadService) { }
 
   ngOnInit(): void {
-    this.loadServ.downloadImg(this.product).subscribe((imgUrl: AngularFireStorageReference) => {
-      this.imgUrl = imgUrl;
-    });
+    this.loadImages();
+  }
+
+  loadImages(): void {
+    const imgUrlsObsArr: Observable<any>[] = this.loadServ.downloadImg(this.product);
+
+    for (const imgUrlObs of imgUrlsObsArr) {
+      imgUrlObs.subscribe((downloadUrl: any) => {
+        this.imgUrls.push(downloadUrl);
+      });
+    }
   }
 
 }

@@ -48,7 +48,7 @@ export class LayoutHeaderComponent implements OnInit {
   }
 
   searchByString(searchStr: string): void {
-    this.router.navigate(['search'], { queryParams: { searchStr } });
+    this.router.navigate(['/search'], { queryParams: { searchStr } });
   }
 
   showCategories(): void {

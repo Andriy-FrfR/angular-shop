@@ -1,8 +1,10 @@
 <div class="products-item">
-  <img src="{{ imgUrl }}" alt="Lorem ipsum">
-  <a routerLink="/" class="products-item-title">
+  <img src="{{ imgUrls[0] }}" [routerLink]="['/search/product/' + product.id]" alt="Lorem ipsum">
+  <br>
+  <a [routerLink]="['/search/product/' + product.id]" class="products-item-title">
     {{ product.title }}
   </a>
+  <br>
   <div class="products-item-price">
     {{ product.price }} ₴
   </div>

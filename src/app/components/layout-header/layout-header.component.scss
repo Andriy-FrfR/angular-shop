@@ -62,7 +62,7 @@
   position: relative;
 
   display: flex;
-  align-items: center ;
+  align-items: center;
   width: 100%;
 
   &-icon {
@@ -98,10 +98,13 @@
   &-button {
     position: relative;
 
+    width: 64px;
     height: 40px;
 
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
+
+    background-color: #00a046;
 
     &-text {
       position: absolute;
