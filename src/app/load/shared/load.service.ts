@@ -1,8 +1,7 @@
-import { Observable } from 'rxjs';
 import { Product } from '../../shared/interfaces/product.interface';
 import { Injectable } from '@angular/core';
-import { AngularFireStorage, AngularFireStorageReference } from '@angular/fire/storage';
-import { AngularFireDatabase } from '@angular/fire/database';
+import { AngularFireStorage } from '@angular/fire/storage';
+import { DownloadUrlAsync } from './interfaces/download-url-async.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -11,13 +10,13 @@ export class LoadService {
 
   constructor(private storage: AngularFireStorage) { }
 
-  downloadImg(product: Product): Observable<any>[] {
-    const downloadUrls: Observable<any>[] = [];
+  downloadImg(product: Product): DownloadUrlAsync[] {
+    const downloadUrls: DownloadUrlAsync[] = [];
 
-    for (const image of product.img) {
-      const imageRef = this.storage.ref(`/${product.id}/${image}`);
+    for (const imageObj of product.img) {
+      const imageRef = this.storage.ref(`/${product.id}/${imageObj.imgName}`);
 
-      downloadUrls.push(imageRef.getDownloadURL());
+      downloadUrls.push({urlObs: imageRef.getDownloadURL(), index: imageObj.index});
     }
 
     return downloadUrls;

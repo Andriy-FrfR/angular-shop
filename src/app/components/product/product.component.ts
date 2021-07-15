@@ -1,9 +1,10 @@
+import { DownloadUrl } from 'src/app/load/shared/interfaces/download-url.interface';
+import { DownloadUrlAsync } from './../../load/shared/interfaces/download-url-async.interface';
 import { LoadService } from './../../load/shared/load.service';
 import { ProductsService } from './../../services/products.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Product } from 'src/app/shared/interfaces/product.interface';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-product',
@@ -12,8 +13,8 @@ import { Observable } from 'rxjs';
 })
 export class ProductComponent implements OnInit {
   product!: Product;
-  imgUrls: any[] = [];
-  activeImgUrl: any;
+  imgUrls: DownloadUrl[] = [];
+  activeImgUrl = '';
 
   constructor(private productsServ: ProductsService, private route: ActivatedRoute, private loadServ: LoadService) { }
 
@@ -28,13 +29,13 @@ export class ProductComponent implements OnInit {
   }
 
   loadImages(): void {
-    const imgUrlsObsArr: Observable<any>[] = this.loadServ.downloadImg(this.product);
+    const imgUrlsArr: DownloadUrlAsync[] = this.loadServ.downloadImg(this.product);
 
-    for (const imgUrlObs of imgUrlsObsArr) {
-      imgUrlObs.subscribe((downloadUrl: any) => {
-        this.imgUrls.push(downloadUrl);
+    for (const imgUrl of imgUrlsArr) {
+      imgUrl.urlObs.subscribe((downloadUrl: any) => {
+        this.imgUrls.push({url: downloadUrl, index: imgUrl.index});
 
-        if (!this.imgUrls[1]) {
+        if (imgUrl.index === 0) {
           this.activeImgUrl = downloadUrl;
         }
       });

@@ -10,15 +10,21 @@
         <ul class="product-images-sidebar">
           <li
             class="product-images-sidebar-item"
-            *ngFor="let imgUrl of imgUrls"
-            [class.active]="imgUrl === activeImgUrl"
-            (mouseenter)="setActiveImg(imgUrl)"
+            *ngFor="let imgUrl of imgUrls | sortImgByIndex"
+            [class.active]="imgUrl.url === activeImgUrl"
+            (mouseenter)="setActiveImg(imgUrl.url)"
           >
-            <img src="{{ imgUrl }}" alt="Lorem ipsum">
+            <img src="{{ imgUrl.url }}" alt="Lorem ipsum">
           </li>
         </ul>
-        <div class="product-images-big-img">
-          <img src="{{ activeImgUrl }}" alt="Lorem ipsum">
+        <div
+          class="product-images-big-img-wrapper"
+          [class.active]="imgUrl.url === activeImgUrl"
+          *ngFor="let imgUrl of imgUrls"
+        >
+          <div class="product-images-big-img" *ngIf="imgUrl.url === activeImgUrl">
+            <img src="{{ imgUrl.url }}" alt="Lorem ipsum">
+          </div>
         </div>
       </div>
     </div>
