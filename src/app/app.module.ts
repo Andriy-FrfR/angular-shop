@@ -24,7 +24,6 @@ import { CatalogPopupComponent } from './components/catalog-popup/catalog-popup.
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FilterByCategoryPipe } from './shared/pipes/filter-by-category.pipe';
 import { ProductComponent } from './components/product/product.component';
-import { SortImgByIndexPipe } from './load/shared/pipes/sort-img-by-index.pipe';
 
 @NgModule({
   schemas: [NO_ERRORS_SCHEMA],
@@ -38,7 +37,6 @@ import { SortImgByIndexPipe } from './load/shared/pipes/sort-img-by-index.pipe';
     CatalogPopupComponent,
     FilterByCategoryPipe,
     ProductComponent,
-    SortImgByIndexPipe
   ],
   imports: [
     BrowserModule,

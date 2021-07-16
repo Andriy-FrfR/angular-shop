@@ -5,6 +5,7 @@ import { ProductsService } from './../../services/products.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Product } from 'src/app/shared/interfaces/product.interface';
+import { faCheckCircle, faMinusCircle, faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-product',
@@ -15,8 +16,13 @@ export class ProductComponent implements OnInit {
   product!: Product;
   imgUrls: DownloadUrl[] = [];
   activeImgUrl = '';
+  faCheckCircle = faCheckCircle;
+  faMinusCircle = faMinusCircle;
+  faShoppingCart = faShoppingCart;
 
-  constructor(private productsServ: ProductsService, private route: ActivatedRoute, private loadServ: LoadService) { }
+  constructor(private productsServ: ProductsService,
+              private route: ActivatedRoute,
+              private loadServ: LoadService) { }
 
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => {
@@ -35,6 +41,8 @@ export class ProductComponent implements OnInit {
       imgUrl.urlObs.subscribe((downloadUrl: any) => {
         this.imgUrls.push({url: downloadUrl, index: imgUrl.index});
 
+        this.sortImgByIndex();
+
         if (imgUrl.index === 0) {
           this.activeImgUrl = downloadUrl;
         }
@@ -44,5 +52,11 @@ export class ProductComponent implements OnInit {
 
   setActiveImg(imgUrl: any): void {
     this.activeImgUrl = imgUrl;
+  }
+
+  sortImgByIndex(): void {
+    this.imgUrls.sort((a, b) => {
+      return a.index - b.index;
+    });
   }
 }

@@ -32,3 +32,17 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .mat-tab-group.mat-primary .mat-ink-bar  {
   background-color: #00a046;
 }
+
+.large-btn {
+  height: 50px;
+
+  padding: 0 17px;
+
+  border-radius: 4px;
+
+  background-color: #00a046;
+  font-size: 18px;
+  line-height: 50px;
+  color: #fff;
+  cursor: pointer;
+}
