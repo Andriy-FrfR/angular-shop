@@ -8,5 +8,6 @@ export interface Product {
   subCategory?: string;
   amount: number;
   img: ProductImgObj[];
+  seller: string;
   date?: Date;
 }
