@@ -1,4 +1,4 @@
-import { BackdropService } from './../../services/backdrop.service';
+import { BackdropService } from '../../shared/services/backdrop.service';
 import { Category } from './../../shared/interfaces/category.interface';
 import { SubCategory } from 'src/app/shared/interfaces/sub-category.interface';
 import { Component, Input, OnInit } from '@angular/core';

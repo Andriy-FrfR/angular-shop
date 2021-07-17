@@ -47,9 +47,27 @@
         <div class="product-seller">
           Seller: <b>{{ product.seller }}</b>
         </div>
+        <div class="product-payment" *ngIf="product.payment">
+          <div class="product-payment-title">
+            Payment
+          </div>
+          <div class="product-payment-body">
+            {{ product.payment }}
+          </div>
+        </div>
+        <div class="product-guarantees" *ngIf="product.guarantees">
+          <div class="product-guarantees-title">
+            Guarantees
+          </div>
+          <div class="product-guarantees-body">
+            {{ product.guarantees }}
+          </div>
+        </div>
       </div>
     </div>
   </mat-tab>
-  <mat-tab label="Characteristics"> Content 2 </mat-tab>
+  <mat-tab label="Characteristics">
+    <app-characteristics [product]="product"></app-characteristics>
+  </mat-tab>
   <mat-tab label="Reviews"> Content 3 </mat-tab>
 </mat-tab-group>

@@ -1,4 +1,4 @@
-import { BackdropService } from './services/backdrop.service';
+import { BackdropService } from './shared/services/backdrop.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({

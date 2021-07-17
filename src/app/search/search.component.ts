@@ -1,7 +1,7 @@
-import { CatalogService } from './../../services/catalog.service';
-import { Category } from './../../shared/interfaces/category.interface';
-import { Product } from './../../shared/interfaces/product.interface';
-import { ProductsService } from './../../services/products.service';
+import { CatalogService } from '../shared/services/catalog.service';
+import { Category } from '../shared/interfaces/category.interface';
+import { Product } from '../shared/interfaces/product.interface';
+import { ProductsService } from '../shared/services/products.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
@@ -22,6 +22,7 @@ export class SearchComponent implements OnInit {
   ngOnInit(): void {
     this.productsServ.getProducts().subscribe((products: Product[]) => {
       this.products = products;
+      console.log(this.products);
     });
 
     this.route.queryParams.subscribe((params: Params) => {

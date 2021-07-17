@@ -1,10 +1,10 @@
 import { map } from 'rxjs/operators';
-import { Category } from './../shared/interfaces/category.interface';
+import { Category } from '../interfaces/category.interface';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { SubCategory } from '../shared/interfaces/sub-category.interface';
+import { SubCategory } from '../interfaces/sub-category.interface';
 
 @Injectable({
   providedIn: 'root'

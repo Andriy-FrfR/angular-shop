@@ -1,7 +1,7 @@
-import { BackdropService } from './../../services/backdrop.service';
+import { BackdropService } from '../../shared/services/backdrop.service';
 import { Category } from './../../shared/interfaces/category.interface';
-import { CatalogService } from './../../services/catalog.service';
-import { ProductsService } from './../../services/products.service';
+import { CatalogService } from '../../shared/services/catalog.service';
+import { ProductsService } from '../../shared/services/products.service';
 import { Component, Input, OnInit } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { Product } from 'src/app/shared/interfaces/product.interface';

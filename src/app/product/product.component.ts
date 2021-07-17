@@ -1,7 +1,7 @@
 import { DownloadUrl } from 'src/app/load/shared/interfaces/download-url.interface';
-import { DownloadUrlAsync } from './../../load/shared/interfaces/download-url-async.interface';
-import { LoadService } from './../../load/shared/load.service';
-import { ProductsService } from './../../services/products.service';
+import { DownloadUrlAsync } from '../load/shared/interfaces/download-url-async.interface';
+import { LoadService } from '../load/shared/load.service';
+import { ProductsService } from '../shared/services/products.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Product } from 'src/app/shared/interfaces/product.interface';
@@ -25,6 +25,7 @@ export class ProductComponent implements OnInit {
               private loadServ: LoadService) { }
 
   ngOnInit(): void {
+    console.log('asdas');
     this.route.params.subscribe((params: Params) => {
       this.productsServ.getProductById(params.id).subscribe((product: Product) => {
         this.product = product;

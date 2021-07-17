@@ -1,6 +1,6 @@
-import { DownloadUrlAsync } from './../../load/shared/interfaces/download-url-async.interface';
-import { LoadService } from '../../load/shared/load.service';
-import { Product } from '../../shared/interfaces/product.interface';
+import { DownloadUrlAsync } from '../../../load/shared/interfaces/download-url-async.interface';
+import { LoadService } from '../../../load/shared/load.service';
+import { Product } from '../../../shared/interfaces/product.interface';
 import { Component, Input, OnInit } from '@angular/core';
 import { DownloadUrl } from 'src/app/load/shared/interfaces/download-url.interface';
 

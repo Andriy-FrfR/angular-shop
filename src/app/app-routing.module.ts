@@ -1,11 +1,10 @@
-import { ProductComponent } from './components/product/product.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { SearchComponent } from './components/search/search.component';
+import { SearchComponent } from './search/search.component';
 
 const routes: Routes = [
-  {path: 'search/product/:id', component: ProductComponent},
-  {path: 'search', component: SearchComponent}
+  {path: 'search/product/:id', loadChildren: () => import ('./product/product.module').then(m => m.ProductModule)},
+  {path: 'search', loadChildren: () => import ('./search/search.module').then(m => m.SearchModule)}
 ];
 
 @NgModule({

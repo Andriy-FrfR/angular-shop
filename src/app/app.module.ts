@@ -6,6 +6,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { AngularFireStorageModule } from '@angular/fire/storage';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -15,28 +16,17 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatButtonModule } from '@angular/material/button';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatInputModule } from '@angular/material/input';
-import { MatTabsModule } from '@angular/material/tabs';
-import { SearchComponent } from './components/search/search.component';
-import { SearchProductComponent } from './components/search-product/search-product.component';
-import { FilterByStringPipe } from './shared/pipes/filter-by-string.pipe';
 import { BackdropComponent } from './components/backdrop/backdrop.component';
 import { CatalogPopupComponent } from './components/catalog-popup/catalog-popup.component';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { FilterByCategoryPipe } from './shared/pipes/filter-by-category.pipe';
-import { ProductComponent } from './components/product/product.component';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   schemas: [NO_ERRORS_SCHEMA],
   declarations: [
     AppComponent,
     LayoutHeaderComponent,
-    SearchComponent,
-    SearchProductComponent,
-    FilterByStringPipe,
     BackdropComponent,
     CatalogPopupComponent,
-    FilterByCategoryPipe,
-    ProductComponent,
   ],
   imports: [
     BrowserModule,
@@ -49,11 +39,11 @@ import { ProductComponent } from './components/product/product.component';
     MatButtonModule,
     MatAutocompleteModule,
     MatInputModule,
-    MatTabsModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireDatabaseModule,
     AngularFireStorageModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    SharedModule
   ],
   providers: [],
   bootstrap: [AppComponent]
