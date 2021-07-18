@@ -25,7 +25,6 @@ export class ProductComponent implements OnInit {
               private loadServ: LoadService) { }
 
   ngOnInit(): void {
-    console.log('asdas');
     this.route.params.subscribe((params: Params) => {
       this.productsServ.getProductById(params.id).subscribe((product: Product) => {
         this.product = product;

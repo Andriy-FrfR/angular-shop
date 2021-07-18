@@ -1,4 +1,5 @@
 import { ProductImgObj } from '../../load/shared/interfaces/product-img-obj.interface';
+import { Characteristic } from './characteristic.interface';
 
 export interface Product {
   id?: string;
@@ -10,6 +11,7 @@ export interface Product {
   img: ProductImgObj[];
   payment?: string;
   guarantees?: string;
+  characteristics?: Characteristic[];
   seller: string;
   date?: Date;
 }

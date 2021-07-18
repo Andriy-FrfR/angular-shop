@@ -1,0 +1,29 @@
+<div class="product">
+  <div class="product-header">
+    <div class="product-header-img">
+      <img src="{{ imgUrl.url }}" alt="Lorem ipsum">
+    </div>
+    <div class="product-header-title">
+      {{ product.title }}
+    </div>
+  </div>
+  <div class="product-available-status">
+    <div class="product-is-available" *ngIf="product.amount ">
+      <fa-icon [icon]="faCheckCircle"></fa-icon> Available
+    </div>
+    <div class="product-is-not-available" *ngIf="!product.amount">
+      <fa-icon [icon]="faMinusCircle"></fa-icon> Not available
+    </div>
+  </div>
+  <div class="product-buy-btn-wrapper">
+    <span class="product-price">
+      {{ product.price }} <span class="hrivna-symbol">₴</span>
+    </span>
+    <button class="large-btn product-buy-btn">
+      <fa-icon [icon]="faShoppingCart"></fa-icon> Buy
+    </button>
+  </div>
+  <div class="product-seller">
+    Seller: <b>{{ product.seller }}</b>
+  </div>
+</div>

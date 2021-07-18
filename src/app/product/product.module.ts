@@ -5,11 +5,13 @@ import { ProductComponent } from './product.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatTabsModule } from '@angular/material/tabs';
+import { ProductSideBuyBarComponent } from './components/product-side-buy-bar/product-side-buy-bar.component';
 
 @NgModule({
   declarations: [
     ProductComponent,
-    CharacteristicsComponent
+    CharacteristicsComponent,
+    ProductSideBuyBarComponent
   ],
   imports: [
     CommonModule,

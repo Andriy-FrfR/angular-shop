@@ -1,0 +1,60 @@
+.container {
+  display: flex;
+
+  margin-top: 35px;
+}
+
+.characteristics {
+  width: 100%;
+  
+  padding: 0 50px 0 0;
+
+  &-title {
+    font-size: 28px;
+
+    & span {
+      margin: 0 0 0 10px;
+
+      color: #d2d2d2;
+    }
+  }
+
+  &-list {
+    &-item {
+      display: flex;
+
+      margin-top: 15px;
+
+      font-size: 15px;
+
+      &-name {
+        display: flex;
+        align-items: flex-start;
+
+        width: 40%;
+
+        &-wrapper {
+          padding: 0 15px 0 0;
+
+          white-space: nowrap;
+        }
+
+        & .span-with-border {
+          transform: translate(0, -6px);
+
+          width: 100%;
+
+          border-bottom: 1px dotted #d2d2d2;
+
+          color: transparent;
+        }
+      }
+
+      &-value {
+        width: 60%;
+
+        padding: 0 0 0 15px;
+      }
+    }
+  }
+}
