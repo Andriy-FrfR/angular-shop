@@ -7,6 +7,7 @@ import { MatSidenav } from '@angular/material/sidenav';
 import { Product } from 'src/app/shared/interfaces/product.interface';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
+import { faUser } from '@fortawesome/free-regular-svg-icons';
 
 @Component({
   selector: 'app-layout-header',
@@ -15,10 +16,13 @@ import { Router } from '@angular/router';
 })
 export class LayoutHeaderComponent implements OnInit {
   @Input() sidenav!: MatSidenav;
+
   products!: Product[];
   searchInput!: FormControl;
   categories!: Category[];
   showCatalog = false;
+  showAuth = false;
+  faUser = faUser;
 
   constructor(private productsServ: ProductsService,
               private catalogServ: CatalogService,
@@ -39,6 +43,7 @@ export class LayoutHeaderComponent implements OnInit {
     this.backdropServ.backdrop$.subscribe((message: string) => {
       if (message === 'hide') {
         this.showCatalog = false;
+        this.showAuth = false;
       }
     });
   }
@@ -51,9 +56,14 @@ export class LayoutHeaderComponent implements OnInit {
     this.router.navigate(['/search'], { queryParams: { searchStr } });
   }
 
-  showCategories(): void {
+  showCategoriesPopup(): void {
     this.backdropServ.showBackdrop();
     this.showCatalog = true;
+  }
+
+  showAuthPopup(): void {
+    this.backdropServ.showBackdrop();
+    this.showAuth = true;
   }
 
   // getCategories(): void {

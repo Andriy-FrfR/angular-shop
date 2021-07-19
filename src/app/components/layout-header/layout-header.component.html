@@ -4,7 +4,7 @@
       <img src="../../../assets/img/icons/toggle-menu.png" alt="Lorem ipsum">
     </button>
     <span [routerLink]="['/']" class="header-title">Angular Shop</span>
-    <button class="catalog-btn" (click)="showCategories()">
+    <button class="catalog-btn" (click)="showCategoriesPopup()">
       Каталог
     </button>
     <div class="search">
@@ -27,6 +27,10 @@
         <span class="search-button-text">Search</span>
       </button>
     </div>
+    <button class="user-btn" (click)="showAuthPopup()">
+      <fa-icon [icon]="faUser"></fa-icon>
+    </button>
   </div>
   <app-catalog-popup [categories]="categories" *ngIf="showCatalog"></app-catalog-popup>
+  <app-auth-popup *ngIf="showAuth"></app-auth-popup>
 </header>

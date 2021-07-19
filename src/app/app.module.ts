@@ -6,6 +6,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { AngularFireStorageModule } from '@angular/fire/storage';
+import { AngularFireAuthModule } from '@angular/fire/auth';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -19,6 +20,7 @@ import { MatInputModule } from '@angular/material/input';
 import { BackdropComponent } from './components/backdrop/backdrop.component';
 import { CatalogPopupComponent } from './components/catalog-popup/catalog-popup.component';
 import { SharedModule } from './shared/shared.module';
+import { AuthPopupComponent } from './components/auth-popup/auth-popup.component';
 
 @NgModule({
   schemas: [NO_ERRORS_SCHEMA],
@@ -27,6 +29,7 @@ import { SharedModule } from './shared/shared.module';
     LayoutHeaderComponent,
     BackdropComponent,
     CatalogPopupComponent,
+    AuthPopupComponent,
   ],
   imports: [
     BrowserModule,
@@ -42,6 +45,7 @@ import { SharedModule } from './shared/shared.module';
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireDatabaseModule,
     AngularFireStorageModule,
+    AngularFireAuthModule,
     FontAwesomeModule,
     SharedModule
   ],
