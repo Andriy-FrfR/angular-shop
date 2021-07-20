@@ -57,7 +57,20 @@
 
   &-wrapper {
     margin: 15px 0 0 0;
+
+    &.error {
+      .form-control {
+        border-color: #f84147;
+      }
+    }
   }
+}
+
+.validation-item {
+  margin-top: 4px;
+
+  color: #f84147;
+  font-size: 12px;
 }
 
 .large-btn {
@@ -67,4 +80,22 @@
 
   text-align: center;
   outline: none;
+}
+
+.auth-switch-link {
+  text-decoration: none;
+  font-size: 16px;
+  color: #3e77aa;
+  cursor: pointer;
+
+  &:hover {
+    color: #ff7878;
+    text-decoration: underline;
+  }
+
+  &-wrapper {
+    margin: 15px 0 0 0;
+
+    text-align: center;
+  }
 }

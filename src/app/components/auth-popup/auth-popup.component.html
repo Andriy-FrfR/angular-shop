@@ -1,18 +1,96 @@
 <div class="auth-popup">
-  <form class="form-group">
+  <form class="form-group" [formGroup]="logInForm" (ngSubmit)="logIn()" *ngIf="showLogIn">
     <h3 class="form-group-title">
       Log in
     </h3>
     <div class="form-controls-wrapper">
-      <div class="form-control-wrapper">
-        <label class="form-label">Email</label>
-        <input type="text" class="form-control">
+      <div
+        class="form-control-wrapper"
+        [class.error]="logInForm.get('email')?.touched && logInForm.get('email')?.invalid"
+      >
+        <label class="form-label" for="logInEmail">Email</label>
+        <input id="logInEmail" type="email" class="form-control" formControlName="email">
+        <div
+          class="validation"
+          *ngIf="logInForm.get('email')?.touched && logInForm.get('email')?.invalid"
+        >
+          <p class="validation-item" *ngIf="logInForm.get('email')?.errors?.required">
+            Email is required
+          </p>
+          <p class="validation-item" *ngIf="logInForm.get('email')?.errors?.email">
+            The email address was entered incorrectly
+          </p>
+        </div>
       </div>
-      <div class="form-control-wrapper">
-        <label class="form-label">Password</label>
-        <input type="text" class="form-control">
+      <div
+        class="form-control-wrapper"
+        [class.error]="logInForm.get('password')?.touched && logInForm.get('password')?.invalid"
+      >
+        <label class="form-label" for="logInPassword">Password</label>
+        <input id="logInPassword" type="password" class="form-control" formControlName="password">
+        <div
+          class="validation"
+          *ngIf="logInForm.get('password')?.touched && logInForm.get('password')?.invalid"
+        > 
+          <p class="validation-item" *ngIf="logInForm.get('password')?.errors?.required">
+            Password is required
+          </p>
+          <p class="validation-item" *ngIf="logInForm.get('password')?.errors?.minlength">
+            Password should contain at least {{ logInForm.get('password')?.errors?.minlength.requiredLength }} symbols
+          </p>
+        </div>
       </div>
       <input type="submit" class="large-btn" value="Log in">
+      <div class="auth-switch-link-wrapper">
+        <a class="auth-switch-link" (click)="switchForm()">Sign up</a>
+      </div>
+    </div>
+  </form>
+  <form class="form-group" [formGroup]="signUpForm" (ngSubmit)="signUp()" *ngIf="!showLogIn">
+    <h3 class="form-group-title">
+      Sign up
+    </h3>
+    <div class="form-controls-wrapper">
+      <div
+        class="form-control-wrapper"
+        [class.error]="signUpForm.get('email')?.touched && signUpForm.get('email')?.invalid"
+      >
+        <label class="form-label" for="signUpEmail">Email</label>
+        <input id="signUpEmail" type="email" class="form-control" formControlName="email">
+        <div
+          class="validation"
+          *ngIf="signUpForm.get('email')?.touched && signUpForm.get('email')?.invalid"
+        >
+          <p class="validation-item" *ngIf="signUpForm.get('email')?.errors?.required">
+            Email is required
+          </p>
+          <p class="validation-item" *ngIf="signUpForm.get('email')?.errors?.email">
+            The email address was entered incorrectly
+          </p>
+        </div>
+      </div>
+      <div
+        class="form-control-wrapper"
+        [class.error]="signUpForm.get('password')?.touched && signUpForm.get('password')?.invalid"
+      >
+        <label class="form-label" for="signUpPassword">Password</label>
+        <input id="signUpPassword" type="password" class="form-control" formControlName="password">
+        <div
+          class="validation"
+          *ngIf="signUpForm.get('password')?.touched && signUpForm.get('password')?.invalid"
+        >
+          <p class="validation-item" *ngIf="signUpForm.get('password')?.errors?.required">
+            Password is required
+          </p>
+          <p class="validation-item" *ngIf="signUpForm.get('password')?.errors?.minlength">
+            Password should contain at least {{ signUpForm.get('password')?.errors?.minlength.requiredLength }} symbols
+          </p>
+        </div>
+      </div>
+      <input type="submit" class="large-btn" value="Sign up">
+      <div class="auth-switch-link-wrapper">
+        <a class="auth-switch-link" (click)="switchForm()">Log in</a>
+      </div>
     </div>
   </form>
 </div>

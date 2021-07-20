@@ -1,6 +1,6 @@
 <div class="products-item">
   <div class="products-item-img">
-    <img src="{{ imgUrl.url }}" [routerLink]="['/search/product/' + product.id]" alt="Lorem ipsum">
+    <img src="{{ imgUrl?.url }}" [routerLink]="['/search/product/' + product.id]" alt="Lorem ipsum">
   </div>
   <br>
   <a [routerLink]="['/search/product/' + product.id]" class="products-item-title">
