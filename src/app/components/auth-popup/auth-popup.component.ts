@@ -25,7 +25,7 @@ export class AuthPopupComponent implements OnInit {
       ]),
       password: new FormControl('', [
         Validators.required,
-        Validators.minLength(5)
+        Validators.minLength(6)
       ])
     });
 
@@ -36,7 +36,7 @@ export class AuthPopupComponent implements OnInit {
       ]),
       password: new FormControl('', [
         Validators.required,
-        Validators.minLength(5)
+        Validators.minLength(6)
       ])
     });
   }
@@ -50,7 +50,12 @@ export class AuthPopupComponent implements OnInit {
       return;
     }
 
-    this.authServ.logIn();
+    this.authServ.logIn({
+      email: this.logInForm.get('email')?.value,
+      password: this.logInForm.get('password')?.value
+    }).subscribe((data: any) => {
+      console.log(data);
+    });
 
     this.backdropServ.hideBackdrop();
   }
@@ -60,7 +65,12 @@ export class AuthPopupComponent implements OnInit {
       return;
     }
 
-    this.authServ.signUp(this.signUpForm.get('email')?.value, this.signUpForm.get('password')?.value);
+    this.authServ.signUp({
+      email: this.signUpForm.get('email')?.value,
+      password: this.signUpForm.get('password')?.value
+    }).subscribe((data: any) => {
+      console.log(data);
+    });
 
     this.backdropServ.hideBackdrop();
   }

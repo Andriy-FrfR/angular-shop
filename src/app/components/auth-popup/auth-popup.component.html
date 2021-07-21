@@ -9,7 +9,7 @@
         [class.error]="logInForm.get('email')?.touched && logInForm.get('email')?.invalid"
       >
         <label class="form-label" for="logInEmail">Email</label>
-        <input id="logInEmail" type="email" class="form-control" formControlName="email">
+        <input id="logInEmail" type="email" autocomplete="username" class="form-control" formControlName="email">
         <div
           class="validation"
           *ngIf="logInForm.get('email')?.touched && logInForm.get('email')?.invalid"
@@ -27,7 +27,7 @@
         [class.error]="logInForm.get('password')?.touched && logInForm.get('password')?.invalid"
       >
         <label class="form-label" for="logInPassword">Password</label>
-        <input id="logInPassword" type="password" class="form-control" formControlName="password">
+        <input id="logInPassword" type="password" autocomplete="current-password" class="form-control" formControlName="password">
         <div
           class="validation"
           *ngIf="logInForm.get('password')?.touched && logInForm.get('password')?.invalid"
@@ -56,7 +56,7 @@
         [class.error]="signUpForm.get('email')?.touched && signUpForm.get('email')?.invalid"
       >
         <label class="form-label" for="signUpEmail">Email</label>
-        <input id="signUpEmail" type="email" class="form-control" formControlName="email">
+        <input id="signUpEmail" type="email" autocomplete="username" class="form-control" formControlName="email">
         <div
           class="validation"
           *ngIf="signUpForm.get('email')?.touched && signUpForm.get('email')?.invalid"
@@ -74,7 +74,7 @@
         [class.error]="signUpForm.get('password')?.touched && signUpForm.get('password')?.invalid"
       >
         <label class="form-label" for="signUpPassword">Password</label>
-        <input id="signUpPassword" type="password" class="form-control" formControlName="password">
+        <input id="signUpPassword" type="password" autocomplete="new-password" class="form-control" formControlName="password">
         <div
           class="validation"
           *ngIf="signUpForm.get('password')?.touched && signUpForm.get('password')?.invalid"
