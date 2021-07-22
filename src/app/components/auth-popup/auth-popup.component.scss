@@ -73,6 +73,16 @@
   font-size: 12px;
 }
 
+.login-error {
+  border: 1px solid #f84147;
+  border-radius: 4px;
+
+  padding: 12px;
+  margin: 15px 0 0 0;
+
+  background-color: rgba(248, 65, 71, 0.1);
+}
+
 .large-btn {
   width: 100%;
 
