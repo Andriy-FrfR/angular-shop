@@ -67,6 +67,9 @@
           <p class="validation-item" *ngIf="signUpForm.get('email')?.errors?.email">
             The email address was entered incorrectly
           </p>
+          <p class="validation-item" *ngIf="signUpForm.get('email')?.errors?.uniqueEmail">
+            The email address is already used
+          </p>
         </div>
       </div>
       <div

@@ -3,7 +3,7 @@ import { environment } from '../../../environments/environment.prod';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { first, map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -26,7 +26,8 @@ export class ProductsService {
           }
 
           return mappedProducts;
-        })
+        }),
+        first()
       );
   }
 
@@ -35,7 +36,8 @@ export class ProductsService {
       .pipe(
         map((data: any) => {
           return {id, ...data};
-        })
+        }),
+        first()
       );
   }
 
@@ -46,6 +48,6 @@ export class ProductsService {
       price: 123,
       img: ['not4.jpg'],
       date: Date.now()
-    });
+    }).pipe(first());
   }
 }

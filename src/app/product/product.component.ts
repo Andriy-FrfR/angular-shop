@@ -2,17 +2,18 @@ import { DownloadUrl } from 'src/app/load/shared/interfaces/download-url.interfa
 import { DownloadUrlAsync } from '../load/shared/interfaces/download-url-async.interface';
 import { LoadService } from '../load/shared/load.service';
 import { ProductsService } from '../shared/services/products.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Product } from 'src/app/shared/interfaces/product.interface';
 import { faCheckCircle, faMinusCircle, faShoppingCart } from '@fortawesome/free-solid-svg-icons';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-product',
   templateUrl: './product.component.html',
   styleUrls: ['./product.component.scss']
 })
-export class ProductComponent implements OnInit {
+export class ProductComponent implements OnInit, OnDestroy {
   product!: Product;
   imgUrls: DownloadUrl[] = [];
   activeImgUrl = '';
@@ -23,30 +24,41 @@ export class ProductComponent implements OnInit {
   constructor(private productsServ: ProductsService,
               private route: ActivatedRoute,
               private loadServ: LoadService) { }
+  subscriptions: Subscription[] = [];
 
   ngOnInit(): void {
-    this.route.params.subscribe((params: Params) => {
-      this.productsServ.getProductById(params.id).subscribe((product: Product) => {
-        this.product = product;
+    this.subscriptions.push(
+      this.route.params.subscribe((params: Params) => {
+        this.productsServ.getProductById(params.id).subscribe((product: Product) => {
+          this.product = product;
 
-        this.loadImages();
-      });
-    });
+          this.loadImages();
+        });
+      })
+    );
+  }
+
+  ngOnDestroy(): void {
+    for (const subscription of this.subscriptions) {
+      subscription.unsubscribe();
+    }
   }
 
   loadImages(): void {
     const imgUrlsArr: DownloadUrlAsync[] = this.loadServ.downloadImg(this.product);
 
     for (const imgUrl of imgUrlsArr) {
-      imgUrl.urlObs.subscribe((downloadUrl: any) => {
-        this.imgUrls.push({url: downloadUrl, index: imgUrl.index});
+      this.subscriptions.push(
+        imgUrl.urlObs.subscribe((downloadUrl: any) => {
+          this.imgUrls.push({url: downloadUrl, index: imgUrl.index});
 
-        this.sortImgByIndex();
+          this.sortImgByIndex();
 
-        if (imgUrl.index === 0) {
-          this.activeImgUrl = downloadUrl;
-        }
-      });
+          if (imgUrl.index === 0) {
+            this.activeImgUrl = downloadUrl;
+          }
+        })
+      );
     }
   }
 

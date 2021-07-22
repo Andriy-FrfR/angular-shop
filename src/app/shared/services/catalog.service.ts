@@ -1,4 +1,4 @@
-import { map } from 'rxjs/operators';
+import { first, map } from 'rxjs/operators';
 import { Category } from '../interfaces/category.interface';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
@@ -17,7 +17,7 @@ export class CatalogService {
     return this.http.post<Category>(`${environment.dbUrl}/categories.json`, {
       title,
       subCategories: ['']
-    });
+    }).pipe(first());
   }
 
   getCategories(): Observable<Category[]> {
@@ -31,15 +31,19 @@ export class CatalogService {
           }
 
           return mappedCategories;
-        })
+        }),
+        first()
       );
   }
 
   getCategoryById(id: string): Observable<Category> {
     return this.http.get<Category>(`${environment.dbUrl}/categories/${id}.json`)
-      .pipe(map((category: Category) => {
-        return {id, ...category};
-      }));
+      .pipe(
+        map((category: Category) => {
+          return {id, ...category};
+        }),
+        first()
+      );
   }
 
   createSubCategory(category: Category, title: string): Observable<SubCategory> {
@@ -47,6 +51,6 @@ export class CatalogService {
 
     return this.http.patch<SubCategory>(`${environment.dbUrl}/categories/${category.id}.json`, {
       subCategories: category.subCategories
-    });
+    }).pipe(first());
   }
 }

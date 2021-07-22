@@ -1,10 +1,10 @@
 <div class="container">
   <div class="characteristics">
     <h2 class="characteristics-title">
-      Characteristics <span>{{ product.title }}</span>
+      Characteristics <span>{{ product?.title }}</span>
     </h2>
     <div class="characteristics-list">
-      <div class="characteristics-list-item" *ngFor="let characteristic of product.characteristics">
+      <div class="characteristics-list-item" *ngFor="let characteristic of product?.characteristics">
         <div class="characteristics-list-item-name">
           <span class="characteristics-list-item-name-wrapper">{{ characteristic.name }}</span>
           <span class="span-with-border">t</span>
@@ -13,5 +13,5 @@
       </div>
     </div>
   </div>
-  <app-product-side-buy-bar [product]="product"></app-product-side-buy-bar>
+  <app-product-side-buy-bar [product]="product" *ngIf="product"></app-product-side-buy-bar>
 </div>

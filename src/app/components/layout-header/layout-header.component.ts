@@ -2,19 +2,20 @@ import { BackdropService } from '../../shared/services/backdrop.service';
 import { Category } from './../../shared/interfaces/category.interface';
 import { CatalogService } from '../../shared/services/catalog.service';
 import { ProductsService } from '../../shared/services/products.service';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { Product } from 'src/app/shared/interfaces/product.interface';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { faUser } from '@fortawesome/free-regular-svg-icons';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-layout-header',
   templateUrl: './layout-header.component.html',
   styleUrls: ['./layout-header.component.scss']
 })
-export class LayoutHeaderComponent implements OnInit {
+export class LayoutHeaderComponent implements OnInit, OnDestroy {
   @Input() sidenav!: MatSidenav;
 
   products!: Product[];
@@ -28,24 +29,37 @@ export class LayoutHeaderComponent implements OnInit {
               private catalogServ: CatalogService,
               private router: Router,
               private backdropServ: BackdropService) { }
+  subscriptions: Subscription[] = [];
 
   ngOnInit(): void {
     this.searchInput = new FormControl('');
 
-    this.productsServ.getProducts().subscribe((products: Product[]) => {
-      this.products = products;
-    });
+    this.subscriptions.push(
+      this.productsServ.getProducts().subscribe((products: Product[]) => {
+        this.products = products;
+      })
+    );
 
-    this.catalogServ.getCategories().subscribe((categories: Category[]) => {
-      this.categories = categories;
-    });
+    this.subscriptions.push(
+      this.catalogServ.getCategories().subscribe((categories: Category[]) => {
+        this.categories = categories;
+      })
+    );
 
-    this.backdropServ.backdrop$.subscribe((message: string) => {
-      if (message === 'hide') {
-        this.showCatalog = false;
-        this.showAuth = false;
-      }
-    });
+    this.subscriptions.push(
+      this.backdropServ.backdrop$.subscribe((message: string) => {
+        if (message === 'hide') {
+          this.showCatalog = false;
+          this.showAuth = false;
+        }
+      })
+    );
+  }
+
+  ngOnDestroy(): void {
+    for (const subscription of this.subscriptions) {
+      subscription.unsubscribe();
+    }
   }
 
   sidenavToggle(): void {

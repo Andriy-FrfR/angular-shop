@@ -5,7 +5,7 @@ import { User } from './../interfaces/user.interface';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AuthResponse } from '../interfaces/auth-response.interface';
-import { map, tap } from 'rxjs/operators';
+import { first, map, tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -15,16 +15,16 @@ export class AuthService {
     if (!this.isAuthentificated) {
       return new Observable((observer: Observer<string>) => {
         observer.next('');
-      });
+      }).pipe(first());
     }
 
     if (0 < Date.now()) {
-      return this.refreshToken();
+      return this.refreshToken().pipe(first());
     }
 
     return new Observable((observer: Observer<string>) => {
       observer.next(localStorage.getItem('token') || '');
-    });
+    }).pipe(first());
   }
 
   private setToken(response: AuthResponse): void {
@@ -60,7 +60,8 @@ export class AuthService {
     return this.http.post<AuthResponse>(`https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=
                                         ${environment.APIKey}`, user)
       .pipe(
-        tap(this.setToken)
+        tap(this.setToken),
+        first()
       );
   }
 
@@ -69,7 +70,8 @@ export class AuthService {
 
     return this.http.post<AuthResponse>(`https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${environment.APIKey}`, user)
       .pipe(
-        tap(this.setToken)
+        tap(this.setToken),
+        first()
       );
   }
 
