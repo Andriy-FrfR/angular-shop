@@ -2,29 +2,35 @@ import { AuthRefreshTokenResponse } from './../interfaces/auth-refresh-token-res
 import { Observable, Observer } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { User } from './../interfaces/user.interface';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AuthResponse } from '../interfaces/auth-response.interface';
-import { first, map, tap } from 'rxjs/operators';
+import { first, map, tap, switchMap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  get token(): Observable<string> {
-    if (!this.isAuthentificated) {
-      return new Observable((observer: Observer<string>) => {
-        observer.next('');
-      }).pipe(first());
+  get token(): Observable<string | null> {
+    if (!localStorage.getItem('token')) {
+      return new Observable((observer: Observer<null>) => {
+        observer.next(null);
+      }).pipe(
+        first()
+      );
     }
 
-    if (0 < Date.now()) {
-      return this.refreshToken().pipe(first());
+    if (+(localStorage.getItem('expiresIn') || 0) < Date.now()) {
+      return this.refreshToken().pipe(
+        first()
+      );
     }
 
-    return new Observable((observer: Observer<string>) => {
-      observer.next(localStorage.getItem('token') || '');
-    }).pipe(first());
+    return new Observable((observer: Observer<string | null>) => {
+      observer.next(localStorage.getItem('token') || null);
+    }).pipe(
+      first()
+    );
   }
 
   private setToken(response: AuthResponse): void {
@@ -37,6 +43,10 @@ export class AuthService {
     return this.http.post<AuthRefreshTokenResponse>(`https://securetoken.googleapis.com/v1/token?key=${environment.APIKey}`, {
       grant_type : 'refresh_token',
       refresh_token: localStorage.getItem('refreshToken')
+    }, {
+      headers: {
+        skipInterceptor: 'true'
+      }
     }).pipe(
       map((response: AuthRefreshTokenResponse) => {
         this.setToken({
@@ -48,10 +58,6 @@ export class AuthService {
         return response.id_token;
       })
     );
-  }
-
-  isAuthentificated(): boolean {
-    return !!this.token;
   }
 
   logIn(user: User): Observable<AuthResponse> {

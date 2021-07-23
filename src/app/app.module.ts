@@ -1,7 +1,8 @@
+import { AuthInterceptor } from './shared/auth.interceptor';
 import { environment } from './../environments/environment';
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { NgModule, NO_ERRORS_SCHEMA, Provider } from '@angular/core';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
@@ -20,6 +21,12 @@ import { BackdropComponent } from './components/backdrop/backdrop.component';
 import { CatalogPopupComponent } from './components/catalog-popup/catalog-popup.component';
 import { SharedModule } from './shared/shared.module';
 import { AuthPopupComponent } from './components/auth-popup/auth-popup.component';
+
+const INTERCEPTOR_PROVIDER: Provider = {
+  provide: HTTP_INTERCEPTORS,
+  multi: true,
+  useClass: AuthInterceptor
+};
 
 @NgModule({
   schemas: [NO_ERRORS_SCHEMA],
@@ -47,7 +54,7 @@ import { AuthPopupComponent } from './components/auth-popup/auth-popup.component
     FontAwesomeModule,
     SharedModule
   ],
-  providers: [],
+  providers: [INTERCEPTOR_PROVIDER],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
