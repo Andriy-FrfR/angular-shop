@@ -11,7 +11,6 @@ export class AuthInterceptor implements HttpInterceptor {
   ) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    console.log('intercept');
     if (req.headers.get('skipInterceptor')){
       const newHeaders = req.headers.delete('skipInterceptor');
       req = req.clone({headers: newHeaders});

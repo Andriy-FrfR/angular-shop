@@ -13,5 +13,6 @@ export interface Product {
   guarantees?: string;
   characteristics?: Characteristic[];
   seller: string;
+  weight?: string;
   date?: Date;
 }

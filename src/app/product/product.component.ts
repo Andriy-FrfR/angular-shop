@@ -21,9 +21,11 @@ export class ProductComponent implements OnInit, OnDestroy {
   faMinusCircle = faMinusCircle;
   faShoppingCart = faShoppingCart;
 
-  constructor(private productsServ: ProductsService,
-              private route: ActivatedRoute,
-              private loadServ: LoadService) { }
+  constructor(
+      private productsServ: ProductsService,
+      private route: ActivatedRoute,
+      private loadServ: LoadService
+    ) { }
   subscriptions: Subscription[] = [];
 
   ngOnInit(): void {

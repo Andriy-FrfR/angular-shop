@@ -1,0 +1,41 @@
+<div class="container">
+  <div class="reviews">
+    <h2 class="reviews-title">
+      Reviews from customers about {{ product?.title }}
+    </h2>
+    <div class="reviews-list">
+      <div class="reviews-list-item" *ngFor="let review of reviews">
+        <div class="reviews-list-item-title">
+          {{ review.author }}
+        </div>
+        <div class="reviews-list-item-content">
+          <ul class="reviews-list-item-info">
+            <li class="reviews-list-item-info-item" *ngIf="product.seller">
+              <span class="reviews-list-item-info-label">Seller:</span>
+              <span class="reviews-list-item-info-value">{{ product.seller }}</span>
+            </li>
+            <li class="reviews-list-item-info-item" *ngIf="product.weight">
+              <span class="reviews-list-item-info-label">Weight:</span>
+              <span class="reviews-list-item-info-value">{{ product.weight }}</span>
+            </li>
+          </ul>
+          <div class="reviews-list-item-rating" *ngIf="review.rating">
+            <fa-icon
+              [icon]="faStar"
+              *ngFor="let i of [1, 2, 3, 4, 5]"
+              [class.active]="i <= review.rating"  
+            ></fa-icon>
+          </div>
+          <div class="reviews-list-item-comment">{{ review?.comment }}</div>
+          <div class="reviews-list-item-pros">
+            <b>Pros:</b> <br> {{ review?.pros }}
+          </div>
+          <div class="reviews-list-item-cons">
+            <b>Cons:</b> <br> {{ review?.cons }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <app-product-side-buy-bar [product]="product" *ngIf="product"></app-product-side-buy-bar>
+</div>
