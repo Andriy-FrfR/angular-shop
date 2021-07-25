@@ -1,0 +1,29 @@
+<div class="reviews-form-popup">
+  <h2 class="reviews-form-popup-title">
+    Write review
+  </h2>
+  <div class="reviews-form-popup-content">
+    <div class="reviews-form-rating">
+      <div
+        class="reviews-form-rating-item"
+        *ngFor="let i of [1, 2, 3, 4, 5]"
+        (click)="setRating(i)"
+        (mouseenter)="setTemporaryRating(i)"
+        (mouseleave)="setActualRating()"
+      >
+        <fa-icon
+          class="reviews-form-rating-item-star"
+          [icon]="faStar"
+          [class.active]="i <= temporaryRating"
+        ></fa-icon>
+        <div [ngSwitch]="i">
+          <div class="reviews-form-rating-item-label" *ngSwitchCase="1">Bad</div>
+          <div class="reviews-form-rating-item-label" *ngSwitchCase="2">So-so</div>
+          <div class="reviews-form-rating-item-label" *ngSwitchCase="3">Normal</div>
+          <div class="reviews-form-rating-item-label" *ngSwitchCase="4">Good</div>
+          <div class="reviews-form-rating-item-label" *ngSwitchCase="5">Awesome</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

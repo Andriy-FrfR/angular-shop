@@ -1,8 +1,9 @@
+import { BackdropService } from './../../../shared/services/backdrop.service';
 import { ProductReview } from './../../../shared/interfaces/product-review.interface';
 import { ReviewsService } from './../../../shared/services/reviews.service';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, Output, EventEmitter } from '@angular/core';
 import { Product } from 'src/app/shared/interfaces/product.interface';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 
@@ -13,6 +14,7 @@ import { faStar } from '@fortawesome/free-solid-svg-icons';
 })
 export class ReviewsComponent implements OnInit, OnDestroy {
   @Input() product!: Product;
+  @Output() reviewsFormShow = new EventEmitter();
   reviews: ProductReview[] = [];
   faStar = faStar;
   subscriptions: Subscription[] = [];
@@ -38,5 +40,9 @@ export class ReviewsComponent implements OnInit, OnDestroy {
     for (const subscription of this.subscriptions) {
       subscription.unsubscribe();
     }
+  }
+
+  onReviewsFormBtnClick(): void {
+    this.reviewsFormShow.emit('');
   }
 }

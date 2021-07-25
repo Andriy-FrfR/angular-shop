@@ -1,3 +1,4 @@
+import { BackdropService } from './../shared/services/backdrop.service';
 import { DownloadUrl } from 'src/app/load/shared/interfaces/download-url.interface';
 import { DownloadUrlAsync } from '../load/shared/interfaces/download-url-async.interface';
 import { LoadService } from '../load/shared/load.service';
@@ -20,13 +21,15 @@ export class ProductComponent implements OnInit, OnDestroy {
   faCheckCircle = faCheckCircle;
   faMinusCircle = faMinusCircle;
   faShoppingCart = faShoppingCart;
+  showReviewsForm = false;
+  subscriptions: Subscription[] = [];
 
   constructor(
       private productsServ: ProductsService,
       private route: ActivatedRoute,
-      private loadServ: LoadService
+      private loadServ: LoadService,
+      private backdropServ: BackdropService
     ) { }
-  subscriptions: Subscription[] = [];
 
   ngOnInit(): void {
     this.subscriptions.push(
@@ -36,6 +39,14 @@ export class ProductComponent implements OnInit, OnDestroy {
 
           this.loadImages();
         });
+      })
+    );
+
+    this.subscriptions.push(
+      this.backdropServ.backdrop$.subscribe((message: string) => {
+        if (message === 'hide') {
+          this.showReviewsForm = false;
+        }
       })
     );
   }
@@ -72,5 +83,10 @@ export class ProductComponent implements OnInit, OnDestroy {
     this.imgUrls.sort((a, b) => {
       return a.index - b.index;
     });
+  }
+
+  onReviewsFormShow(): void {
+    this.backdropServ.showBackdrop();
+    this.showReviewsForm = true;
   }
 }

@@ -70,6 +70,7 @@
     <app-characteristics [product]="product"></app-characteristics>
   </mat-tab>
   <mat-tab label="Reviews">
-    <app-reviews [product]="product"></app-reviews>
+    <app-reviews [product]="product" (reviewsFormShow)="onReviewsFormShow()"></app-reviews>
   </mat-tab>
 </mat-tab-group>
+<app-reviews-form *ngIf="showReviewsForm"></app-reviews-form>

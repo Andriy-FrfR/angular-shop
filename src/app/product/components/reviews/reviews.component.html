@@ -3,6 +3,12 @@
     <h2 class="reviews-title">
       Reviews from customers about {{ product?.title }}
     </h2>
+    <div class="reviews-leave-review-btn-wrapper">
+      <button
+        class="reviews-leave-review-btn medium-btn"
+        (click)="onReviewsFormBtnClick()"
+      >Leave Review</button>
+    </div>
     <div class="reviews-list">
       <div class="reviews-list-item" *ngFor="let review of reviews">
         <div class="reviews-list-item-title">
@@ -10,11 +16,11 @@
         </div>
         <div class="reviews-list-item-content">
           <ul class="reviews-list-item-info">
-            <li class="reviews-list-item-info-item" *ngIf="product.seller">
+            <li class="reviews-list-item-info-item" *ngIf="product?.seller">
               <span class="reviews-list-item-info-label">Seller:</span>
               <span class="reviews-list-item-info-value">{{ product.seller }}</span>
             </li>
-            <li class="reviews-list-item-info-item" *ngIf="product.weight">
+            <li class="reviews-list-item-info-item" *ngIf="product?.weight">
               <span class="reviews-list-item-info-label">Weight:</span>
               <span class="reviews-list-item-info-value">{{ product.weight }}</span>
             </li>
