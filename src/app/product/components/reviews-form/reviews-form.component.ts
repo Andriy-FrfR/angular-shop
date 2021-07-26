@@ -1,3 +1,4 @@
+import { BackdropService } from './../../../shared/services/backdrop.service';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { Component, OnInit } from '@angular/core';
 
@@ -11,7 +12,7 @@ export class ReviewsFormComponent implements OnInit {
   rating = 0;
   temporaryRating = 0;
 
-  constructor() { }
+  constructor(private backdropServ: BackdropService) { }
 
   ngOnInit(): void {
   }
@@ -26,5 +27,9 @@ export class ReviewsFormComponent implements OnInit {
 
   setActualRating(): void {
     this.temporaryRating = this.rating;
+  }
+
+  closePopup(): void {
+    this.backdropServ.hideBackdrop();
   }
 }

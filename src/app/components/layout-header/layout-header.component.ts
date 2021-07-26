@@ -67,6 +67,10 @@ export class LayoutHeaderComponent implements OnInit, OnDestroy {
   }
 
   searchByString(searchStr: string): void {
+    if (!searchStr) {
+      return;
+    }
+
     this.router.navigate(['/search'], { queryParams: { searchStr } });
   }
 

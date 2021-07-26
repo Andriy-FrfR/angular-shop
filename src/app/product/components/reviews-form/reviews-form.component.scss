@@ -24,6 +24,17 @@
   &-content {
     padding: 20px 25px;
   }
+
+  &-buttons {
+    display: flex;
+    justify-content: space-between;
+
+    margin: 30px 0 0 0;
+
+    .medium-btn {
+      width: 48%;
+    }
+  }
 }
 
 .reviews-form {
