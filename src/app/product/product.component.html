@@ -73,4 +73,4 @@
     <app-reviews [product]="product" (reviewsFormShow)="onReviewsFormShow()"></app-reviews>
   </mat-tab>
 </mat-tab-group>
-<app-reviews-form *ngIf="showReviewsForm"></app-reviews-form>
+<app-reviews-form-popup [product]="product" *ngIf="showReviewsForm && product"></app-reviews-form-popup>

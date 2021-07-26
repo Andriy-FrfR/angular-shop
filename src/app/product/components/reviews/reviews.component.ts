@@ -34,6 +34,12 @@ export class ReviewsComponent implements OnInit, OnDestroy {
           });
       })
     );
+
+    this.subscriptions.push(
+      this.reviewsServ.reviews$.subscribe((review: ProductReview) => {
+        this.reviews.push(review);
+      })
+    );
   }
 
   ngOnDestroy(): void {

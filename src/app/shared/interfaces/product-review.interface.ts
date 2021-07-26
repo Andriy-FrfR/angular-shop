@@ -1,7 +1,7 @@
 export interface ProductReview {
   id?: string;
   author: string;
-  rating?: number;
+  rating: number;
   comment?: string;
   pros?: string;
   cons?: string;

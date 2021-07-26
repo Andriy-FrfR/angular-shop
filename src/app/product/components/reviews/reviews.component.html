@@ -10,7 +10,7 @@
       >Leave Review</button>
     </div>
     <div class="reviews-list">
-      <div class="reviews-list-item" *ngFor="let review of reviews">
+      <div class="reviews-list-item" *ngFor="let review of reviews.reverse()">
         <div class="reviews-list-item-title">
           {{ review.author }}
         </div>
@@ -33,10 +33,10 @@
             ></fa-icon>
           </div>
           <div class="reviews-list-item-comment">{{ review?.comment }}</div>
-          <div class="reviews-list-item-pros">
+          <div class="reviews-list-item-pros" *ngIf="review.pros">
             <b>Pros:</b> <br> {{ review?.pros }}
           </div>
-          <div class="reviews-list-item-cons">
+          <div class="reviews-list-item-cons" *ngIf="review.cons">
             <b>Cons:</b> <br> {{ review?.cons }}
           </div>
         </div>

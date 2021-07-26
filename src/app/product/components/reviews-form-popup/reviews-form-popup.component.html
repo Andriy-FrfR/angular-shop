@@ -1,0 +1,73 @@
+<div class="reviews-form-popup">
+  <h2 class="reviews-form-popup-title">
+    Write review
+  </h2>
+  <div class="reviews-form-popup-content">
+    <div class="reviews-form-rating">
+      <div
+        class="reviews-form-rating-item"
+        *ngFor="let i of [1, 2, 3, 4, 5]"
+        (click)="setRating(i)"
+        (mouseenter)="setTemporaryRating(i)"
+        (mouseleave)="setActualRating()"
+      >
+        <fa-icon
+          class="reviews-form-rating-item-star"
+          [icon]="faStar"
+          [class.active]="i <= temporaryRating"
+        ></fa-icon>
+        <div [ngSwitch]="i">
+          <div class="reviews-form-rating-item-label" *ngSwitchCase="1">Bad</div>
+          <div class="reviews-form-rating-item-label" *ngSwitchCase="2">So-so</div>
+          <div class="reviews-form-rating-item-label" *ngSwitchCase="3">Normal</div>
+          <div class="reviews-form-rating-item-label" *ngSwitchCase="4">Good</div>
+          <div class="reviews-form-rating-item-label" *ngSwitchCase="5">Awesome</div>
+        </div>
+      </div>
+    </div>
+    <div class="validation" *ngIf="showReviewRatingValidation">
+      <div class="validation-item">
+        You need to set rating
+      </div>
+    </div>
+    <form class="form-group" [formGroup]="reviewsForm" (ngSubmit)="reviewsFormSubmit()">
+      <div class="form-control-wrapper">
+        <label class="form-label">Pros</label>
+        <input class="form-control" formControlName="pros">
+      </div>
+      <div class="form-control-wrapper">
+        <label class="form-label">Cons</label>
+        <input class="form-control" formControlName="cons">
+      </div>
+      <div class="form-control-wrapper" [class.error]="reviewsForm.get('comment')?.invalid && reviewsForm.get('comment')?.touched">
+        <label class="form-label">Comment</label>
+        <textarea
+          class="form-control"
+          rows="5"
+          formControlName="comment"
+        ></textarea>
+        <div class="validation" *ngIf="reviewsForm.get('comment')?.invalid && reviewsForm.get('comment')?.touched">
+          <div class="validation-item" *ngIf="reviewsForm.get('comment')?.errors?.required">
+            Comment is required
+          </div>
+          <div class="validation-item" *ngIf="reviewsForm.get('comment')?.errors?.minlength">
+            Minimal amount of symbols: {{ reviewsForm.get('comment')?.errors?.minlength.actualLength }}/{{ reviewsForm.get('comment')?.errors?.minlength.requiredLength }}
+          </div>
+        </div>
+      </div>
+      <div class="form-control-wrapper" [class.error]="reviewsForm.get('author')?.invalid && reviewsForm.get('author')?.touched">
+        <label class="form-label">Your name</label>
+        <input class="form-control" formControlName="author">
+        <div class="validation" *ngIf="reviewsForm.get('author')?.invalid && reviewsForm.get('author')?.touched">
+          <div class="validation-item" *ngIf="reviewsForm.get('author')?.errors?.required">
+            Name is required
+          </div>
+        </div>
+      </div>
+      <div class="reviews-form-popup-buttons">
+        <button class="medium-btn grey-btn" (click)="closePopup()">Cancel</button>
+        <input type="submit" class="medium-btn blue-btn" value="Leave review">
+      </div>
+    </form>
+  </div>
+</div>
