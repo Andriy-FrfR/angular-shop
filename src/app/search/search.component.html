@@ -1,6 +1,6 @@
 <div class="container products-wrapper">
   <app-search-product
     [product]="product"
-    *ngFor="let product of products | filterByString:searchStr | filterByCategory:categories:searchCategory:searchSubCategory"
+    *ngFor="let product of products | filterByString:searchStr:searchByCategories | filterByCategory:categories:searchCategory:searchSubCategory"
   ></app-search-product>
 </div>

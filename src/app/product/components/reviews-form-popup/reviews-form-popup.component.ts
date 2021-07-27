@@ -1,3 +1,5 @@
+import { AuthService } from 'src/app/shared/services/auth.service';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Product } from 'src/app/shared/interfaces/product.interface';
 import { ReviewsService } from './../../../shared/services/reviews.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
@@ -22,7 +24,8 @@ export class ReviewsFormPopupComponent implements OnInit, OnDestroy {
 
   constructor(
     private backdropServ: BackdropService,
-    private reviewsServ: ReviewsService
+    private reviewsServ: ReviewsService,
+    private authServ: AuthService
   ) { }
 
   ngOnInit(): void {
@@ -66,6 +69,7 @@ export class ReviewsFormPopupComponent implements OnInit, OnDestroy {
     }
 
     if (this.reviewsForm.invalid || !this.rating) {
+      this.reviewsForm.markAllAsTouched();
       return;
     }
 
@@ -83,6 +87,11 @@ export class ReviewsFormPopupComponent implements OnInit, OnDestroy {
         .subscribe(() => {
           this.reviewsServ.reviewAdded(review);
           this.closePopup();
+        }, (error: HttpErrorResponse) => {
+          if (error.error.error === 'Permission denied') {
+            this.closePopup();
+            this.authServ.showAuthPopup();
+          }
         })
     );
   }

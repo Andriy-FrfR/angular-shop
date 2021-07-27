@@ -17,7 +17,11 @@ export class ReviewsService {
   getReviews(productId: string): Observable<ProductReview[]> {
     return this.http.get<object>(`${environment.dbUrl}/products-reviews/${productId}.json`)
       .pipe(
-        map((reviews: object) => {
+        map((reviews: object | null) => {
+          if (!reviews) {
+            return [];
+          }
+
           const mappedReviews = [];
 
           for (const [id, review] of Object.entries(reviews)) {

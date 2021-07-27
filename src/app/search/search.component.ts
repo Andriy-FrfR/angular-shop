@@ -17,9 +17,14 @@ export class SearchComponent implements OnInit, OnDestroy {
   categories!: Category[];
   searchCategory!: string;
   searchSubCategory!: string;
+  searchByCategories!: boolean;
   subscriptions: Subscription[] = [];
 
-  constructor(private productsServ: ProductsService, private catalogServ: CatalogService, private route: ActivatedRoute) { }
+  constructor(
+    private productsServ: ProductsService,
+    private catalogServ: CatalogService,
+    private route: ActivatedRoute
+  ) { }
 
   ngOnInit(): void {
     this.subscriptions.push(
@@ -34,6 +39,12 @@ export class SearchComponent implements OnInit, OnDestroy {
         this.searchStr = params.searchStr;
         this.searchCategory = params.category;
         this.searchSubCategory = params.subCategory;
+
+        if (this.searchCategory) {
+          this.searchByCategories = true;
+        } else {
+          this.searchByCategories = false;
+        }
       })
     );
 

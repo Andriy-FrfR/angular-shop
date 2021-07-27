@@ -20,10 +20,13 @@ export class AuthPopupComponent implements OnInit, OnDestroy {
   showWrongPassword = false;
   showTooManyAttempts = false;
 
-  constructor(private backdropServ: BackdropService,
-              private authServ: AuthService,
-              private uniqueEmailValidator: UniqueEmail,
-              private accountExistValidator: AccountWithEmailExist) { }
+  constructor(
+    private backdropServ: BackdropService,
+    private authServ: AuthService,
+    private uniqueEmailValidator: UniqueEmail,
+    private accountExistValidator: AccountWithEmailExist
+  ) { }
+
   ngOnInit(): void {
     this.logInForm = new FormGroup({
       email: new FormControl('', [
@@ -92,7 +95,6 @@ export class AuthPopupComponent implements OnInit, OnDestroy {
 
   loginPasswordInput(): void {
     this.showWrongPassword = false;
-    this.showTooManyAttempts = false;
   }
 
   signUp(): void {

@@ -1,3 +1,4 @@
+import { AuthService } from 'src/app/shared/services/auth.service';
 import { BackdropService } from '../../shared/services/backdrop.service';
 import { Category } from './../../shared/interfaces/category.interface';
 import { CatalogService } from '../../shared/services/catalog.service';
@@ -25,10 +26,13 @@ export class LayoutHeaderComponent implements OnInit, OnDestroy {
   showAuth = false;
   faUser = faUser;
 
-  constructor(private productsServ: ProductsService,
-              private catalogServ: CatalogService,
-              private router: Router,
-              private backdropServ: BackdropService) { }
+  constructor(
+    private productsServ: ProductsService,
+    private catalogServ: CatalogService,
+    private router: Router,
+    private backdropServ: BackdropService,
+    private authServ: AuthService
+  ) { }
   subscriptions: Subscription[] = [];
 
   ngOnInit(): void {
@@ -54,6 +58,12 @@ export class LayoutHeaderComponent implements OnInit, OnDestroy {
         }
       })
     );
+
+    this.authServ.auth$.subscribe((message: string) => {
+      if (message === 'show') {
+        this.showAuthPopup();
+      }
+    });
   }
 
   ngOnDestroy(): void {
@@ -83,22 +93,4 @@ export class LayoutHeaderComponent implements OnInit, OnDestroy {
     this.backdropServ.showBackdrop();
     this.showAuth = true;
   }
-
-  // getCategories(): void {
-  //   this.catalogServ.createCategory('Another category').subscribe((category: any) => {
-  //     console.log(category);
-  //     this.catalogServ.getCategoryById(category.name).subscribe((newCategory: Category) => {
-  //       console.log(newCategory);
-  //       this.catalogServ.createSubCategory(newCategory, 'some subcategory').subscribe((e) => {
-  //         console.log(e);
-  //       });
-  //       this.catalogServ.createSubCategory(newCategory, 'another subcategory').subscribe((e) => {
-  //         console.log(e);
-  //       });
-  //       this.catalogServ.createSubCategory(newCategory, '3rd subcategory').subscribe((e) => {
-  //         console.log(e);
-  //       });
-  //     });
-  //   });
-  // }
 }

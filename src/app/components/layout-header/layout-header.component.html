@@ -19,7 +19,7 @@
         (keydown.enter)="searchByString(searchInput.value)"
       >
       <mat-autocomplete #auto="matAutocomplete">
-        <mat-option *ngFor="let product of products | filterByString:searchInput.value:5" [value]="product.title" (click)="searchByString(searchInput.value)">
+        <mat-option *ngFor="let product of products | filterByString:searchInput.value:false:5" [value]="product.title" (click)="searchByString(searchInput.value)">
           {{ product.title }}
         </mat-option>
       </mat-autocomplete>

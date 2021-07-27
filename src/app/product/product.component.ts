@@ -1,3 +1,4 @@
+import { AuthService } from 'src/app/shared/services/auth.service';
 import { BackdropService } from './../shared/services/backdrop.service';
 import { DownloadUrl } from 'src/app/load/shared/interfaces/download-url.interface';
 import { DownloadUrlAsync } from '../load/shared/interfaces/download-url-async.interface';
@@ -28,7 +29,8 @@ export class ProductComponent implements OnInit, OnDestroy {
       private productsServ: ProductsService,
       private route: ActivatedRoute,
       private loadServ: LoadService,
-      private backdropServ: BackdropService
+      private backdropServ: BackdropService,
+      private authServ: AuthService
     ) { }
 
   ngOnInit(): void {
@@ -86,7 +88,14 @@ export class ProductComponent implements OnInit, OnDestroy {
   }
 
   onReviewsFormShow(): void {
-    this.backdropServ.showBackdrop();
-    this.showReviewsForm = true;
+    this.authServ.token.subscribe((token: string | null) => {
+      if (!token) {
+        this.authServ.showAuthPopup();
+        return;
+      }
+
+      this.backdropServ.showBackdrop();
+      this.showReviewsForm = true;
+    });
   }
 }

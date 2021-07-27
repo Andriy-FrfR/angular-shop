@@ -6,8 +6,12 @@ import { Product } from '../interfaces/product.interface';
 })
 export class FilterByStringPipe implements PipeTransform {
 
-  transform(products: Product[], substr: string = '', limit?: number): Product[] | undefined {
-    if (!products) {
+  transform(products: Product[], substr: string = '', searchByCategories: boolean, limit?: number): Product[] | undefined {
+    if (searchByCategories) {
+      return products;
+    }
+
+    if (!products || !substr) {
       return;
     }
 

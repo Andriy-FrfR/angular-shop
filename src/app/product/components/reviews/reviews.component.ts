@@ -29,7 +29,6 @@ export class ReviewsComponent implements OnInit, OnDestroy {
       this.route.params.subscribe((params: Params) => {
         this.reviewsServ.getReviews(params.id)
           .subscribe((reviews: ProductReview[]) => {
-            console.log(reviews);
             this.reviews = reviews;
           });
       })

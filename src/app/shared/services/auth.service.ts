@@ -1,5 +1,5 @@
 import { AuthRefreshTokenResponse } from './../interfaces/auth-refresh-token-response.interface';
-import { Observable, Observer } from 'rxjs';
+import { Observable, Observer, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { User } from './../interfaces/user.interface';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -11,6 +11,14 @@ import { first, map, tap, switchMap } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class AuthService {
+  auth$: Subject<string> = new Subject<string>();
+
+  constructor(private http: HttpClient) { }
+
+  showAuthPopup(): void {
+    this.auth$.next('show');
+  }
+
   get token(): Observable<string | null> {
     if (!localStorage.getItem('token')) {
       return new Observable((observer: Observer<null>) => {
@@ -80,6 +88,4 @@ export class AuthService {
         first()
       );
   }
-
-  constructor(private http: HttpClient) { }
 }
