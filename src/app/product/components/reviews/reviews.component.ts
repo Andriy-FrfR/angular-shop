@@ -20,9 +20,9 @@ export class ReviewsComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
 
   constructor(
-      private route: ActivatedRoute,
-      private reviewsServ: ReviewsService
-    ) { }
+    private route: ActivatedRoute,
+    private reviewsServ: ReviewsService
+  ) { }
 
   ngOnInit(): void {
     this.subscriptions.push(

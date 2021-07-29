@@ -27,10 +27,14 @@
         <span class="search-button-text">Search</span>
       </button>
     </div>
-    <button class="user-btn" (click)="showAuthPopup()">
+    <button class="popup-btn" (click)="showAuthPopup()">
       <fa-icon [icon]="faUser"></fa-icon>
+    </button>
+    <button class="popup-btn" (click)="showCartPopup()">
+      <fa-icon [icon]="faShoppingCart"></fa-icon>
     </button>
   </div>
   <app-catalog-popup [categories]="categories" *ngIf="showCatalog"></app-catalog-popup>
   <app-auth-popup *ngIf="showAuth"></app-auth-popup>
+  <app-cart-popup *ngIf="showCart"></app-cart-popup>
 </header>

@@ -1,3 +1,4 @@
+import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { BackdropService } from '../../shared/services/backdrop.service';
 import { Category } from './../../shared/interfaces/category.interface';
@@ -18,13 +19,15 @@ import { Subscription } from 'rxjs';
 })
 export class LayoutHeaderComponent implements OnInit, OnDestroy {
   @Input() sidenav!: MatSidenav;
-
+  faUser = faUser;
+  faShoppingCart = faShoppingCart;
   products!: Product[];
   searchInput!: FormControl;
   categories!: Category[];
   showCatalog = false;
   showAuth = false;
-  faUser = faUser;
+  showCart = false;
+  subscriptions: Subscription[] = [];
 
   constructor(
     private productsServ: ProductsService,
@@ -33,7 +36,6 @@ export class LayoutHeaderComponent implements OnInit, OnDestroy {
     private backdropServ: BackdropService,
     private authServ: AuthService
   ) { }
-  subscriptions: Subscription[] = [];
 
   ngOnInit(): void {
     this.searchInput = new FormControl('');
@@ -55,6 +57,7 @@ export class LayoutHeaderComponent implements OnInit, OnDestroy {
         if (message === 'hide') {
           this.showCatalog = false;
           this.showAuth = false;
+          this.showCart = false;
         }
       })
     );
@@ -92,5 +95,10 @@ export class LayoutHeaderComponent implements OnInit, OnDestroy {
   showAuthPopup(): void {
     this.backdropServ.showBackdrop();
     this.showAuth = true;
+  }
+
+  showCartPopup(): void {
+    this.backdropServ.showBackdrop();
+    this.showCart = true;
   }
 }

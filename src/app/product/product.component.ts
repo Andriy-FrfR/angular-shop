@@ -26,12 +26,12 @@ export class ProductComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
 
   constructor(
-      private productsServ: ProductsService,
-      private route: ActivatedRoute,
-      private loadServ: LoadService,
-      private backdropServ: BackdropService,
-      private authServ: AuthService
-    ) { }
+    private productsServ: ProductsService,
+    private route: ActivatedRoute,
+    private loadServ: LoadService,
+    private backdropServ: BackdropService,
+    private authServ: AuthService
+  ) { }
 
   ngOnInit(): void {
     this.subscriptions.push(

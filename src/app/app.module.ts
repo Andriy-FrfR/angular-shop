@@ -19,6 +19,7 @@ import { BackdropComponent } from './components/backdrop/backdrop.component';
 import { CatalogPopupComponent } from './components/catalog-popup/catalog-popup.component';
 import { SharedModule } from './shared/shared.module';
 import { AuthPopupComponent } from './components/auth-popup/auth-popup.component';
+import { CartPopupComponent } from './components/cart-popup/cart-popup.component';
 
 const INTERCEPTOR_PROVIDER: Provider = {
   provide: HTTP_INTERCEPTORS,
@@ -33,7 +34,8 @@ const INTERCEPTOR_PROVIDER: Provider = {
     LayoutHeaderComponent,
     BackdropComponent,
     CatalogPopupComponent,
-    AuthPopupComponent
+    AuthPopupComponent,
+    CartPopupComponent
   ],
   imports: [
     BrowserModule,

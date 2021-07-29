@@ -1,8 +1,9 @@
+import { UserData } from './../interfaces/user-data.interface';
+import { environment } from './../../../environments/environment.prod';
+import { UserAuth } from './../interfaces/user-auth.interface';
 import { AuthRefreshTokenResponse } from './../interfaces/auth-refresh-token-response.interface';
 import { Observable, Observer, Subject } from 'rxjs';
-import { environment } from 'src/environments/environment';
-import { User } from './../interfaces/user.interface';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AuthResponse } from '../interfaces/auth-response.interface';
 import { first, map, tap, switchMap } from 'rxjs/operators';
@@ -45,6 +46,7 @@ export class AuthService {
     localStorage.setItem('token', response.idToken);
     localStorage.setItem('expiresIn', `${Date.now() + +response.expiresIn * 1000}`);
     localStorage.setItem('refreshToken', response.refreshToken);
+    localStorage.setItem('localId', response.localId);
   }
 
   refreshToken(): Observable<string> {
@@ -60,7 +62,8 @@ export class AuthService {
         this.setToken({
           expiresIn: response.expires_in,
           idToken: response.id_token,
-          refreshToken: response.refresh_token
+          refreshToken: response.refresh_token,
+          localId: response.user_id
         });
 
         return response.id_token;
@@ -68,7 +71,7 @@ export class AuthService {
     );
   }
 
-  logIn(user: User): Observable<AuthResponse> {
+  logIn(user: UserAuth): Observable<AuthResponse> {
     user.returnSecureToken = true;
 
     return this.http.post<AuthResponse>(`https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=
@@ -79,13 +82,30 @@ export class AuthService {
       );
   }
 
-  signUp(user: User): Observable<AuthResponse> {
+  signUp(user: UserAuth): Observable<any> {
     user.returnSecureToken = true;
 
     return this.http.post<AuthResponse>(`https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${environment.APIKey}`, user)
       .pipe(
         tap(this.setToken),
+        switchMap((data: AuthResponse) => {
+          return this.http.post<UserData>(`${environment.dbUrl}/users/${data.localId}.json`, {
+            productsInCart: ['']
+          });
+        }),
         first()
+      );
+  }
+
+  getUserData(): Observable<UserData> {
+    return this.http.get<any>(`${environment.dbUrl}/users/${localStorage.getItem('localId')}.json`)
+      .pipe(
+        map((userDataFb: object) => {
+          for (const [id, data] of Object.entries(userDataFb)) {
+            console.log(data);
+            return data;
+          }
+        })
       );
   }
 }

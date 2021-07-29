@@ -65,6 +65,10 @@ export class AuthPopupComponent implements OnInit, OnDestroy {
     this.showLogIn = !this.showLogIn;
   }
 
+  loginPasswordInput(): void {
+    this.showWrongPassword = false;
+  }
+
   logIn(): void {
     if (this.logInForm.invalid || this.logInForm.pending) {
       return;
@@ -91,10 +95,6 @@ export class AuthPopupComponent implements OnInit, OnDestroy {
         }
       })
     );
-  }
-
-  loginPasswordInput(): void {
-    this.showWrongPassword = false;
   }
 
   signUp(): void {
