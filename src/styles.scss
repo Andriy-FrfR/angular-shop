@@ -158,3 +158,56 @@ textarea.form-control {
   color: #f84147;
   font-size: 12px;
 }
+
+/*Popups*/
+
+.popup {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 100;
+
+  width: 100%;
+
+  border-radius: 8px;
+
+  background-color: #fff;
+  box-shadow: 0 8px 40px rgb(0 0 0 / 32%);
+
+  &-title {
+    position: relative;
+
+    display: flex;
+    justify-content: space-between;
+
+    border-bottom: 1px solid #e9e9e9;
+
+    padding: 18px 25px;
+    
+    color: #221f1f;
+    font-size: 24px;
+    font-weight: 400;
+  }
+}
+
+.close-popup-btn {
+  position: absolute;
+  right: 0;
+  top: 0;
+
+  height: 100%;
+  width: 56px;
+
+  border-radius: 8px;
+
+  background-color: rgba(255, 255, 255, 0);;
+  color: #797878;
+  font-size: 30px;
+  cursor: pointer;
+  transition: all .2s linear;
+
+  &:hover {
+    color: #f84147;
+  }
+}

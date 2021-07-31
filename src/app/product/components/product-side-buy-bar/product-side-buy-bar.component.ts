@@ -1,8 +1,8 @@
+import { Product } from './../../../shared/interfaces/product.interface';
 import { faCheckCircle, faMinusCircle, faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 import { DownloadUrl } from './../../../load/shared/interfaces/download-url.interface';
 import { LoadService } from './../../../load/shared/load.service';
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { Product } from 'src/app/shared/interfaces/product.interface';
 import { DownloadUrlAsync } from 'src/app/load/shared/interfaces/download-url-async.interface';
 import { Subscription } from 'rxjs';
 
@@ -12,7 +12,16 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./product-side-buy-bar.component.scss']
 })
 export class ProductSideBuyBarComponent implements OnInit, OnDestroy {
-  @Input() product!: Product;
+  @Input() set product(product: Product) {
+    this._product = product;
+  }
+
+  get product(): Product {
+    return this._product;
+  }
+
+  // tslint:disable-next-line:variable-name
+  _product!: Product;
   imgUrl!: DownloadUrl;
   faCheckCircle = faCheckCircle;
   faMinusCircle = faMinusCircle;
@@ -35,13 +44,13 @@ export class ProductSideBuyBarComponent implements OnInit, OnDestroy {
     const imgUrlsAsyncArr: DownloadUrlAsync[] = this.loadServ.downloadImg(this.product);
 
     for (const imgUrlAsync of imgUrlsAsyncArr) {
-      this.subscriptions.push(
-        imgUrlAsync.urlObs.subscribe((downloadUrl: string) => {
-          if (imgUrlAsync.index === 0) {
-            this.imgUrl = {url: downloadUrl, index: imgUrlAsync.index};
-          }
-        })
-      );
+      if (imgUrlAsync.index === 0) {
+        this.subscriptions.push(
+          imgUrlAsync.urlObs.subscribe((url: string) => {
+            this.imgUrl = {url, index: imgUrlAsync.index };
+          })
+        );
+      }
     }
   }
 

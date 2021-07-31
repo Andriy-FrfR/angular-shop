@@ -1,11 +1,13 @@
-<div class="cart-popup">
-  <div class="cart-popup-title">Shopping Cart</div>
+<div class="popup cart-popup">
+  <div class="popup-title cart-popup-title">
+    Shopping Cart
+    <button class="close-popup-btn" appHideBackdrop>
+      &times;
+    </button>
+  </div>
   <div class="cart-popup-content">
     <div class="cart-popup-products">
-      <div class="cart-popup-products-item">
-        <div class="cart-popup-products-item-img"></div>
-        <div class="cart-popup-products-item-title"></div>
-      </div>
+      <app-cart-popup-item *ngFor="let product of productsId" [productId]="product"></app-cart-popup-item>
     </div>
   </div>
 </div>

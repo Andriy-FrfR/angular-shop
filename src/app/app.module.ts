@@ -20,6 +20,7 @@ import { CatalogPopupComponent } from './components/catalog-popup/catalog-popup.
 import { SharedModule } from './shared/shared.module';
 import { AuthPopupComponent } from './components/auth-popup/auth-popup.component';
 import { CartPopupComponent } from './components/cart-popup/cart-popup.component';
+import { CartPopupItemComponent } from './components/cart-popup-item/cart-popup-item.component';
 
 const INTERCEPTOR_PROVIDER: Provider = {
   provide: HTTP_INTERCEPTORS,
@@ -35,7 +36,8 @@ const INTERCEPTOR_PROVIDER: Provider = {
     BackdropComponent,
     CatalogPopupComponent,
     AuthPopupComponent,
-    CartPopupComponent
+    CartPopupComponent,
+    CartPopupItemComponent,
   ],
   imports: [
     BrowserModule,

@@ -98,7 +98,14 @@ export class LayoutHeaderComponent implements OnInit, OnDestroy {
   }
 
   showCartPopup(): void {
-    this.backdropServ.showBackdrop();
-    this.showCart = true;
+    this.authServ.token.subscribe((token: string | null) => {
+      if (!token) {
+        this.authServ.showAuthPopup();
+        return;
+      }
+
+      this.backdropServ.showBackdrop();
+      this.showCart = true;
+    });
   }
 }

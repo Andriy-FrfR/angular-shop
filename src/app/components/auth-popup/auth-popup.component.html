@@ -1,7 +1,10 @@
-<div class="auth-popup">
+<div class="popup auth-popup">
   <form class="form-group" [formGroup]="logInForm" (ngSubmit)="logIn()" *ngIf="showLogIn">
-    <h3 class="form-group-title">
+    <h3 class="form-group-title popup-title">
       Log in
+      <button class="close-popup-btn" appHideBackdrop>
+        &times;
+      </button>
     </h3>
     <div class="form-controls-wrapper">
       <div
@@ -75,8 +78,11 @@
     </div>
   </form>
   <form class="form-group" [formGroup]="signUpForm" (ngSubmit)="signUp()" *ngIf="!showLogIn">
-    <h3 class="form-group-title">
+    <h3 class="form-group-title popup-title">
       Sign up
+      <button class="close-popup-btn" appHideBackdrop>
+        &times;
+      </button>
     </h3>
     <div class="form-controls-wrapper">
       <div
