@@ -4,7 +4,7 @@
       <img src="{{ imgUrl?.url }}" alt="Lorem Ipsum">
     </div>
     <a
-      [routerLink]="['/search/product/' + productId]"
+      [routerLink]="['/search/product/' + product?.id]"
       class="cart-popup-item-product-title"
       (click)="openProductPage()"
     >
@@ -13,8 +13,25 @@
   </div>
   <div class="cart-popup-item-price-wrapper">
     <div class="cart-popup-amount">
-      <input class="form-control" type="number" value="1">
+      <button
+        [class.inactive]="amountInput.value <= 1"
+        (click)="minusAmount()"
+      >
+        <fa-icon [icon]="faMinus"></fa-icon>
+      </button>
+      <input
+        class="form-control"
+        type="number"
+        [formControl]="amountInput"
+        (blur)="amountInputOnBlur()"
+      >
+      <button
+        [class.inactive]="amountInput.value >= (product?.amount || 0)"
+        (click)="addAmount()"
+      >
+        <fa-icon [icon]="faPlus"></fa-icon>
+      </button>
     </div>
-    <div class="cart-popup-item-price">123 ₴</div>
+    <div class="cart-popup-item-price">{{ (product?.price || 0) * amountInput.value }} ₴</div>
   </div>
 </div>

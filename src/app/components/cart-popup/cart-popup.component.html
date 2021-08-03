@@ -7,7 +7,20 @@
   </div>
   <div class="cart-popup-content">
     <div class="cart-popup-products">
-      <app-cart-popup-item *ngFor="let product of productsId" [productId]="product"></app-cart-popup-item>
+      <app-cart-popup-item
+        *ngFor="let productInCart of productsInCart"
+        [productInCart]="productInCart"
+      ></app-cart-popup-item>
+    </div>
+    <div class="cart-popup-buttons">
+      <button class="medium-btn grey-btn">Continue shopping</button>
+      <div class="place-order-btn-wrapper">
+        <div class="place-order-btn-price">
+          <span class="price">{{ countPrice() }}</span>
+          <span class="hrivna-symbol"> ₴</span>
+        </div>
+        <button class="large-btn green-btn">Place an order</button>
+      </div>
     </div>
   </div>
 </div>

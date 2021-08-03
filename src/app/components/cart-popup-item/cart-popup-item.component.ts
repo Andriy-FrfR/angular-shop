@@ -1,10 +1,13 @@
+import { ProductInCart } from './../../shared/interfaces/product-in-cart.interface';
+import { FormControl } from '@angular/forms';
 import { DownloadUrl } from './../../load/shared/interfaces/download-url.interface';
 import { LoadService } from './../../load/shared/load.service';
 import { BackdropService } from './../../shared/services/backdrop.service';
 import { ProductsService } from './../../shared/services/products.service';
 import { Subscription } from 'rxjs';
 import { Product } from './../../shared/interfaces/product.interface';
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, EventEmitter, Output } from '@angular/core';
+import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-cart-popup-item',
@@ -12,9 +15,12 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core';
   styleUrls: ['./cart-popup-item.component.scss']
 })
 export class CartPopupItemComponent implements OnInit, OnDestroy {
-  @Input() productId!: string;
+  @Input() productInCart!: ProductInCart;
+  faMinus = faMinus;
+  faPlus = faPlus;
   product!: Product;
   imgUrl!: DownloadUrl;
+  amountInput!: FormControl;
   subscriptions: Subscription[] = [];
 
   constructor(
@@ -24,14 +30,24 @@ export class CartPopupItemComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
+    this.amountInput = new FormControl(this.productInCart?.amount);
+
     this.subscriptions.push(
-      this.productsServ.getProductById(this.productId)
+      this.productsServ.getProductById(this.productInCart.productId)
         .subscribe((product: Product) => {
           this.product = product;
 
           this.loadProductImg();
+
+          this.setPrice();
         })
     );
+  }
+
+  ngOnDestroy(): void {
+    for (const subscription of this.subscriptions) {
+      subscription.unsubscribe();
+    }
   }
 
   loadProductImg(): void {
@@ -46,13 +62,47 @@ export class CartPopupItemComponent implements OnInit, OnDestroy {
     }
   }
 
-  ngOnDestroy(): void {
-    for (const subscription of this.subscriptions) {
-      subscription.unsubscribe();
-    }
+  private setPrice(): void {
+    this.productInCart.priceForAll = this.amountInput.value * this.product.price;
   }
 
   openProductPage(): void {
     this.backdropServ.hideBackdrop();
+  }
+
+  amountInputOnBlur(): void {
+    const amount = this.amountInput.value;
+
+    if (amount > this.product.amount) {
+      this.amountInput.setValue(this.product.amount);
+    } else if (amount < 1) {
+      this.amountInput.setValue(1);
+    }
+
+    this.setPrice();
+  }
+
+  minusAmount(): void {
+    let amount = this.amountInput.value;
+
+    this.amountInput.setValue(amount-- - 1);
+
+    if (amount < 1) {
+      this.amountInput.setValue(1);
+    }
+
+    this.setPrice();
+  }
+
+  addAmount(): void {
+    let amount = this.amountInput.value;
+
+    this.amountInput.setValue(amount++ + 1);
+
+    if (amount >= this.product.amount) {
+      this.amountInput.setValue(this.product.amount);
+    }
+
+    this.setPrice();
   }
 }

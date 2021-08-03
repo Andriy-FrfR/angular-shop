@@ -12,10 +12,40 @@
   }
 
   &-products {
-    & app-cart-popup-item {
-      &:not(:last-child) {
-        border-bottom: 1px solid #e9e9e9;;
-      }
+    & app-cart-popup-item:not(:last-child) {
+      border-bottom: 1px solid #e9e9e9;;
     }
+  }
+
+  &-buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+.place-order-btn-wrapper {
+  display: flex;
+  align-items: center;
+
+  border: 1px solid #00a046;
+  border-radius: 4px;
+
+  padding: 24px;
+
+  background-color: rgba(0,160,70,.1);
+}
+
+.place-order-btn-price {
+  height: 50px;
+
+  margin-right: 20px;
+
+  font-size: 36px;
+  line-height: 50px;
+  color: #221f1f;
+
+  & .hrivna-symbol {
+    font-size: 20px;
   }
 }

@@ -47,10 +47,31 @@
 }
 
 .cart-popup-amount {
+  display: flex;
+  align-items: center;
+
+  & button {
+    background-color: #fff;
+    cursor: pointer;
+
+    & fa-icon {
+      color: #3e77aa;
+      font-size: 20px;
+    }
+
+    &.inactive {
+      & fa-icon {
+        color: #d2d2d2;
+        cursor: default;
+      }
+    }
+  }
+
   & input {
     width: 55px;
 
     padding: 0;
+    margin: 0 15px;
 
     text-align: center;
 
