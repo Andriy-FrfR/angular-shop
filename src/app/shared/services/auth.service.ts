@@ -96,16 +96,4 @@ export class AuthService {
         first()
       );
   }
-
-  getUserData(): Observable<UserData> {
-    return this.http.get<any>(`${environment.dbUrl}/users/${localStorage.getItem('localId')}.json`)
-      .pipe(
-        map((userDataFb: object) => {
-          for (const [id, data] of Object.entries(userDataFb)) {
-            console.log(data);
-            return data;
-          }
-        })
-      );
-  }
 }

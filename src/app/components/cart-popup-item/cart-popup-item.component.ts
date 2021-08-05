@@ -1,3 +1,4 @@
+import { UserDataService } from './../../shared/services/user-data.service';
 import { ProductInCart } from './../../shared/interfaces/product-in-cart.interface';
 import { FormControl } from '@angular/forms';
 import { DownloadUrl } from './../../load/shared/interfaces/download-url.interface';
@@ -26,7 +27,8 @@ export class CartPopupItemComponent implements OnInit, OnDestroy {
   constructor(
     private productsServ: ProductsService,
     private backdropServ: BackdropService,
-    private loadServ: LoadService
+    private loadServ: LoadService,
+    private userDataServ: UserDataService
   ) { }
 
   ngOnInit(): void {
@@ -66,6 +68,14 @@ export class CartPopupItemComponent implements OnInit, OnDestroy {
     this.productInCart.priceForAll = this.amountInput.value * this.product.price;
   }
 
+  private setAmount(): void {
+    this.productInCart.amount = this.amountInput.value;
+  }
+
+  private patchCartProducts(): void {
+    this.userDataServ.patchProductsInCart();
+  }
+
   openProductPage(): void {
     this.backdropServ.hideBackdrop();
   }
@@ -79,7 +89,10 @@ export class CartPopupItemComponent implements OnInit, OnDestroy {
       this.amountInput.setValue(1);
     }
 
+    this.setAmount();
     this.setPrice();
+
+    this.patchCartProducts();
   }
 
   minusAmount(): void {
@@ -91,7 +104,10 @@ export class CartPopupItemComponent implements OnInit, OnDestroy {
       this.amountInput.setValue(1);
     }
 
+    this.setAmount();
     this.setPrice();
+
+    this.patchCartProducts();
   }
 
   addAmount(): void {
@@ -103,6 +119,9 @@ export class CartPopupItemComponent implements OnInit, OnDestroy {
       this.amountInput.setValue(this.product.amount);
     }
 
+    this.setAmount();
     this.setPrice();
+
+    this.patchCartProducts();
   }
 }

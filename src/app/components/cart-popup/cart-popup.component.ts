@@ -1,7 +1,7 @@
+import { UserDataService } from './../../shared/services/user-data.service';
 import { ProductInCart } from './../../shared/interfaces/product-in-cart.interface';
 import { Subscription } from 'rxjs';
 import { UserData } from './../../shared/interfaces/user-data.interface';
-import { AuthService } from './../../shared/services/auth.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 
 @Component({
@@ -10,17 +10,32 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
   styleUrls: ['./cart-popup.component.scss']
 })
 export class CartPopupComponent implements OnInit, OnDestroy {
+  priceForAll = 0;
+  userData!: UserData;
   productsInCart: ProductInCart[] = [];
   subscriptions: Subscription[] = [];
 
   constructor(
-    private authServ: AuthService
+    private userDataServ: UserDataService
   ) { }
 
   ngOnInit(): void {
     this.subscriptions.push(
-      this.authServ.getUserData().subscribe((userData: UserData) => {
+      this.userDataServ.getUserData().subscribe((userData: UserData) => {
+        this.userData = userData;
         this.productsInCart = userData.productsInCart;
+
+        this.countPrice();
+      })
+    );
+
+    this.subscriptions.push(
+      this.userDataServ.productsInCart$.subscribe((message: string) => {
+        if (message === 'patch') {
+          this.userDataServ.patchUserData(this.userData).subscribe(() => {
+            this.countPrice();
+          });
+        }
       })
     );
   }
@@ -31,13 +46,13 @@ export class CartPopupComponent implements OnInit, OnDestroy {
     }
   }
 
-  countPrice(): number {
+  private countPrice(): void {
     let sum = 0;
 
     for (const productInCart of this.productsInCart) {
       sum += productInCart.priceForAll || 0;
     }
 
-    return sum;
+    this.priceForAll = sum;
   }
 }
