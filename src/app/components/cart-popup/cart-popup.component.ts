@@ -10,7 +10,6 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
   styleUrls: ['./cart-popup.component.scss']
 })
 export class CartPopupComponent implements OnInit, OnDestroy {
-  priceForAll = 0;
   userData!: UserData;
   productsInCart: ProductInCart[] = [];
   subscriptions: Subscription[] = [];
@@ -23,6 +22,11 @@ export class CartPopupComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       this.userDataServ.getUserData().subscribe((userData: UserData) => {
         this.userData = userData;
+
+        if (!this.userData.productsInCart) {
+          this.userData.productsInCart = [];
+        }
+
         this.productsInCart = userData.productsInCart;
 
         this.countPrice();
@@ -30,9 +34,11 @@ export class CartPopupComponent implements OnInit, OnDestroy {
     );
 
     this.subscriptions.push(
-      this.userDataServ.productsInCart$.subscribe((message: string) => {
+      this.userDataServ.cart$.subscribe((message: string) => {
         if (message === 'patch') {
           this.userDataServ.patchUserData(this.userData).subscribe(() => {
+            this.userDataServ.productsInCartChanged();
+
             this.countPrice();
           });
         }
@@ -46,13 +52,24 @@ export class CartPopupComponent implements OnInit, OnDestroy {
     }
   }
 
-  private countPrice(): void {
+  countPrice(): number {
     let sum = 0;
 
     for (const productInCart of this.productsInCart) {
       sum += productInCart.priceForAll || 0;
     }
 
-    this.priceForAll = sum;
+    return sum;
+  }
+
+  onRemoveProductFromCartEvent(productToDelete: ProductInCart): void {
+    this.productsInCart.forEach((productInCart: ProductInCart, index: number) => {
+      if (productInCart === productToDelete) {
+        this.productsInCart.splice(index, 1);
+
+        this.userDataServ.patchProductsInCart();
+        return;
+      }
+    });
   }
 }

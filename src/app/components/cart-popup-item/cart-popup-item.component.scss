@@ -1,4 +1,6 @@
 .cart-popup-item {
+  position: relative;
+
   padding: 25px 0;
 
   &-product {
@@ -79,6 +81,29 @@
     &::-webkit-inner-spin-button {
       -webkit-appearance: none;
       margin: 0;
+    }
+  }
+}
+
+.remove-btn {
+  position: absolute;
+  right: 0;
+  top: 0;
+  transform: translate(0, 100%);
+  
+  background-color: #fff;
+  cursor: pointer;
+
+  fa-icon {
+    color: #3e77aa;
+    font-size: 20px;
+
+    transition: all .2s ease-in-out;
+  }
+
+  &:hover {
+    fa-icon {
+      color: rgb(255, 120, 120);
     }
   }
 }

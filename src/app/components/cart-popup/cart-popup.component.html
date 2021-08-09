@@ -10,13 +10,14 @@
       <app-cart-popup-item
         *ngFor="let productInCart of productsInCart"
         [productInCart]="productInCart"
+        (removeProductFromCartEvent)="onRemoveProductFromCartEvent($event)"
       ></app-cart-popup-item>
     </div>
     <div class="cart-popup-buttons">
       <button class="medium-btn grey-btn">Continue shopping</button>
       <div class="place-order-btn-wrapper">
         <div class="place-order-btn-price">
-          <span class="price">{{ priceForAll }}</span>
+          <span class="price">{{ countPrice() }}</span>
           <span class="hrivna-symbol"> ₴</span>
         </div>
         <button class="large-btn green-btn">Place an order</button>

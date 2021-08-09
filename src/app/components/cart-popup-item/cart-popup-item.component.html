@@ -34,4 +34,7 @@
     </div>
     <div class="cart-popup-item-price">{{ (product?.price || 0) * amountInput.value }} ₴</div>
   </div>
+  <button class="remove-btn" (click)="removeProductFromCart()">
+    <fa-icon [icon]="faTrash"></fa-icon>
+  </button>
 </div>

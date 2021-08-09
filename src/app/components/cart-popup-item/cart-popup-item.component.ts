@@ -7,8 +7,8 @@ import { BackdropService } from './../../shared/services/backdrop.service';
 import { ProductsService } from './../../shared/services/products.service';
 import { Subscription } from 'rxjs';
 import { Product } from './../../shared/interfaces/product.interface';
-import { Component, Input, OnDestroy, OnInit, EventEmitter, Output } from '@angular/core';
-import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { Component, Input, OnDestroy, OnInit, Output, EventEmitter } from '@angular/core';
+import { faMinus, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-cart-popup-item',
@@ -17,8 +17,10 @@ import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
 })
 export class CartPopupItemComponent implements OnInit, OnDestroy {
   @Input() productInCart!: ProductInCart;
+  @Output() removeProductFromCartEvent = new EventEmitter<ProductInCart>();
   faMinus = faMinus;
   faPlus = faPlus;
+  faTrash = faTrash;
   product!: Product;
   imgUrl!: DownloadUrl;
   amountInput!: FormControl;
@@ -123,5 +125,9 @@ export class CartPopupItemComponent implements OnInit, OnDestroy {
     this.setPrice();
 
     this.patchCartProducts();
+  }
+
+  removeProductFromCart(): void {
+    this.removeProductFromCartEvent.emit(this.productInCart);
   }
 }

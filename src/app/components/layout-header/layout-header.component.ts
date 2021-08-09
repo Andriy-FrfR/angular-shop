@@ -1,3 +1,4 @@
+import { UserDataService } from './../../shared/services/user-data.service';
 import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { BackdropService } from '../../shared/services/backdrop.service';
@@ -34,7 +35,8 @@ export class LayoutHeaderComponent implements OnInit, OnDestroy {
     private catalogServ: CatalogService,
     private router: Router,
     private backdropServ: BackdropService,
-    private authServ: AuthService
+    private authServ: AuthService,
+    private userDataServ: UserDataService
   ) { }
 
   ngOnInit(): void {
@@ -62,11 +64,21 @@ export class LayoutHeaderComponent implements OnInit, OnDestroy {
       })
     );
 
-    this.authServ.auth$.subscribe((message: string) => {
-      if (message === 'show') {
-        this.showAuthPopup();
-      }
-    });
+    this.subscriptions.push(
+      this.authServ.auth$.subscribe((message: string) => {
+        if (message === 'show') {
+          this.showAuthPopup();
+        }
+      })
+    );
+
+    this.subscriptions.push(
+      this.userDataServ.cart$.subscribe((message: string) => {
+        if (message === 'show cart') {
+          this.showCartPopup();
+        }
+      })
+    );
   }
 
   ngOnDestroy(): void {

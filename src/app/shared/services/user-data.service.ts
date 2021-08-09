@@ -3,17 +3,25 @@ import { environment } from './../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserDataService {
 
-  productsInCart$: Subject<string> = new Subject();
+  cart$: Subject<string> = new Subject();
+
+  showCart(): void {
+    this.cart$.next('show cart');
+  }
 
   patchProductsInCart(): void {
-    this.productsInCart$.next('patch');
+    this.cart$.next('patch');
+  }
+
+  productsInCartChanged(): void {
+    this.cart$.next('changed');
   }
 
   constructor(private http: HttpClient) { }
@@ -23,9 +31,6 @@ export class UserDataService {
       .pipe(
         map((userDataFb: object) => {
           for (const [id, data] of Object.entries(userDataFb)) {
-            console.log(Object.entries(userDataFb));
-            console.log(data);
-            console.log({id, ...data});
             return {id, ...data};
           }
         })

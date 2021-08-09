@@ -1,3 +1,5 @@
+import { UserData } from './../shared/interfaces/user-data.interface';
+import { UserDataService } from './../shared/services/user-data.service';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { BackdropService } from './../shared/services/backdrop.service';
 import { DownloadUrl } from 'src/app/load/shared/interfaces/download-url.interface';
@@ -9,6 +11,7 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { Product } from 'src/app/shared/interfaces/product.interface';
 import { faCheckCircle, faMinusCircle, faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
+import { ThrowStmt } from '@angular/compiler';
 
 @Component({
   selector: 'app-product',
@@ -19,10 +22,12 @@ export class ProductComponent implements OnInit, OnDestroy {
   product!: Product;
   imgUrls: DownloadUrl[] = [];
   activeImgUrl = '';
+  userData!: UserData;
   faCheckCircle = faCheckCircle;
   faMinusCircle = faMinusCircle;
   faShoppingCart = faShoppingCart;
   showReviewsForm = false;
+  showAlreadyInCartBtn = false;
   subscriptions: Subscription[] = [];
 
   constructor(
@@ -30,7 +35,8 @@ export class ProductComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private loadServ: LoadService,
     private backdropServ: BackdropService,
-    private authServ: AuthService
+    private authServ: AuthService,
+    private userDataServ: UserDataService
   ) { }
 
   ngOnInit(): void {
@@ -42,7 +48,21 @@ export class ProductComponent implements OnInit, OnDestroy {
           this.product = product;
 
           this.loadImages();
+
+          this.subscriptions.push(
+            this.checkProductAlreadyInCart()
+          );
         });
+      })
+    );
+
+    this.subscriptions.push(
+      this.userDataServ.cart$.subscribe((message: string) => {
+        if (message === 'changed') {
+          this.subscriptions.push(
+            this.checkProductAlreadyInCart()
+          );
+        }
       })
     );
 
@@ -61,7 +81,27 @@ export class ProductComponent implements OnInit, OnDestroy {
     }
   }
 
-  loadImages(): void {
+  private checkProductAlreadyInCart(): Subscription {
+    return this.userDataServ.getUserData().subscribe((userData: UserData) => {
+      this.userData = userData;
+
+      if (!userData.productsInCart) {
+        this.showAlreadyInCartBtn = false;
+        return;
+      }
+
+      for (const productInCart of userData.productsInCart) {
+        if (this.product.id === productInCart.productId) {
+          this.showAlreadyInCartBtn = true;
+          return;
+        }
+
+        this.showAlreadyInCartBtn = false;
+      }
+    });
+  }
+
+  private loadImages(): void {
     const imgUrlsArr: DownloadUrlAsync[] = this.loadServ.downloadImg(this.product);
 
     for (const imgUrl of imgUrlsArr) {
@@ -79,14 +119,14 @@ export class ProductComponent implements OnInit, OnDestroy {
     }
   }
 
-  setActiveImg(imgUrl: any): void {
-    this.activeImgUrl = imgUrl;
-  }
-
-  sortImgByIndex(): void {
+  private sortImgByIndex(): void {
     this.imgUrls.sort((a, b) => {
       return a.index - b.index;
     });
+  }
+
+  setActiveImg(imgUrl: any): void {
+    this.activeImgUrl = imgUrl;
   }
 
   onReviewsFormShow(): void {
@@ -99,5 +139,32 @@ export class ProductComponent implements OnInit, OnDestroy {
       this.backdropServ.showBackdrop();
       this.showReviewsForm = true;
     });
+  }
+
+  addProductToCart(): void {
+    this.authServ.token.subscribe((token: string | null) => {
+      if (!token) {
+        this.authServ.showAuthPopup();
+        return;
+      }
+
+      this.userDataServ.getUserData().subscribe((userData: UserData) => {
+        if (!userData.productsInCart) {
+          userData.productsInCart = [];
+        }
+
+        userData.productsInCart.push({productId: this.product.id || '', amount: 1});
+
+        this.userDataServ.patchUserData(userData).subscribe(() => {
+          this.checkProductAlreadyInCart();
+
+          this.userDataServ.showCart();
+        });
+      });
+    });
+  }
+
+  alreadyInCartClick(): void {
+    this.userDataServ.showCart();
   }
 }
