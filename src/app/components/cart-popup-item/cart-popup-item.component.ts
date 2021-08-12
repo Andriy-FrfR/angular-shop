@@ -9,6 +9,7 @@ import { Subscription } from 'rxjs';
 import { Product } from './../../shared/interfaces/product.interface';
 import { Component, Input, OnDestroy, OnInit, Output, EventEmitter } from '@angular/core';
 import { faMinus, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { CartService } from 'src/app/shared/services/cart.service';
 
 @Component({
   selector: 'app-cart-popup-item',
@@ -30,7 +31,7 @@ export class CartPopupItemComponent implements OnInit, OnDestroy {
     private productsServ: ProductsService,
     private backdropServ: BackdropService,
     private loadServ: LoadService,
-    private userDataServ: UserDataService
+    private cartServ: CartService
   ) { }
 
   ngOnInit(): void {
@@ -75,7 +76,7 @@ export class CartPopupItemComponent implements OnInit, OnDestroy {
   }
 
   private patchCartProducts(): void {
-    this.userDataServ.patchProductsInCart();
+    this.cartServ.patchProductsInCart();
   }
 
   openProductPage(): void {

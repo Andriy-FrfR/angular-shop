@@ -1,0 +1,59 @@
+.container {
+  max-width: 1050px;
+}
+
+.checkout {
+  &-title {
+    font-size: 36px;
+
+    margin: 35px 0 0 0;
+  }
+
+  &-content {
+    display: flex;
+    justify-content: space-between;
+  
+    margin: 40px 0 0 0;
+  }
+
+  &-form {
+    width: 100%;
+
+    margin: 0 50px 0 0;
+
+    &-item {
+      position: relative;
+
+      padding: 0 0 0 40px;
+
+      &-cyrcle {
+        position: absolute;
+        left: 0;
+        top: 0;
+
+        width: 24px;
+        height: 24px;
+
+        border-radius: 50%;
+
+        background-color: #e9e9e9;
+        text-align: center;
+        line-height: 24px;
+      }
+
+      &-title {
+        font-size: 16px;
+      }
+    }
+
+    &-contact-data {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+
+      .form-control-wrapper {
+        width: 48%;
+      }
+    }
+  }
+}

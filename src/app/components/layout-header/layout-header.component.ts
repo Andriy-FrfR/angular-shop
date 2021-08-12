@@ -1,3 +1,4 @@
+import { CartService } from './../../shared/services/cart.service';
 import { UserDataService } from './../../shared/services/user-data.service';
 import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 import { AuthService } from 'src/app/shared/services/auth.service';
@@ -36,7 +37,7 @@ export class LayoutHeaderComponent implements OnInit, OnDestroy {
     private router: Router,
     private backdropServ: BackdropService,
     private authServ: AuthService,
-    private userDataServ: UserDataService
+    private cartServ: CartService
   ) { }
 
   ngOnInit(): void {
@@ -73,7 +74,7 @@ export class LayoutHeaderComponent implements OnInit, OnDestroy {
     );
 
     this.subscriptions.push(
-      this.userDataServ.cart$.subscribe((message: string) => {
+      this.cartServ.cart$.subscribe((message: string) => {
         if (message === 'show cart') {
           this.showCartPopup();
         }

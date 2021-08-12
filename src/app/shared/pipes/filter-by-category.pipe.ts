@@ -7,7 +7,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class FilterByCategoryPipe implements PipeTransform {
   transform(products: Product[] | undefined,
-            categories: Category[],
+            categories: Category[] | undefined,
             searchCategoryStr: string,
             searchSubCategoryStr: string): Product[] | undefined {
     if (!products) {
@@ -19,7 +19,7 @@ export class FilterByCategoryPipe implements PipeTransform {
     }
 
     if (!searchSubCategoryStr) {
-      const searchCategory: Category | undefined = categories.find((category: Category) => {
+      const searchCategory: Category | undefined = categories?.find((category: Category) => {
         return category.title === searchCategoryStr ? true : false;
       });
 

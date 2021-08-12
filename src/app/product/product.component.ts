@@ -1,3 +1,4 @@
+import { CartService } from 'src/app/shared/services/cart.service';
 import { UserData } from './../shared/interfaces/user-data.interface';
 import { UserDataService } from './../shared/services/user-data.service';
 import { AuthService } from 'src/app/shared/services/auth.service';
@@ -11,7 +12,6 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { Product } from 'src/app/shared/interfaces/product.interface';
 import { faCheckCircle, faMinusCircle, faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
-import { ThrowStmt } from '@angular/compiler';
 
 @Component({
   selector: 'app-product',
@@ -36,7 +36,8 @@ export class ProductComponent implements OnInit, OnDestroy {
     private loadServ: LoadService,
     private backdropServ: BackdropService,
     private authServ: AuthService,
-    private userDataServ: UserDataService
+    private userDataServ: UserDataService,
+    private cartServ: CartService
   ) { }
 
   ngOnInit(): void {
@@ -57,7 +58,7 @@ export class ProductComponent implements OnInit, OnDestroy {
     );
 
     this.subscriptions.push(
-      this.userDataServ.cart$.subscribe((message: string) => {
+      this.cartServ.cart$.subscribe((message: string) => {
         if (message === 'changed') {
           this.subscriptions.push(
             this.checkProductAlreadyInCart()
@@ -158,13 +159,13 @@ export class ProductComponent implements OnInit, OnDestroy {
         this.userDataServ.patchUserData(userData).subscribe(() => {
           this.checkProductAlreadyInCart();
 
-          this.userDataServ.showCart();
+          this.cartServ.showCart();
         });
       });
     });
   }
 
   alreadyInCartClick(): void {
-    this.userDataServ.showCart();
+    this.cartServ.showCart();
   }
 }

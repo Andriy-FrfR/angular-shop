@@ -1,3 +1,6 @@
+import { CartService } from './../../shared/services/cart.service';
+import { Router } from '@angular/router';
+import { BackdropService } from './../../shared/services/backdrop.service';
 import { UserDataService } from './../../shared/services/user-data.service';
 import { ProductInCart } from './../../shared/interfaces/product-in-cart.interface';
 import { Subscription } from 'rxjs';
@@ -15,7 +18,10 @@ export class CartPopupComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
 
   constructor(
-    private userDataServ: UserDataService
+    private userDataServ: UserDataService,
+    private cartServ: CartService,
+    private backdropServ: BackdropService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -34,10 +40,10 @@ export class CartPopupComponent implements OnInit, OnDestroy {
     );
 
     this.subscriptions.push(
-      this.userDataServ.cart$.subscribe((message: string) => {
+      this.cartServ.cart$.subscribe((message: string) => {
         if (message === 'patch') {
           this.userDataServ.patchUserData(this.userData).subscribe(() => {
-            this.userDataServ.productsInCartChanged();
+            this.cartServ.productsInCartChanged();
 
             this.countPrice();
           });
@@ -67,9 +73,21 @@ export class CartPopupComponent implements OnInit, OnDestroy {
       if (productInCart === productToDelete) {
         this.productsInCart.splice(index, 1);
 
-        this.userDataServ.patchProductsInCart();
+        this.cartServ.patchProductsInCart();
         return;
       }
     });
+  }
+
+  continueShopping(): void {
+    this.backdropServ.hideBackdrop();
+  }
+
+  makeOrder(): void {
+    this.cartServ.setProductsToCheckout(this.productsInCart);
+
+    this.router.navigate(['/checkout']);
+
+    this.backdropServ.hideBackdrop();
   }
 }
