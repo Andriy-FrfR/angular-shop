@@ -1,0 +1,26 @@
+<div class="product-to-checkout">
+  <a
+    target="_blank"
+    routerLink="/search/product/{{ productToCheckout.productId }}"
+    class="product-to-checkout-overview"
+  >
+    <div class="product-to-checkout-img">
+      <img src="{{ imgUrl.url }}" alt="Lorem ipsum">
+    </div>
+    <h5 class="product-to-checkout-title">{{ product?.title }}</h5>
+  </a>
+  <div class="product-to-checkout-info">
+    <div class="product-to-checkout-info-item">
+      <div class="product-to-checkout-info-item-title">Price</div>
+      <div class="product-to-checkout-info-item-content">{{ product?.price }}</div>
+    </div>
+    <div class="product-to-checkout-info-item">
+      <div class="product-to-checkout-info-item-title">Amount</div>
+      <div class="product-to-checkout-info-item-content">{{ productToCheckout.amount }}</div>
+    </div>
+    <div class="product-to-checkout-info-item">
+      <div class="product-to-checkout-info-item-title">Sum</div>
+      <div class="product-to-checkout-info-item-content">{{ (product?.price || 0) * productToCheckout.amount }}</div>
+    </div>
+  </div>
+</div>

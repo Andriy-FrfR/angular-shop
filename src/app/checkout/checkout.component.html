@@ -24,6 +24,24 @@
           </div>
         </div>
       </div>
+      <div class="order">
+        <h3 class="order-title">Order</h3>
+        <div class="order-price">for the price: </div>
+      </div>
+      <div class="checkout-form-item">
+        <div class="checkout-form-item-cyrcle">1</div>
+        <div class="checkout-form-item-title">Products</div>
+        <div class="checkout-products">
+          <app-checkout-product
+            *ngFor="let productToCheckout of productsToCheckout"
+            [productToCheckout]="productToCheckout">
+          </app-checkout-product>
+        </div>
+      </div>
+      <div class="checkout-form-item">
+        <div class="checkout-form-item-cyrcle">2</div>
+        <div class="checkout-form-item-title">Shipping</div>
+      </div>
     </form>
     <app-checkout-side-bar></app-checkout-side-bar>
   </div>
