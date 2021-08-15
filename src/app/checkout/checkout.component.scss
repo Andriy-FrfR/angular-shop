@@ -24,13 +24,15 @@
     &-item {
       position: relative;
 
-      padding: 0 0 0 40px;
+      border-top: 1px solid #e9e9e9;
+
+      padding: 20px 0 0 40px;
       margin: 15px 0 0 0;
 
       &-cyrcle {
         position: absolute;
         left: 0;
-        top: 0;
+        top: 20px;
 
         width: 24px;
         height: 24px;
@@ -46,16 +48,6 @@
         font-size: 16px;
       }
     }
-
-    &-contact-data {
-      display: flex;
-      justify-content: space-between;
-      flex-wrap: wrap;
-
-      .form-control-wrapper {
-        width: 48%;
-      }
-    }
   }
 }
 
@@ -64,14 +56,114 @@
   justify-content: space-between;
   align-items: flex-end;
 
-  border-bottom: 1px solid #e9e9e9;
-
-  padding: 0 0 20px 0;
   margin: 50px 0 0 0;
 
   &-title {
     margin: 0;
 
     font-size: 28px;
+  }
+}
+
+/*Shipping*/
+
+.checkout-form-shipping {
+  .form-label {
+    margin: 15px 0 0 0;
+  }
+
+  .form-control-wrapper {
+    display: flex;
+    justify-content: space-between;
+
+    margin: 0;
+
+    .form-control {
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+  }
+
+  .medium-btn {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+
+  &-adress {
+    position: relative;
+
+    display: block;
+    width: 100%;
+
+    border: 1px solid #d2d2d2;
+    border-radius: 4px;
+
+    padding: 15px 30px 15px 55px;
+    margin: 25px 0 0 0;
+
+    background-color: #fff;
+    word-break: break-all;
+    text-align: left;
+    transition: all .2s ease-in-out;
+
+    &:hover {
+      border-color: rgb(126, 125, 125);
+      background-color: #e9e9e9;
+      cursor: pointer;
+    }
+
+    .form-label {
+      margin: 0;
+    }
+
+    .adress {
+      margin: 4px 0 0 0;
+
+      font-size: 14px;
+    }
+
+    .map-marker {
+      position: absolute;
+      top: 50%;
+      left: 20px;
+      transform: translate(0, -50%);
+
+      color: #797878;
+      font-size: 25px;
+    }
+
+    .chevron {
+      position: absolute;
+      top: 50%;
+      right: 15px;
+      transform: translate(0, -50%);
+
+      color: #797878;
+    }
+  }
+}
+
+/*Mat radio*/
+
+.radio-group {
+  display: flex;
+  flex-direction: column;
+}
+
+mat-radio-button {
+  border: 1px solid #fff;
+
+  margin-bottom: 25px;
+  padding: 0 15px;
+
+  &:first-child {
+    margin-top: 30px;
+  }
+
+  &.active {
+    border-color: #00a046;
+    border-radius: 4px;
+
+    padding: 20px 15px;
   }
 }

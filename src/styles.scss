@@ -21,6 +21,8 @@ body {
 
 /*Angular Material*/
 
+/*Mat tabs*/
+
 .container,
 .mat-tab-labels { 
   max-width: 1500px;
@@ -47,6 +49,17 @@ body {
 
 .mat-tab-group.mat-primary .mat-ink-bar  {
   background-color: #00a046;
+}
+
+/*Mat radio*/
+
+
+.mat-radio-outer-circle {
+  border-color: #d2d2d2;
+}
+
+mat-radio-button:hover .mat-radio-outer-circle {
+  border-color: #333;
 }
 
 /*Buttons*/

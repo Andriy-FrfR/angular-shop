@@ -1,0 +1,9 @@
+.contact-data-form {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+
+  .form-control-wrapper {
+    width: 48%;
+  }
+}

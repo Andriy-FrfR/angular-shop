@@ -1,32 +1,15 @@
 <div class="container">
   <h2 class="checkout-title">Checkout</h2>
   <div class="checkout-content">
-    <form class="checkout-form">
+    <form class="checkout-form" [formGroup]="checkoutForm">
       <div class="checkout-form-item">
         <div class="checkout-form-item-cyrcle">!</div>
         <div class="checkout-form-item-title">Your contact data</div>
-        <div class="checkout-form-contact-data">
-          <div class="form-control-wrapper">
-            <label class="form-wrapper">Surname</label>
-            <input class="form-control" type="text">
-          </div>
-          <div class="form-control-wrapper">
-            <label class="form-wrapper">Name</label>
-            <input class="form-control" type="text">
-          </div>
-          <div class="form-control-wrapper">
-            <label class="form-wrapper">Phone</label>
-            <input class="form-control" type="text">
-          </div>
-          <div class="form-control-wrapper">
-            <label class="form-wrapper">City</label>
-            <input class="form-control" type="text">
-          </div>
-        </div>
+        <app-contact-data-form [parentForm]="checkoutForm" [formName]="'customer-contact-data'"></app-contact-data-form>
       </div>
       <div class="order">
         <h3 class="order-title">Order</h3>
-        <div class="order-price">for the price: </div>
+        <div class="order-price">for the price: {{ countPrice() }} ₴</div>
       </div>
       <div class="checkout-form-item">
         <div class="checkout-form-item-cyrcle">1</div>
@@ -41,6 +24,96 @@
       <div class="checkout-form-item">
         <div class="checkout-form-item-cyrcle">2</div>
         <div class="checkout-form-item-title">Shipping</div>
+        <div class="checkout-form-shipping">
+          <div class="checkout-form-shipping-input-wrapper" [hidden]="!showAdressInput">
+            <label class="form-label">Your adress</label>
+            <div class="form-control-wrapper">
+              <input type="text" class="form-control" formControlName="adress">
+              <button class="medium-btn blue-btn" (click)="adressInputToggle()">Confirm</button>
+            </div>
+          </div>
+          <button
+            class="checkout-form-shipping-adress"
+            (click)="adressInputToggle()"
+            *ngIf="!showAdressInput"
+          >
+            <fa-icon class="map-marker" [icon]="faMapMarkerAlt"></fa-icon>
+            <div class="form-label">Your adress</div>
+            <p class="adress">
+              {{ checkoutForm.get('adress')?.value }}
+            </p>
+            <fa-icon class="chevron" [icon]="faChevronRight"></fa-icon>
+          </button>
+          <div class="checkout-form-item-radio">
+            <mat-radio-group
+              class="radio-group" 
+              formControlName="shipping"
+            >
+              <mat-radio-button
+                [class.active]="checkoutForm.get('shipping')?.value === 'Receiving from Angular Shop\'s pickup points'"
+                [value]="'Receiving from Angular Shop\'s pickup points'"
+              >
+                Receiving from Angular Shop's pickup points
+              </mat-radio-button>
+              <mat-radio-button
+                [class.active]="checkoutForm.get('shipping')?.value === 'Receiving from post offices'"
+                [value]="'Receiving from post offices'"
+              >
+                Receiving from post offices
+              </mat-radio-button>
+              <mat-radio-button
+                [class.active]="checkoutForm.get('shipping')?.value === 'Courier delivery'"
+                [value]="'Courier delivery'"
+              >
+                Courier delivery
+              </mat-radio-button>
+            </mat-radio-group>
+          </div>
+        </div>
+      </div>
+      <div class="checkout-form-item">
+        <div class="checkout-form-item-cyrcle">3</div>
+        <div class="checkout-form-item-title">Payment</div>
+        <div class="checkout-form-item-radio">
+          <mat-radio-group
+            class="radio-group" 
+            formControlName="payment"
+          >
+            <mat-radio-button
+              [class.active]="checkoutForm.get('payment')?.value === 'Payment upon receipt of goods'"
+              [value]="'Payment upon receipt of goods'"
+            >
+              Payment upon receipt of goods
+            </mat-radio-button>
+            <mat-radio-button
+              [class.active]="checkoutForm.get('payment')?.value === 'Card online'"
+              [value]="'Card online'"
+            >
+              Card online
+            </mat-radio-button>
+            <mat-radio-button
+              [class.active]="checkoutForm.get('payment')?.value === 'Google Pay'"
+              [value]="'Google Pay'"
+            >
+              Google Pay
+            </mat-radio-button>
+          </mat-radio-group>
+        </div>
+      </div>
+      <div class="checkout-form-item">
+        <div class="checkout-form-item-cyrcle">4</div>
+        <div class="checkout-form-item-title">Receiver's contact data</div>
+        <div class="who-is-receiver-radio">
+          <mat-radio-group
+            class="radio-group"
+            [(ngModel)]="receiver"
+            [ngModelOptions]="{ standalone: true }"
+          >
+            <mat-radio-button [value]="'Me'" checked>Me</mat-radio-button>
+            <mat-radio-button [value]="'Another person'">Another person</mat-radio-button>
+          </mat-radio-group>
+        </div>
+        <app-contact-data-form [parentForm]="checkoutForm" [formName]="'receiver-contact-data'" [receiver]="receiver"></app-contact-data-form>
       </div>
     </form>
     <app-checkout-side-bar></app-checkout-side-bar>
