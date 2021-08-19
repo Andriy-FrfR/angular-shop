@@ -1,18 +1,39 @@
 <form class="contact-data-form" [formGroup]="contactForm">
   <div class="form-control-wrapper">
     <label class="form-wrapper">Surname</label>
-    <input class="form-control" formControlName="surname" type="text">
+    <input
+      class="form-control"
+      formControlName="surname"
+      type="text"
+      (blur)="patchContactInfo()"
+      (input)="contactFormInput()"
+    >
   </div>
   <div class="form-control-wrapper">
     <label class="form-wrapper">Name</label>
-    <input class="form-control" formControlName="name" type="text">
+    <input
+      class="form-control"
+      formControlName="name"
+      type="text"
+      (blur)="patchContactInfo()"
+    >
   </div>
   <div class="form-control-wrapper">
-    <label class="form-wrapper">Phone</label>
-    <input class="form-control" formControlName="phone" type="text">
+    <label class="form-wrapper">Number</label>
+    <input
+      class="form-control"
+      formControlName="number"
+      type="text" 
+      (blur)="patchContactInfo()"
+    >
   </div>
   <div class="form-control-wrapper">
-    <label class="form-wrapper">Adress</label>
-    <input class="form-control" formControlName="adress" type="text">
+    <label class="form-wrapper">City</label>
+    <input
+      class="form-control"
+      formControlName="city"
+      type="text"
+      (blur)="patchContactInfo()"
+    >
   </div>
 </form>

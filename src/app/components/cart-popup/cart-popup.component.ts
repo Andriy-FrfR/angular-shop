@@ -33,7 +33,7 @@ export class CartPopupComponent implements OnInit, OnDestroy {
           this.userData.productsInCart = [];
         }
 
-        this.productsInCart = userData.productsInCart;
+        this.productsInCart = userData.productsInCart || [];
 
         this.countPrice();
       })

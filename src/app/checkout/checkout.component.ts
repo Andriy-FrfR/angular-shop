@@ -1,24 +1,29 @@
+import { UserDataService } from './../shared/services/user-data.service';
+import { Subscription } from 'rxjs';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { faChevronRight, faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 import { CartService } from './../shared/services/cart.service';
 import { ProductInCart } from './../shared/interfaces/product-in-cart.interface';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { UserData } from '../shared/interfaces/user-data.interface';
 
 @Component({
   selector: 'app-checkout',
   templateUrl: './checkout.component.html',
   styleUrls: ['./checkout.component.scss']
 })
-export class CheckoutComponent implements OnInit {
+export class CheckoutComponent implements OnInit, OnDestroy {
   faChevronRight = faChevronRight;
   faMapMarkerAlt = faMapMarkerAlt;
   productsToCheckout: ProductInCart[] = [];
   checkoutForm!: FormGroup;
   showAdressInput = true;
-  receiver = 'Me' ;
+  receiver = 'Me';
+  subscriptions: Subscription[] = [];
 
   constructor(
-    private cartServ: CartService
+    private cartServ: CartService,
+    private userDataServ: UserDataService
   ) { }
 
   ngOnInit(): void {
@@ -30,7 +35,40 @@ export class CheckoutComponent implements OnInit {
       payment: new FormControl(null, Validators.required)
     });
 
-    console.log(this.checkoutForm);
+    this.subscriptions.push(
+      this.userDataServ.getUserData()
+        .subscribe((userData: UserData) => {
+          if (!userData.adress) {
+            return;
+          }
+
+          this.checkoutForm.get('adress')?.setValue(userData.adress);
+
+          this.showAdressInput = false;
+        })
+    );
+  }
+
+  ngOnDestroy(): void {
+    for (const subscription of this.subscriptions) {
+      subscription.unsubscribe();
+    }
+  }
+
+  private patchAdress(): void {
+    this.subscriptions.push(
+      this.userDataServ.getUserData()
+        .subscribe((userData: UserData) => {
+          userData.adress = this.checkoutForm.get('adress')?.value;
+
+          this.subscriptions.push(
+            this.userDataServ.patchUserData(userData)
+              .subscribe((patchedData) => {
+                console.log(patchedData);
+              })
+          );
+        })
+    );
   }
 
   countPrice(): number {
@@ -49,5 +87,9 @@ export class CheckoutComponent implements OnInit {
     }
 
     this.showAdressInput = !this.showAdressInput;
+
+    if (!this.showAdressInput) {
+      this.patchAdress();
+    }
   }
 }

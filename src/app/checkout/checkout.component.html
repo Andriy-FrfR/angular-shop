@@ -113,7 +113,7 @@
             <mat-radio-button [value]="'Another person'">Another person</mat-radio-button>
           </mat-radio-group>
         </div>
-        <app-contact-data-form [parentForm]="checkoutForm" [formName]="'receiver-contact-data'" [receiver]="receiver"></app-contact-data-form>
+        <app-contact-data-form [parentForm]="checkoutForm" [formName]="'receiver-contact-data'" [(receiver)]="receiver"></app-contact-data-form>
       </div>
     </form>
     <app-checkout-side-bar></app-checkout-side-bar>
