@@ -1,3 +1,4 @@
+import { CheckoutService } from './../shared/services/checkout.service';
 import { UserDataService } from './../shared/services/user-data.service';
 import { Subscription } from 'rxjs';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
@@ -6,6 +7,7 @@ import { CartService } from './../shared/services/cart.service';
 import { ProductInCart } from './../shared/interfaces/product-in-cart.interface';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { UserData } from '../shared/interfaces/user-data.interface';
+import { ShippingPrices } from '../shared/interfaces/shipping-prices.interface';
 
 @Component({
   selector: 'app-checkout',
@@ -17,13 +19,15 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   faMapMarkerAlt = faMapMarkerAlt;
   productsToCheckout: ProductInCart[] = [];
   checkoutForm!: FormGroup;
+  shippingPrices!: ShippingPrices;
   showAdressInput = true;
   receiver = 'Me';
   subscriptions: Subscription[] = [];
 
   constructor(
     private cartServ: CartService,
-    private userDataServ: UserDataService
+    private userDataServ: UserDataService,
+    private checkoutServ: CheckoutService
   ) { }
 
   ngOnInit(): void {
@@ -31,8 +35,11 @@ export class CheckoutComponent implements OnInit, OnDestroy {
 
     this.checkoutForm = new FormGroup({
       adress: new FormControl(null, Validators.required),
-      shipping: new FormControl(null, Validators.required),
-      payment: new FormControl(null, Validators.required)
+      shipping: new FormControl('angularShopPickupPoints', Validators.required),
+      payment: new FormControl('Payment upon receipt of goods', [
+        Validators.required,
+        Validators.minLength(4)
+      ])
     });
 
     this.subscriptions.push(
@@ -45,6 +52,13 @@ export class CheckoutComponent implements OnInit, OnDestroy {
           this.checkoutForm.get('adress')?.setValue(userData.adress);
 
           this.showAdressInput = false;
+        })
+    );
+
+    this.subscriptions.push(
+      this.checkoutServ.getShippingPrices()
+        .subscribe((shippingPrices: ShippingPrices) => {
+          this.shippingPrices = shippingPrices;
         })
     );
   }

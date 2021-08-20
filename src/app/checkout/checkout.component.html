@@ -27,9 +27,14 @@
         <div class="checkout-form-shipping">
           <div class="checkout-form-shipping-input-wrapper" [hidden]="!showAdressInput">
             <label class="form-label">Your adress</label>
-            <div class="form-control-wrapper">
+            <div class="form-control-wrapper" [class.error]="checkoutForm.get('adress')?.invalid && checkoutForm.get('adress')?.touched">
               <input type="text" class="form-control" formControlName="adress">
               <button class="medium-btn blue-btn" (click)="adressInputToggle()">Confirm</button>
+            </div>
+            <div class="validation" *ngIf="checkoutForm.get('adress')?.invalid && checkoutForm.get('adress')?.touched">
+              <div class="validation-item">
+                Type destination adress
+              </div>
             </div>
           </div>
           <button
@@ -44,26 +49,27 @@
             </p>
             <fa-icon class="chevron" [icon]="faChevronRight"></fa-icon>
           </button>
+
           <div class="checkout-form-item-radio">
             <mat-radio-group
               class="radio-group" 
               formControlName="shipping"
             >
               <mat-radio-button
-                [class.active]="checkoutForm.get('shipping')?.value === 'Receiving from Angular Shop\'s pickup points'"
-                [value]="'Receiving from Angular Shop\'s pickup points'"
+                [class.active]="checkoutForm.get('shipping')?.value === 'angularShopPickupPoints'"
+                [value]="'angularShopPickupPoints'"
               >
                 Receiving from Angular Shop's pickup points
               </mat-radio-button>
               <mat-radio-button
-                [class.active]="checkoutForm.get('shipping')?.value === 'Receiving from post offices'"
-                [value]="'Receiving from post offices'"
+                [class.active]="checkoutForm.get('shipping')?.value === 'postOffices'"
+                [value]="'postOffices'"
               >
                 Receiving from post offices
               </mat-radio-button>
               <mat-radio-button
-                [class.active]="checkoutForm.get('shipping')?.value === 'Courier delivery'"
-                [value]="'Courier delivery'"
+                [class.active]="checkoutForm.get('shipping')?.value === 'courier'"
+                [value]="'courier'"
               >
                 Courier delivery
               </mat-radio-button>
@@ -116,6 +122,10 @@
         <app-contact-data-form [parentForm]="checkoutForm" [formName]="'receiver-contact-data'" [(receiver)]="receiver"></app-contact-data-form>
       </div>
     </form>
-    <app-checkout-side-bar></app-checkout-side-bar>
+    <app-checkout-side-bar
+      [productsToCheckout]="productsToCheckout"
+      [shippingPrices]="shippingPrices"
+      [shippingMethod]="checkoutForm.get('shipping')?.value"
+    ></app-checkout-side-bar>
   </div>
 </div>

@@ -1,3 +1,23 @@
 <div class="checkout-side-bar">
-  
+  <h3 class="checkout-side-bar-title">
+    Total
+  </h3>
+  <div class="checkout-side-bar-info">
+    <div class="checkout-side-bar-info-item">
+      <span class="checkout-side-bar-info-item-label">{{ productsToCheckout.length }} product for price</span>
+      <span class="checkout-side-bar-info-item-value">{{ countProductsPrice() }} ₴</span>
+    </div>
+    <div class="checkout-side-bar-info-item">
+      <span class="checkout-side-bar-info-item-label">Shipping cost</span>
+      <span class="checkout-side-bar-info-item-value">{{ getShippingPrice() }}</span>
+    </div>
+    <div class="checkout-side-bar-info-item total-price">
+      <span class="checkout-side-bar-info-item-label">To pay</span>
+      <span class="checkout-side-bar-info-item-value large">{{ countTotalPrice() }} ₴</span>
+    </div>
+    <button class="large-btn green-btn">Confirm order</button>
+    <div class="checkout-side-bar-agreement">
+      By confirming the order, I accept the terms of the user agreement
+    </div>
+  </div>
 </div>

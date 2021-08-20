@@ -1,5 +1,5 @@
 <form class="contact-data-form" [formGroup]="contactForm">
-  <div class="form-control-wrapper">
+  <div class="form-control-wrapper" [class.error]="contactForm.get('surname')?.invalid && contactForm.get('surname')?.touched">
     <label class="form-wrapper">Surname</label>
     <input
       class="form-control"
@@ -8,8 +8,13 @@
       (blur)="patchContactInfo()"
       (input)="contactFormInput()"
     >
+    <div class="validation" *ngIf="contactForm.get('surname')?.invalid && contactForm.get('surname')?.touched">
+      <div class="validation-item">
+        Type your real surname
+      </div>
+    </div>
   </div>
-  <div class="form-control-wrapper">
+  <div class="form-control-wrapper" [class.error]="contactForm.get('name')?.invalid && contactForm.get('name')?.touched">
     <label class="form-wrapper">Name</label>
     <input
       class="form-control"
@@ -17,8 +22,13 @@
       type="text"
       (blur)="patchContactInfo()"
     >
+    <div class="validation" *ngIf="contactForm.get('name')?.invalid && contactForm.get('name')?.touched">
+      <div class="validation-item">
+        Type your real name
+      </div>
+    </div>
   </div>
-  <div class="form-control-wrapper">
+  <div class="form-control-wrapper" [class.error]="contactForm.get('number')?.invalid && contactForm.get('number')?.touched">
     <label class="form-wrapper">Number</label>
     <input
       class="form-control"
@@ -26,8 +36,13 @@
       type="text" 
       (blur)="patchContactInfo()"
     >
+    <div class="validation" *ngIf="contactForm.get('number')?.invalid && contactForm.get('number')?.touched">
+      <div class="validation-item">
+        Type your number
+      </div>
+    </div>
   </div>
-  <div class="form-control-wrapper">
+  <div class="form-control-wrapper" [class.error]="contactForm.get('city')?.invalid && contactForm.get('city')?.touched">
     <label class="form-wrapper">City</label>
     <input
       class="form-control"
@@ -35,5 +50,10 @@
       type="text"
       (blur)="patchContactInfo()"
     >
+    <div class="validation" *ngIf="contactForm.get('city')?.invalid && contactForm.get('city')?.touched">
+      <div class="validation-item">
+        Type your city
+      </div>
+    </div>
   </div>
 </form>

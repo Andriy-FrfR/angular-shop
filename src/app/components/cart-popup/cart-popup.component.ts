@@ -34,8 +34,6 @@ export class CartPopupComponent implements OnInit, OnDestroy {
         }
 
         this.productsInCart = userData.productsInCart || [];
-
-        this.countPrice();
       })
     );
 
@@ -44,8 +42,6 @@ export class CartPopupComponent implements OnInit, OnDestroy {
         if (message === 'patch') {
           this.userDataServ.patchUserData(this.userData).subscribe(() => {
             this.cartServ.productsInCartChanged();
-
-            this.countPrice();
           });
         }
       })
@@ -58,7 +54,7 @@ export class CartPopupComponent implements OnInit, OnDestroy {
     }
   }
 
-  countPrice(): number {
+  countProductsPrice(): number {
     let sum = 0;
 
     for (const productInCart of this.productsInCart) {

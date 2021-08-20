@@ -46,10 +46,22 @@ export class ContactDataFormComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.contactForm = new FormGroup({
-      surname: new FormControl(null, Validators.required),
-      name: new FormControl(null, Validators.required),
-      number: new FormControl(null, Validators.required),
-      city: new FormControl(null, Validators.required)
+      surname: new FormControl(null, [
+        Validators.required,
+        Validators.minLength(2)
+      ]),
+      name: new FormControl(null, [
+        Validators.required,
+        Validators.minLength(2)
+      ]),
+      number: new FormControl(null, [
+        Validators.required,
+        Validators.minLength(2)
+      ]),
+      city: new FormControl(null, [
+        Validators.required,
+        Validators.minLength(2)
+      ])
     });
 
     this.parentForm.addControl(this.formName, this.contactForm);
