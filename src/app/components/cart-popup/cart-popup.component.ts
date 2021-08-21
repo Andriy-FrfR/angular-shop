@@ -1,3 +1,4 @@
+import { CheckoutService } from './../../shared/services/checkout.service';
 import { CartService } from './../../shared/services/cart.service';
 import { Router } from '@angular/router';
 import { BackdropService } from './../../shared/services/backdrop.service';
@@ -39,7 +40,7 @@ export class CartPopupComponent implements OnInit, OnDestroy {
 
     this.subscriptions.push(
       this.cartServ.cart$.subscribe((message: string) => {
-        if (message === 'patch') {
+        if (message === 'patch cart') {
           this.userDataServ.patchUserData(this.userData).subscribe(() => {
             this.cartServ.productsInCartChanged();
           });
@@ -83,6 +84,8 @@ export class CartPopupComponent implements OnInit, OnDestroy {
     this.cartServ.setProductsToCheckout(this.productsInCart);
 
     this.router.navigate(['/checkout']);
+
+    this.cartServ.productsToCheckoutChanged();
 
     this.backdropServ.hideBackdrop();
   }

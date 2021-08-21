@@ -16,11 +16,15 @@ export class CartService {
   }
 
   patchProductsInCart(): void {
-    this.cart$.next('patch');
+    this.cart$.next('patch cart');
   }
 
   productsInCartChanged(): void {
-    this.cart$.next('changed');
+    this.cart$.next('cart changed');
+  }
+
+  productsToCheckoutChanged(): void {
+    this.cart$.next('products to checkout changed');
   }
 
   setProductsToCheckout(products: ProductInCart[]): void {

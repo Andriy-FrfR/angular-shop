@@ -31,8 +31,6 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.productsToCheckout = this.cartServ.getProductsToCheckout();
-
     this.checkoutForm = new FormGroup({
       adress: new FormControl(null, Validators.required),
       shipping: new FormControl('angularShopPickupPoints', Validators.required),
@@ -41,6 +39,17 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         Validators.minLength(4)
       ])
     });
+
+    this.productsToCheckout = this.cartServ.getProductsToCheckout();
+
+    this.subscriptions.push(
+      this.cartServ.cart$
+        .subscribe((message: string) => {
+          if (message === 'products to checkout changed') {
+            this.productsToCheckout = this.cartServ.getProductsToCheckout();
+          }
+        })
+    );
 
     this.subscriptions.push(
       this.userDataServ.getUserData()
@@ -105,5 +114,21 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     if (!this.showAdressInput) {
       this.patchAdress();
     }
+  }
+
+  getShippingPrice(shippingMethod: string): string {
+    if (shippingMethod === 'courier') {
+      return this.shippingPrices?.courier + ' ₴';
+    }
+
+    if (shippingMethod === 'angularShopPickupPoints') {
+      return this.shippingPrices?.angularShopPickupPoints;
+    }
+
+    if (shippingMethod === 'postOffices') {
+      return this.shippingPrices?.postOffices;
+    }
+
+    return '';
   }
 }

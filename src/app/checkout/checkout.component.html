@@ -60,18 +60,21 @@
                 [value]="'angularShopPickupPoints'"
               >
                 Receiving from Angular Shop's pickup points
+                <span class="free">{{ getShippingPrice('angularShopPickupPoints') }}</span>
               </mat-radio-button>
               <mat-radio-button
                 [class.active]="checkoutForm.get('shipping')?.value === 'postOffices'"
                 [value]="'postOffices'"
               >
                 Receiving from post offices
+                <span>{{ getShippingPrice('postOffices') }}</span>
               </mat-radio-button>
               <mat-radio-button
                 [class.active]="checkoutForm.get('shipping')?.value === 'courier'"
                 [value]="'courier'"
               >
                 Courier delivery
+                <span>{{ getShippingPrice('courier') }}</span>
               </mat-radio-button>
             </mat-radio-group>
           </div>

@@ -85,6 +85,29 @@
     }
   }
 
+  .already-in-cart {
+    width: 100%;
+
+    background-color: #fff;
+    font-size: 18px;
+    color: #3e77aa;
+    cursor: pointer;
+
+    &:hover {
+      color: rgb(255, 120, 120);
+    }
+
+    & fa-icon {
+      margin: 0 10px 0 0;
+
+      color: #00a046;
+    }
+
+    &-text {
+      text-decoration: underline;
+    }
+  }
+
   .product-price {
     font-size: 28px;
 

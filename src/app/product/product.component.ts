@@ -59,7 +59,7 @@ export class ProductComponent implements OnInit, OnDestroy {
 
     this.subscriptions.push(
       this.cartServ.cart$.subscribe((message: string) => {
-        if (message === 'changed') {
+        if (message === 'cart changed') {
           this.subscriptions.push(
             this.checkProductAlreadyInCart()
           );
@@ -83,23 +83,24 @@ export class ProductComponent implements OnInit, OnDestroy {
   }
 
   private checkProductAlreadyInCart(): Subscription {
-    return this.userDataServ.getUserData().subscribe((userData: UserData) => {
-      this.userData = userData;
+    return this.userDataServ.getUserData()
+      .subscribe((userData: UserData) => {
+        this.userData = userData;
 
-      if (!userData.productsInCart) {
-        this.showAlreadyInCartBtn = false;
-        return;
-      }
-
-      for (const productInCart of userData.productsInCart) {
-        if (this.product.id === productInCart.productId) {
-          this.showAlreadyInCartBtn = true;
+        if (!userData.productsInCart) {
+          this.showAlreadyInCartBtn = false;
           return;
         }
 
-        this.showAlreadyInCartBtn = false;
-      }
-    });
+        for (const productInCart of userData.productsInCart) {
+          if (this.product.id === productInCart.productId) {
+            this.showAlreadyInCartBtn = true;
+            return;
+          }
+
+          this.showAlreadyInCartBtn = false;
+        }
+      });
   }
 
   private loadImages(): void {

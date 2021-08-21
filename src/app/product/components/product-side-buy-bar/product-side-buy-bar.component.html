@@ -19,8 +19,12 @@
     <span class="product-price">
       {{ product?.price }} <span class="hrivna-symbol">₴</span>
     </span>
-    <button class="large-btn product-buy-btn green-btn">
+    <button class="large-btn product-buy-btn green-btn" (click)="addProductToCart()" *ngIf="!showAlreadyInCartBtn">
       <fa-icon [icon]="faShoppingCart"></fa-icon> Buy
+    </button>
+    <button class="already-in-cart large-btn" (click)="alreadyInCartClick()" *ngIf="showAlreadyInCartBtn">
+      <fa-icon [icon]="faShoppingCart"></fa-icon>
+      <span class="already-in-cart-text">In Cart</span>
     </button>
   </div>
   <div class="product-seller">

@@ -1,3 +1,8 @@
+import { AuthService } from './../../../shared/services/auth.service';
+import { UserDataService } from './../../../shared/services/user-data.service';
+import { UserData } from './../../../shared/interfaces/user-data.interface';
+import { CartService } from 'src/app/shared/services/cart.service';
+import { ActivatedRoute } from '@angular/router';
 import { Product } from './../../../shared/interfaces/product.interface';
 import { faCheckCircle, faMinusCircle, faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 import { DownloadUrl } from './../../../load/shared/interfaces/download-url.interface';
@@ -14,23 +19,43 @@ import { Subscription } from 'rxjs';
 export class ProductSideBuyBarComponent implements OnInit, OnDestroy {
   @Input() set product(product: Product) {
     this._product = product;
+
+    this.checkProductAlreadyInCart();
   }
 
   get product(): Product {
     return this._product;
   }
 
+  showAlreadyInCartBtn = false;
+
   // tslint:disable-next-line:variable-name
   _product!: Product;
   imgUrl!: DownloadUrl;
+  userData!: UserData;
   faCheckCircle = faCheckCircle;
   faMinusCircle = faMinusCircle;
   faShoppingCart = faShoppingCart;
   subscriptions: Subscription[] = [];
 
-  constructor(private loadServ: LoadService) { }
+  constructor(
+    private loadServ: LoadService,
+    private cartServ: CartService,
+    private userDataServ: UserDataService,
+    private authServ: AuthService
+  ) { }
 
   ngOnInit(): void {
+    this.subscriptions.push(
+      this.cartServ.cart$.subscribe((message: string) => {
+        if (message === 'cart changed') {
+          this.subscriptions.push(
+            this.checkProductAlreadyInCart()
+          );
+        }
+      })
+    );
+
     this.loadImages();
   }
 
@@ -38,6 +63,31 @@ export class ProductSideBuyBarComponent implements OnInit, OnDestroy {
     for (const subscription of this.subscriptions) {
       subscription.unsubscribe();
     }
+  }
+
+  private checkProductAlreadyInCart(): Subscription {
+    return this.userDataServ.getUserData()
+      .subscribe((userData: UserData) => {
+        this.userData = userData;
+
+        if (!userData.productsInCart) {
+          this.showAlreadyInCartBtn = false;
+          return;
+        }
+
+        for (const productInCart of userData.productsInCart) {
+          if (this.product.id === productInCart.productId) {
+            this.showAlreadyInCartBtn = true;
+            return;
+          }
+
+          this.showAlreadyInCartBtn = false;
+        }
+      });
+  }
+
+  alreadyInCartClick(): void {
+    this.cartServ.showCart();
   }
 
   loadImages(): void {
@@ -54,4 +104,26 @@ export class ProductSideBuyBarComponent implements OnInit, OnDestroy {
     }
   }
 
+  addProductToCart(): void {
+    this.authServ.token.subscribe((token: string | null) => {
+      if (!token) {
+        this.authServ.showAuthPopup();
+        return;
+      }
+
+      this.userDataServ.getUserData().subscribe((userData: UserData) => {
+        if (!userData.productsInCart) {
+          userData.productsInCart = [];
+        }
+
+        userData.productsInCart.push({productId: this.product.id || '', amount: 1});
+
+        this.userDataServ.patchUserData(userData).subscribe(() => {
+          this.checkProductAlreadyInCart();
+
+          this.cartServ.showCart();
+        });
+      });
+    });
+  }
 }
