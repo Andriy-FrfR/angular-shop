@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { CheckoutService } from './../shared/services/checkout.service';
 import { UserDataService } from './../shared/services/user-data.service';
 import { Subscription } from 'rxjs';
@@ -27,7 +28,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   constructor(
     private cartServ: CartService,
     private userDataServ: UserDataService,
-    private checkoutServ: CheckoutService
+    private checkoutServ: CheckoutService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -70,12 +72,38 @@ export class CheckoutComponent implements OnInit, OnDestroy {
           this.shippingPrices = shippingPrices;
         })
     );
+
+    this.subscriptions.push(
+      this.checkoutServ.checkout$
+        .subscribe((message) => {
+          if (message === 'confirm') {
+            this.confirmOrder();
+          }
+        })
+    );
   }
 
   ngOnDestroy(): void {
     for (const subscription of this.subscriptions) {
       subscription.unsubscribe();
     }
+  }
+
+  private confirmOrder(): void {
+    if (this.checkoutForm.invalid) {
+      this.checkoutForm.markAllAsTouched();
+      return;
+    }
+
+    this.checkoutServ.createOrder(
+      this.checkoutForm,
+      this.productsToCheckout,
+      this.countTotalPrice()
+    ).subscribe(() => {
+      this.cartServ.removeProductsToCheckout();
+
+      this.router.navigate(['cabinet', 'orders']);
+    });
   }
 
   private patchAdress(): void {
@@ -94,7 +122,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     );
   }
 
-  countPrice(): number {
+  countProductsPrice(): number {
     let sum = 0;
 
     for (const productToCheckout of this.productsToCheckout) {
@@ -102,6 +130,14 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     }
 
     return sum;
+  }
+
+  countTotalPrice(): number {
+    if (this.checkoutForm.get('shipping')?.value === 'courier') {
+      return this.countProductsPrice() + this.shippingPrices?.courier || 0;
+    }
+
+    return this.countProductsPrice();
   }
 
   adressInputToggle(): void {

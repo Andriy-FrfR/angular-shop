@@ -34,4 +34,8 @@ export class CartService {
   getProductsToCheckout(): ProductInCart[] {
     return JSON.parse(localStorage.getItem('productsToCheckout') || '');
   }
+
+  removeProductsToCheckout(): void {
+    localStorage.removeItem('productsToCheckout');
+  }
 }

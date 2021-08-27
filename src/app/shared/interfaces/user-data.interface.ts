@@ -1,3 +1,4 @@
+import { Order } from './order.interface';
 import { ProductInCart } from './product-in-cart.interface';
 export interface UserData {
   id: string;
@@ -7,4 +8,5 @@ export interface UserData {
   city?: string;
   adress?: string;
   productsInCart?: ProductInCart[];
+  orders?: Order[] ;
 }

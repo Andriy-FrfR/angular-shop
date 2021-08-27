@@ -1,3 +1,4 @@
+import { CheckoutService } from './../../../shared/services/checkout.service';
 import { ShippingPrices } from './../../../shared/interfaces/shipping-prices.interface';
 import { Subscription } from 'rxjs';
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
@@ -14,7 +15,7 @@ export class CheckoutSideBarComponent implements OnInit, OnDestroy {
   @Input() shippingMethod!: string;
   subscriptions: Subscription[] = [];
 
-  constructor() { }
+  constructor(private checkoutServ: CheckoutService) { }
 
   ngOnInit(): void {
   }
@@ -59,4 +60,7 @@ export class CheckoutSideBarComponent implements OnInit, OnDestroy {
     return this.countProductsPrice();
   }
 
+  onConfirm(): void {
+    this.checkoutServ.emitOrder();
+  }
 }

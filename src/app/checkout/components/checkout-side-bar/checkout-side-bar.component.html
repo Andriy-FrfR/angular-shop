@@ -15,7 +15,7 @@
       <span class="checkout-side-bar-info-item-label">To pay</span>
       <span class="checkout-side-bar-info-item-value large">{{ countTotalPrice() }} ₴</span>
     </div>
-    <button class="large-btn green-btn">Confirm order</button>
+    <button class="large-btn green-btn" (click)="onConfirm()">Confirm order</button>
     <div class="checkout-side-bar-agreement">
       By confirming the order, I accept the terms of the user agreement
     </div>
