@@ -1,2 +1,35 @@
-<p>cabinet works!</p>
-<router-outlet></router-outlet>
+<div class="container">
+  <aside>
+    <nav class="cabinet-nav">
+      <ul class="cabinet-links-list">
+        <li class="cabinet-links-list-item">
+          <a routerLinkActive="active" [routerLink]="['personal']" class="cabinet-link">
+            <div class="cabinet-link-icon-wrapper">
+              <fa-icon class="cabinet-link-icon" [icon]="faUserCircle"></fa-icon>
+            </div>
+            Andriy Lukashevyc
+          </a>
+        </li>
+        <li class="cabinet-links-list-item">
+          <a routerLinkActive="active" [routerLink]="['orders']" class="cabinet-link">
+            <div class="cabinet-link-icon-wrapper">
+              <fa-icon class="cabinet-link-icon" [icon]="faListAll"></fa-icon>
+            </div>
+            My orders
+          </a>
+        </li>
+        <li class="cabinet-links-list-item">
+          <a routerLinkActive="active" [routerLink]="['wish-list']" class="cabinet-link">
+            <div class="cabinet-link-icon-wrapper">
+              <fa-icon class="cabinet-link-icon" [icon]="faHeart"></fa-icon>
+            </div>
+            Wish list
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </aside>
+  <main>
+    <router-outlet></router-outlet>
+  </main>
+</div>

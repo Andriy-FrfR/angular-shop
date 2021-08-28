@@ -1,3 +1,4 @@
+import { PersonalComponent } from './components/personal/personal.component';
 import { WishListComponent } from './components/wish-list/wish-list.component';
 import { OrdersComponent } from './components/orders/orders.component';
 import { CabinetComponent } from './cabinet.component';
@@ -6,7 +7,8 @@ import { NgModule } from '@angular/core';
 
 const childrenRoutes: Routes = [
   {path: 'orders', component: OrdersComponent},
-  {path: 'wish-list', component: WishListComponent}
+  {path: 'wish-list', component: WishListComponent},
+  {path: 'personal', component: PersonalComponent}
 ];
 
 const routes: Routes = [

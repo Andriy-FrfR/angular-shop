@@ -1,6 +1,5 @@
 import { CartService } from './../../shared/services/cart.service';
-import { UserDataService } from './../../shared/services/user-data.service';
-import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
+import { faHeart, faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { BackdropService } from '../../shared/services/backdrop.service';
 import { Category } from './../../shared/interfaces/category.interface';
@@ -22,10 +21,12 @@ import { Subscription } from 'rxjs';
 export class LayoutHeaderComponent implements OnInit, OnDestroy {
   @Input() sidenav!: MatSidenav;
   faUser = faUser;
+  faHeart = faHeart;
   faShoppingCart = faShoppingCart;
   products!: Product[];
   searchInput!: FormControl;
   categories!: Category[];
+  isAuthorized = false;
   showCatalog = false;
   showAuth = false;
   showCart = false;
@@ -66,9 +67,24 @@ export class LayoutHeaderComponent implements OnInit, OnDestroy {
     );
 
     this.subscriptions.push(
+      this.authServ.token
+        .subscribe((token: string | null) => {
+          if (!token) {
+            return;
+          }
+
+          this.isAuthorized = true;
+        })
+    );
+
+    this.subscriptions.push(
       this.authServ.auth$.subscribe((message: string) => {
         if (message === 'show') {
           this.showAuthPopup();
+        }
+
+        if (message === 'authorized') {
+          this.isAuthorized = true;
         }
       })
     );
@@ -120,5 +136,9 @@ export class LayoutHeaderComponent implements OnInit, OnDestroy {
       this.backdropServ.showBackdrop();
       this.showCart = true;
     });
+  }
+
+  navigateToWishlist(): void {
+    this.router.navigate(['cabinet', 'wish-list']);
   }
 }

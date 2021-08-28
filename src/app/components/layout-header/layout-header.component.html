@@ -27,8 +27,11 @@
         <span class="search-button-text">Search</span>
       </button>
     </div>
-    <button class="popup-btn" (click)="showAuthPopup()">
+    <button class="popup-btn" (click)="showAuthPopup()" *ngIf="!isAuthorized">
       <fa-icon [icon]="faUser"></fa-icon>
+    </button>
+    <button class="popup-btn" (click)="navigateToWishlist()" *ngIf="isAuthorized">
+      <fa-icon [icon]="faHeart"></fa-icon>
     </button>
     <button class="popup-btn" (click)="showCartPopup()">
       <fa-icon [icon]="faShoppingCart"></fa-icon>

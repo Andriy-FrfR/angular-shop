@@ -29,26 +29,38 @@ export class AuthPopupComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.logInForm = new FormGroup({
-      email: new FormControl('', [
+      email: new FormControl(null, [
         Validators.required,
         Validators.email
       ], [
         this.accountExistValidator.validate.bind(this.accountExistValidator)
       ]),
-      password: new FormControl('', [
+      password: new FormControl(null, [
         Validators.required,
         Validators.minLength(6)
       ])
     });
 
     this.signUpForm = new FormGroup({
-      email: new FormControl('', [
+      name: new FormControl(null, [
+        Validators.required,
+        Validators.minLength(2)
+      ]),
+      surname: new FormControl(null, [
+        Validators.required,
+        Validators.minLength(2)
+      ]),
+      number: new FormControl(null, [
+        Validators.required,
+        Validators.pattern(/\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/)
+      ]),
+      email: new FormControl(null, [
         Validators.required,
         Validators.email,
       ], [
         this.uniqueEmailValidator.validate.bind(this.uniqueEmailValidator)
       ]),
-      password: new FormControl('', [
+      password: new FormControl(null, [
         Validators.required,
         Validators.minLength(6)
       ])
@@ -71,6 +83,7 @@ export class AuthPopupComponent implements OnInit, OnDestroy {
 
   logIn(): void {
     if (this.logInForm.invalid || this.logInForm.pending) {
+      this.logInForm.markAllAsTouched();
       return;
     }
 
@@ -99,6 +112,7 @@ export class AuthPopupComponent implements OnInit, OnDestroy {
 
   signUp(): void {
     if (this.signUpForm.invalid || this.signUpForm.pending) {
+      this.signUpForm.markAllAsTouched();
       return;
     }
 
@@ -106,6 +120,10 @@ export class AuthPopupComponent implements OnInit, OnDestroy {
       this.authServ.signUp({
         email: this.signUpForm.get('email')?.value,
         password: this.signUpForm.get('password')?.value
+      }, {
+        name: this.signUpForm.get('name')?.value,
+        surname: this.signUpForm.get('surname')?.value,
+        number: this.signUpForm.get('number')?.value
       }).subscribe((data: any) => {
         console.log(data);
         this.backdropServ.hideBackdrop();

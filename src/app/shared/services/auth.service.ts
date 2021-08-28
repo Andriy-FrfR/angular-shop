@@ -47,6 +47,8 @@ export class AuthService {
     localStorage.setItem('expiresIn', `${Date.now() + +response.expiresIn * 1000}`);
     localStorage.setItem('refreshToken', response.refreshToken);
     localStorage.setItem('localId', response.localId);
+
+    this.auth$.next('authorized');
   }
 
   refreshToken(): Observable<string> {
@@ -77,21 +79,19 @@ export class AuthService {
     return this.http.post<AuthResponse>(`https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=
                                         ${environment.APIKey}`, user)
       .pipe(
-        tap(this.setToken),
+        tap(this.setToken.bind(this)),
         first()
       );
   }
 
-  signUp(user: UserAuth): Observable<any> {
+  signUp(user: UserAuth, userData: UserData): Observable<any> {
     user.returnSecureToken = true;
 
     return this.http.post<AuthResponse>(`https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${environment.APIKey}`, user)
       .pipe(
-        tap(this.setToken),
+        tap(this.setToken.bind(this)),
         switchMap((data: AuthResponse) => {
-          return this.http.post<UserData>(`${environment.dbUrl}/users/${data.localId}.json`, {
-            productsInCart: ['']
-          });
+          return this.http.post<UserData>(`${environment.dbUrl}/users/${data.localId}.json`, userData);
         }),
         first()
       );

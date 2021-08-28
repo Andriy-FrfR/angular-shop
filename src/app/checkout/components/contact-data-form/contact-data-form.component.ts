@@ -56,7 +56,7 @@ export class ContactDataFormComponent implements OnInit, OnDestroy {
       ]),
       number: new FormControl(null, [
         Validators.required,
-        Validators.minLength(2)
+        Validators.pattern(/\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/)
       ]),
       city: new FormControl(null, [
         Validators.required,

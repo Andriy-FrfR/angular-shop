@@ -15,7 +15,7 @@
         <input
           id="logInEmail"
           type="email"
-          autocomplete="username"
+          autocomplete="email"
           class="form-control"
           formControlName="email"
         >
@@ -87,13 +87,76 @@
     <div class="form-controls-wrapper">
       <div
         class="form-control-wrapper"
+        [class.error]="signUpForm.get('name')?.touched && signUpForm.get('name')?.invalid"
+      >
+        <label class="form-label" for="signUpName">Name</label>
+        <input
+          id="signUpName"
+          type="text"
+          autocomplete="given-name"
+          class="form-control"
+          formControlName="name"
+        >
+        <div
+          class="validation"
+          *ngIf="signUpForm.get('name')?.touched && signUpForm.get('name')?.invalid"
+        >
+          <p class="validation-item">
+            Type your real name
+          </p>
+        </div>
+      </div> 
+      <div
+        class="form-control-wrapper"
+        [class.error]="signUpForm.get('surname')?.touched && signUpForm.get('surname')?.invalid"
+      >
+        <label class="form-label" for="signUpSurname">Surname</label>
+        <input
+          id="signUpSurname"
+          type="text"
+          autocomplete="family-name"
+          class="form-control"
+          formControlName="surname"
+        >
+        <div
+          class="validation"
+          *ngIf="signUpForm.get('surname')?.touched && signUpForm.get('surname')?.invalid"
+        >
+          <p class="validation-item">
+            Type your real surname
+          </p>
+        </div>
+      </div>
+      <div
+        class="form-control-wrapper"
+        [class.error]="signUpForm.get('number')?.touched && signUpForm.get('number')?.invalid"
+      >
+        <label class="form-label" for="signUpNumber">Number</label>
+        <input
+          id="signUpName"
+          type="text"
+          autocomplete="tel"
+          class="form-control"
+          formControlName="number"
+        >
+        <div
+          class="validation"
+          *ngIf="signUpForm.get('number')?.touched && signUpForm.get('number')?.invalid"
+        >
+          <p class="validation-item">
+            Type your number
+          </p>
+        </div>
+      </div>
+      <div
+        class="form-control-wrapper"
         [class.error]="signUpForm.get('email')?.touched && signUpForm.get('email')?.invalid"
       >
         <label class="form-label" for="signUpEmail">Email</label>
         <input
           id="signUpEmail"
           type="email"
-          autocomplete="username"
+          autocomplete="email"
           class="form-control"
           formControlName="email"
         >
