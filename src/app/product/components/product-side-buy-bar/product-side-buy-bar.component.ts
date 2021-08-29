@@ -28,6 +28,7 @@ export class ProductSideBuyBarComponent implements OnInit, OnDestroy {
   }
 
   showAlreadyInCartBtn = false;
+  alreadyInCartBtnChecked = false;
 
   // tslint:disable-next-line:variable-name
   _product!: Product;
@@ -76,6 +77,8 @@ export class ProductSideBuyBarComponent implements OnInit, OnDestroy {
   }
 
   private checkProductAlreadyInCart(): Subscription {
+    this.alreadyInCartBtnChecked = false;
+
     return this.userDataServ.getUserData()
       .subscribe((userData: UserData) => {
         if (!userData) {
@@ -86,6 +89,7 @@ export class ProductSideBuyBarComponent implements OnInit, OnDestroy {
 
         if (!userData.productsInCart) {
           this.showAlreadyInCartBtn = false;
+          this.alreadyInCartBtnChecked = true;
           return;
         }
 
@@ -97,6 +101,8 @@ export class ProductSideBuyBarComponent implements OnInit, OnDestroy {
 
           this.showAlreadyInCartBtn = false;
         }
+
+        this.alreadyInCartBtnChecked = true;
       });
   }
 
@@ -122,6 +128,10 @@ export class ProductSideBuyBarComponent implements OnInit, OnDestroy {
     this.authServ.token.subscribe((token: string | null) => {
       if (!token) {
         this.authServ.showAuthPopup();
+        return;
+      }
+
+      if (!this.alreadyInCartBtnChecked) {
         return;
       }
 

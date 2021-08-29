@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FilterByStringPipe } from './pipes/filter-by-string.pipe';
 import { NgModule } from '@angular/core';
@@ -14,7 +15,8 @@ import { HideBackdropDirective } from './directives/hide-backdrop.directive';
   imports: [
     FormsModule,
     ReactiveFormsModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    CommonModule
   ],
   exports: [
     FilterByStringPipe,
@@ -22,7 +24,8 @@ import { HideBackdropDirective } from './directives/hide-backdrop.directive';
     FormsModule,
     ReactiveFormsModule,
     FontAwesomeModule,
-    HideBackdropDirective
+    HideBackdropDirective,
+    CommonModule
   ]
 })
 export class SharedModule {}

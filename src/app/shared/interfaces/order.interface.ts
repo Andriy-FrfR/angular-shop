@@ -9,4 +9,6 @@ export interface Order {
   receiverContactData: ContactData;
   products: ProductInCart[];
   price: number;
+  date: Date;
+  status: string;
 }

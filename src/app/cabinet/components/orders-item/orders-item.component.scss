@@ -1,0 +1,40 @@
+.orders-item {
+  position: relative;
+  
+  width: 100%;
+
+  border: 1px solid #e9e9ee;
+
+  padding: 0 40px;
+
+  &-status-bar {
+    position: absolute;
+    top: 50%;
+    left: 15px;
+    transform: translate(0, -50%);
+
+    width: 8px;
+    height: 40px;
+    
+    border-radius: 50px;
+
+    &.grey {
+      background-color: rgb(210, 210, 210);;
+    }
+
+    &.green {
+      background-color: rgb(0, 160, 70);
+    }
+  }
+
+  &-header {
+    display: flex;
+    justify-content: space-between;
+
+    padding: 20px 0;
+
+    .small {
+      color: #797878;
+    }
+  }
+}

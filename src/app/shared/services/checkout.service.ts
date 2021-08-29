@@ -52,7 +52,9 @@ export class CheckoutService {
               surname: checkoutForm.get('receiver-contact-data')?.get('surname')?.value,
               number: checkoutForm.get('receiver-contact-data')?.get('number')?.value,
               city: checkoutForm.get('receiver-contact-data')?.get('city')?.value
-            }
+            },
+            date: new Date(),
+            status: 'In progress'
           };
 
           if (!userData.orders) {

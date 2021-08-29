@@ -1,1 +1,6 @@
-<p>orders works!</p>
+<h2 class="cabinet-title">
+  My orders
+</h2>
+<div class="orders" *ngIf="userData">
+  <app-orders-item *ngFor="let order of userData.orders" [order]="order"></app-orders-item>
+</div>
