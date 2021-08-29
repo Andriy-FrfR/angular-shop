@@ -68,6 +68,16 @@ export class ProductComponent implements OnInit, OnDestroy {
     );
 
     this.subscriptions.push(
+      this.authServ.auth$.subscribe((message: string) => {
+        if (message === 'authorized') {
+          this.subscriptions.push(
+            this.checkProductAlreadyInCart()
+          );
+        }
+      })
+    );
+
+    this.subscriptions.push(
       this.backdropServ.backdrop$.subscribe((message: string) => {
         if (message === 'hide') {
           this.showReviewsForm = false;
@@ -85,6 +95,10 @@ export class ProductComponent implements OnInit, OnDestroy {
   private checkProductAlreadyInCart(): Subscription {
     return this.userDataServ.getUserData()
       .subscribe((userData: UserData) => {
+        if (!userData) {
+          return;
+        }
+
         this.userData = userData;
 
         if (!userData.productsInCart) {
@@ -158,7 +172,7 @@ export class ProductComponent implements OnInit, OnDestroy {
         userData.productsInCart.push({productId: this.product.id || '', amount: 1});
 
         this.userDataServ.patchUserData(userData).subscribe(() => {
-          this.checkProductAlreadyInCart();
+          this.cartServ.productsInCartChanged();
 
           this.cartServ.showCart();
         });

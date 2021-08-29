@@ -3,7 +3,7 @@ import { environment } from './../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +16,10 @@ export class UserDataService {
     return this.http.get<any>(`${environment.dbUrl}/users/${localStorage.getItem('localId')}.json`)
       .pipe(
         map((userDataFb: object) => {
+          if (!userDataFb) {
+            return;
+          }
+
           for (const [id, data] of Object.entries(userDataFb)) {
             return {id, ...data};
           }

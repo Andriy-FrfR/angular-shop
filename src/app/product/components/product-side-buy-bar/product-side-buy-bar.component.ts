@@ -56,6 +56,16 @@ export class ProductSideBuyBarComponent implements OnInit, OnDestroy {
       })
     );
 
+    this.subscriptions.push(
+      this.authServ.auth$.subscribe((message: string) => {
+        if (message === 'authorized') {
+          this.subscriptions.push(
+            this.checkProductAlreadyInCart()
+          );
+        }
+      })
+    );
+
     this.loadImages();
   }
 
@@ -68,6 +78,10 @@ export class ProductSideBuyBarComponent implements OnInit, OnDestroy {
   private checkProductAlreadyInCart(): Subscription {
     return this.userDataServ.getUserData()
       .subscribe((userData: UserData) => {
+        if (!userData) {
+          return;
+        }
+
         this.userData = userData;
 
         if (!userData.productsInCart) {
@@ -119,7 +133,7 @@ export class ProductSideBuyBarComponent implements OnInit, OnDestroy {
         userData.productsInCart.push({productId: this.product.id || '', amount: 1});
 
         this.userDataServ.patchUserData(userData).subscribe(() => {
-          this.checkProductAlreadyInCart();
+          this.cartServ.productsInCartChanged();
 
           this.cartServ.showCart();
         });
