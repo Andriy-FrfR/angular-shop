@@ -1,16 +1,14 @@
 .orders-item {
-  position: relative;
-  
   width: 100%;
 
   border: 1px solid #e9e9ee;
 
-  padding: 0 40px;
+  padding: 0 20px 0 40px;
 
   &-status-bar {
     position: absolute;
     top: 50%;
-    left: 15px;
+    left: -24px;
     transform: translate(0, -50%);
 
     width: 8px;
@@ -28,13 +26,41 @@
   }
 
   &-header {
-    display: flex;
-    justify-content: space-between;
+    position: relative;
 
-    padding: 20px 0;
+    display: flex;
+
+    padding: 20px 45px 20px 0;
+
+    fa-icon {
+      position: absolute;
+      top: 50%;
+      right: 0px;
+      transform: translateY(-50%);
+
+      color: #3e77aa;
+    }
 
     .small {
       color: #797878;
+    }
+
+    &-info {
+      width: 40%;
+    }
+
+    &-images {
+      display: flex;
+
+      margin-left: auto;
+
+      & app-orders-item-img {
+        margin-left: 24px;
+
+        &:first-child {
+          margin-left: 0;
+        }
+      }
     }
   }
 }

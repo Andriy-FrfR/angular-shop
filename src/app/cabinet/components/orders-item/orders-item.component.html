@@ -1,17 +1,25 @@
 <div class="orders-item">
-  <div class="orders-item-header">
+  <div class="orders-item-header" (click)="toggleOrderContent()">
+    <div
+      class="orders-item-status-bar"
+      [class.green]="order.status === 'Completed'"
+      [class.grey]="order.status === 'In progress' || 'Canceled'"
+    ></div>
     <div class="orders-item-header-info">
       <time class="small">{{ order.date | date:'dd.MM.yyyy'}}</time>
       <div>{{ order.status }}</div>
     </div>
-    <div class="orders-item-header-price">
+    <div class="orders-item-header-price" [hidden]="showOrderContent">
       <div class="small">Order price</div>
       <div>{{ order.price }} ₴</div>
     </div>
+    <div class="orders-item-header-images">
+      <app-orders-item-img *ngFor="let product of products" [product]="product" [hidden]="showOrderContent"></app-orders-item-img>
+    </div>
+    <fa-icon [icon]="faChevronDown" *ngIf="!showOrderContent"></fa-icon>
+    <fa-icon [icon]="faChevronUp" *ngIf="showOrderContent"></fa-icon>
   </div>
-  <div
-    class="orders-item-status-bar"
-    [class.green]="order.status === ''"
-    [class.grey]="order.status === 'In progress'"
-  ></div>
+  <div class="orders-item-content" *ngIf="showOrderContent">
+
+  </div>
 </div>
