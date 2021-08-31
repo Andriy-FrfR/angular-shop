@@ -20,6 +20,32 @@
     <fa-icon [icon]="faChevronUp" *ngIf="showOrderContent"></fa-icon>
   </div>
   <div class="orders-item-content" *ngIf="showOrderContent">
-
+    <div class="orders-item-content-info">
+      <div class="orders-item-content-header">Info about order</div>
+      <div class="orders-item-content-info-item">{{ order.shipping }}</div>
+      <div class="orders-item-content-info-item">{{ order.customerContactData.surname }} {{ order.customerContactData.name }}</div>
+      <div class="orders-item-content-info-item">{{ order.customerContactData.number }}</div>
+      <div class="orders-item-content-info-item">{{ order.email }}</div>
+    </div>
+    <div class="orders-item-content-products">
+      <div class="orders-item-content-header">Products</div>
+      <div class="orders-item-content-products-wrapper">
+        <app-checkout-product *ngFor="let product of order.products" [productToCheckout]="product"></app-checkout-product>
+      </div>
+      <div class="orders-item-content-products-price">
+        <div class="orders-item-content-products-price-item">
+          <div class="orders-item-content-products-price-item-label">Payment</div>
+          <div class="orders-item-content-products-price-item-value">{{ order.payment }}</div>
+        </div>
+        <div class="orders-item-content-products-price-item">
+          <div class="orders-item-content-products-price-item-label">Shipping</div>
+          <div class="orders-item-content-products-price-item-value">{{ order.shippingPrice }}</div>
+        </div>
+        <div class="orders-item-content-products-price-item">
+          <div class="orders-item-content-products-price-item-label">Total</div>
+          <div class="orders-item-content-products-price-item-value total-price">{{ order.price }} ₴</div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

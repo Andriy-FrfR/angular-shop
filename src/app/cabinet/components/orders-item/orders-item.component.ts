@@ -1,3 +1,5 @@
+import { CheckoutService } from './../../../shared/services/checkout.service';
+import { ShippingPrices } from './../../../shared/interfaces/shipping-prices.interface';
 import { Subscription } from 'rxjs';
 import { Product } from './../../../shared/interfaces/product.interface';
 import { ProductsService } from './../../../shared/services/products.service';
@@ -19,7 +21,7 @@ export class OrdersItemComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
 
   constructor(
-    private productsServ: ProductsService,
+    private productsServ: ProductsService
   ) { }
 
   ngOnInit(): void {

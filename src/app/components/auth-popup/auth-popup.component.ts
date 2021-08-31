@@ -123,7 +123,8 @@ export class AuthPopupComponent implements OnInit, OnDestroy {
       }, {
         name: this.signUpForm.get('name')?.value,
         surname: this.signUpForm.get('surname')?.value,
-        number: this.signUpForm.get('number')?.value
+        number: this.signUpForm.get('number')?.value,
+        email: this.signUpForm.get('email')?.value,
       }).subscribe((data: any) => {
         console.log(data);
         this.backdropServ.hideBackdrop();

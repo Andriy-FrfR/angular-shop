@@ -31,13 +31,15 @@ export class CheckoutService {
     this.checkout$.next('confirm');
   }
 
-  createOrder(checkoutForm: FormGroup, products: ProductInCart[], price: number): Observable<any> {
+  createOrder(checkoutForm: FormGroup, products: ProductInCart[], price: number, shippingPrice: string): Observable<any> {
     return this.userDataServ.getUserData()
       .pipe(
         switchMap((userData: UserData) => {
           const order: Order = {
             products,
             price,
+            shippingPrice,
+            email: userData.email,
             adress: checkoutForm.get('adress')?.value,
             shipping: checkoutForm.get('shipping')?.value,
             payment: checkoutForm.get('payment')?.value,

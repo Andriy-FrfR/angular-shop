@@ -1,3 +1,5 @@
+import { RouterModule } from '@angular/router';
+import { CheckoutProductComponent } from './components/checkout-product/checkout-product.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FilterByStringPipe } from './pipes/filter-by-string.pipe';
@@ -10,13 +12,15 @@ import { HideBackdropDirective } from './directives/hide-backdrop.directive';
   declarations: [
     FilterByCategoryPipe,
     FilterByStringPipe,
-    HideBackdropDirective
+    HideBackdropDirective,
+    CheckoutProductComponent
   ],
   imports: [
+    CommonModule,
     FormsModule,
     ReactiveFormsModule,
     FontAwesomeModule,
-    CommonModule
+    RouterModule
   ],
   exports: [
     FilterByStringPipe,
@@ -25,7 +29,8 @@ import { HideBackdropDirective } from './directives/hide-backdrop.directive';
     ReactiveFormsModule,
     FontAwesomeModule,
     HideBackdropDirective,
-    CommonModule
+    CommonModule,
+    CheckoutProductComponent
   ]
 })
 export class SharedModule {}

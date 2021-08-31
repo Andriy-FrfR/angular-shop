@@ -98,7 +98,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     this.checkoutServ.createOrder(
       this.checkoutForm,
       this.productsToCheckout,
-      this.countTotalPrice()
+      this.countTotalPrice(),
+      this.getShippingPrice(this.checkoutForm.get('shipping')?.value)
     ).subscribe(() => {
       this.cartServ.removeProductsToCheckout();
 
