@@ -28,7 +28,7 @@ export class ProductSideBuyBarComponent implements OnInit, OnDestroy {
   }
 
   showAlreadyInCartBtn = false;
-  alreadyInCartBtnChecked = false;
+  alreadyInCartChecked = false;
 
   // tslint:disable-next-line:variable-name
   _product!: Product;
@@ -77,7 +77,7 @@ export class ProductSideBuyBarComponent implements OnInit, OnDestroy {
   }
 
   private checkProductAlreadyInCart(): Subscription {
-    this.alreadyInCartBtnChecked = false;
+    this.alreadyInCartChecked = false;
 
     return this.userDataServ.getUserData()
       .subscribe((userData: UserData) => {
@@ -89,7 +89,7 @@ export class ProductSideBuyBarComponent implements OnInit, OnDestroy {
 
         if (!userData.productsInCart) {
           this.showAlreadyInCartBtn = false;
-          this.alreadyInCartBtnChecked = true;
+          this.alreadyInCartChecked = true;
           return;
         }
 
@@ -98,11 +98,10 @@ export class ProductSideBuyBarComponent implements OnInit, OnDestroy {
             this.showAlreadyInCartBtn = true;
             return;
           }
-
-          this.showAlreadyInCartBtn = false;
         }
 
-        this.alreadyInCartBtnChecked = true;
+        this.showAlreadyInCartBtn = false;
+        this.alreadyInCartChecked = true;
       });
   }
 
@@ -131,7 +130,7 @@ export class ProductSideBuyBarComponent implements OnInit, OnDestroy {
         return;
       }
 
-      if (!this.alreadyInCartBtnChecked) {
+      if (!this.alreadyInCartChecked) {
         return;
       }
 

@@ -28,7 +28,7 @@ export class ProductComponent implements OnInit, OnDestroy {
   faShoppingCart = faShoppingCart;
   showReviewsForm = false;
   showAlreadyInCartBtn = false;
-  alreadyInCartBtnChecked = false;
+  alreadyInCartChecked = false;
   subscriptions: Subscription[] = [];
 
   constructor(
@@ -46,15 +46,18 @@ export class ProductComponent implements OnInit, OnDestroy {
       this.route.params.subscribe((params: Params) => {
         this.imgUrls = [];
 
-        this.productsServ.getProductById(params.id).subscribe((product: Product) => {
-          this.product = product;
+        this.subscriptions.push(
+          this.productsServ.getProductById(params.id)
+            .subscribe((product: Product) => {
+              this.product = product;
 
-          this.loadImages();
+              this.loadImages();
 
-          this.subscriptions.push(
-            this.checkProductAlreadyInCart()
-          );
-        });
+              this.subscriptions.push(
+                this.checkProductAlreadyInCart()
+              );
+            })
+        );
       })
     );
 
@@ -94,11 +97,12 @@ export class ProductComponent implements OnInit, OnDestroy {
   }
 
   private checkProductAlreadyInCart(): Subscription {
-    this.alreadyInCartBtnChecked = false;
+    this.alreadyInCartChecked = false;
 
     return this.userDataServ.getUserData()
       .subscribe((userData: UserData) => {
         if (!userData) {
+          this.alreadyInCartChecked = true;
           return;
         }
 
@@ -106,20 +110,20 @@ export class ProductComponent implements OnInit, OnDestroy {
 
         if (!userData.productsInCart) {
           this.showAlreadyInCartBtn = false;
-          this.alreadyInCartBtnChecked = true;
+          this.alreadyInCartChecked = true;
           return;
         }
 
         for (const productInCart of userData.productsInCart) {
           if (this.product.id === productInCart.productId) {
             this.showAlreadyInCartBtn = true;
+            this.alreadyInCartChecked = true;
             return;
           }
-
-          this.showAlreadyInCartBtn = false;
         }
 
-        this.alreadyInCartBtnChecked = true;
+        this.showAlreadyInCartBtn = false;
+        this.alreadyInCartChecked = true;
       });
   }
 
@@ -170,9 +174,7 @@ export class ProductComponent implements OnInit, OnDestroy {
         return;
       }
 
-      console.log(this.alreadyInCartBtnChecked);
-
-      if (!this.alreadyInCartBtnChecked) {
+      if (!this.alreadyInCartChecked) {
         return;
       }
 

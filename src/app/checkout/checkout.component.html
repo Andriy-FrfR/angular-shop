@@ -16,6 +16,7 @@
         <div class="checkout-form-item-title">Products</div>
         <div class="checkout-products">
           <app-checkout-product
+            class="checkout-products-checkout-product"
             *ngFor="let productToCheckout of productsToCheckout"
             [productToCheckout]="productToCheckout">
           </app-checkout-product>

@@ -20,7 +20,6 @@ body {
 }
 
 /*Angular Material*/
-
 /*Mat tabs*/
 
 .container,
@@ -246,4 +245,20 @@ h2.cabinet-title {
 
   font-size: 36px;
   font-weight: 400;
+}
+
+/*Checkout-product*/
+
+app-checkout-product.orders-item-checkout-product .product-to-checkout {
+  margin-bottom: 20px;
+}
+
+app-checkout-product.checkout-products-checkout-product .product-to-checkout {
+  margin-top: 15px;
+}
+
+app-checkout-product.checkout-products-checkout-product:not(app-checkout-product:last-child) .product-to-checkout {
+  border-bottom: 1px solid #e9e9e9;
+  
+  padding-bottom: 25px;
 }

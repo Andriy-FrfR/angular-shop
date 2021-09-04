@@ -30,7 +30,7 @@
     <div class="orders-item-content-products">
       <div class="orders-item-content-header">Products</div>
       <div class="orders-item-content-products-wrapper">
-        <app-checkout-product *ngFor="let product of order.products" [productToCheckout]="product"></app-checkout-product>
+        <app-checkout-product class="orders-item-checkout-product" *ngFor="let product of order.products" [productToCheckout]="product"></app-checkout-product>
       </div>
       <div class="orders-item-content-products-price">
         <div class="orders-item-content-products-price-item">
